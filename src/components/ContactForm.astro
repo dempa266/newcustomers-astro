@@ -1,182 +1,305 @@
 ---
-import { Checkbox, Input, TextArea } from '@heroui/react';
+import { Checkbox, Input, TextArea } from "@heroui/react";
 
 const fieldClassName =
-	'field block w-full border border-border bg-white px-3.5 py-2.5 text-base leading-6 text-gray shadow-none placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/30';
+  "field block w-full rounded-xl border-border/60 bg-surface px-4 py-3 text-base leading-6 text-foreground shadow-sm placeholder:text-muted transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20 hover:border-border";
 const submitClassName =
-	'button button--primary inline-flex h-12 w-full items-center justify-center rounded-[var(--radius-button)] border border-primary bg-primary px-6 text-base font-semibold text-dark shadow-sm transition duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-primary-dark hover:bg-primary-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background';
+  "button button--primary inline-flex h-12 w-full items-center justify-center rounded-xl border border-transparent bg-primary px-8 text-base font-semibold text-primary-foreground shadow-md shadow-primary/20 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/40 hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-95 cursor-pointer";
 ---
 
-<section id="kontakt" class="section-spacing bg-gray-light" data-contact-form>
-	<div class="site-container">
-		<div class="grid gap-8 lg:grid-cols-2">
-			<div class="p-6 lg:p-8">
-				<div class="section-intro section-intro--spaced section-intro--inset text-gray">
-					<h2>Kontakta oss</h2>
-					<p class="text-lg leading-6">
-						Varmt välkommen till oss på new customers. Vi har specialiserat oss på att skapa mer trafik till din webb, få ut mer affärer från webben och uppgradera dina kunders kundresa.
-					</p>
-				</div>
-				<dl class="text-base text-gray grid grid-cols-1 gap-6 sm:grid-cols-2">
-					<dt class="sr-only">Stockholm Address</dt>
-					<dd>
-						<div class="flex h-10 font-semibold"><span class="w-6 h-6 mt-1 text-primary">📍</span><div class="my-auto ml-1">Stockholm</div></div>
-						<div>Kungsgatan 9</div>
-						<div>111 43 Stockholm</div>
-					</dd>
-					<dt class="sr-only">Göteborg Address</dt>
-					<dd>
-						<div class="flex h-10 font-semibold"><span class="w-6 h-6 mt-1 text-primary">📍</span><div class="my-auto ml-1">Göteborg</div></div>
-						<div>Kungsportsavenyn 21</div>
-						<div>411 36 Göteborg</div>
-					</dd>
-					<div class="mt-6 space-y-3">
-						<dt class="sr-only">Phone number</dt>
-						<dd class="flex"><span class="flex-shrink-0 w-6 h-6 text-gray">📞</span><a href="tel:0703877177" class="ml-3 text-gray">070 387 71 77</a></dd>
-						<dt class="sr-only">Email</dt>
-						<dd class="flex"><span class="flex-shrink-0 w-6 h-6 text-gray">✉️</span><a href="mailto:info@newcustomers.se" class="ml-3 text-gray">info@newcustomers.se</a></dd>
-					</div>
-				</dl>
-				<p class="mt-6 text-base text-gray">
-					Letar du efter våra medarbetare?
-					<a href="/om-oss/" class="font-medium text-gray no-underline hover:text-primary">Hitta dem här</a>.
-				</p>
-			</div>
-			<div class="surface-card p-6 lg:p-8">
-				<p class="text-primary font-bold text-center my-auto hidden" data-success></p>
-				<form action="#" method="POST" class="lg:flex-auto" data-form>
-					<div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
-						<div>
-							<label for="cf-name" class="mb-1.5 block text-base font-medium leading-6 text-gray">Namn</label>
-							<div class="mt-2.5">
-								<Input
-									id="cf-name"
-									type="text"
-									name="name"
-									aria-label="Namn"
-									autoComplete="name"
-									className={fieldClassName}
-								/>
-							</div>
-						</div>
-						<div>
-							<label for="cf-phone" class="mb-1.5 block text-base font-medium leading-6 text-gray">Telefon</label>
-							<div class="mt-2.5">
-								<Input
-									id="cf-phone"
-									type="text"
-									name="phone"
-									aria-label="Telefon"
-									autoComplete="phone"
-									className={fieldClassName}
-								/>
-							</div>
-						</div>
-						<div>
-							<label for="cf-email" class="mb-1.5 block text-base font-medium leading-6 text-gray">E-post</label>
-							<div class="mt-2.5">
-								<Input
-									id="cf-email"
-									type="text"
-									name="email"
-									aria-label="E-post"
-									className={fieldClassName}
-								/>
-							</div>
-						</div>
-						<div>
-							<label for="cf-website" class="mb-1.5 block text-base font-medium leading-6 text-gray">Hemsida</label>
-							<div class="mt-2.5">
-								<Input
-									id="cf-website"
-									type="text"
-									name="website"
-									aria-label="Hemsida"
-									className={fieldClassName}
-								/>
-							</div>
-						</div>
-						<div class="sm:col-span-2">
-							<label for="cf-message" class="mb-1.5 block text-base font-medium leading-6 text-gray">Meddelande</label>
-							<div class="mt-2.5">
-								<TextArea
-									id="cf-message"
-									name="message"
-									rows={4}
-									aria-label="Meddelande"
-									className={fieldClassName}
-								/>
-							</div>
-						</div>
-					</div>
-					<div class="mt-10">
-						<button type="submit" class={submitClassName}>
-							Skicka meddelande
-						</button>
-					</div>
-					<div class="mt-5">
-						<Checkbox id="cf-gdpr" name="gdpr" className="text-sm leading-6 text-muted">
-							Genom att skicka detta meddelande godkänner du att vi lagrar och hanterar dina personuppgifter i enlighet med vår
-							<a href="/integritetspolicy/" class="text-primary">integritetspolicy</a>.
-						</Checkbox>
-					</div>
-					<p class="text-red-500 hidden" data-error></p>
-				</form>
-			</div>
-		</div>
-	</div>
+<section
+  id="kontakt"
+  class="section-spacing bg-gradient-to-b from-surface to-surface-secondary/30 relative"
+  data-contact-form
+>
+  {/* Decorative background accent */}
+  <div
+    class="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"
+  >
+  </div>
+
+  <div class="site-container relative z-10">
+    <div class="grid gap-12 lg:gap-16 lg:grid-cols-2">
+      <div class="p-4 lg:py-8 lg:pr-8 flex flex-col justify-center">
+        <div class="mb-10 lg:mb-12">
+          <h2
+            class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-foreground mb-6"
+          >
+            Kontakta oss
+          </h2>
+          <p class="text-lg leading-relaxed text-text-muted max-w-lg">
+            Varmt välkommen till oss på new customers. Vi har specialiserat oss
+            på att skapa mer trafik till din webb, få ut mer affärer från webben
+            och uppgradera dina kunders kundresa.
+          </p>
+        </div>
+
+        <dl
+          class="text-base text-foreground grid grid-cols-1 gap-8 sm:grid-cols-2 bg-surface/50 p-6 sm:p-8 rounded-2xl border border-border/40 backdrop-blur-sm"
+        >
+          <div>
+            <dt class="sr-only">Stockholm Address</dt>
+            <dd class="flex flex-col gap-2">
+              <div class="flex items-center gap-3 font-semibold text-lg">
+                <div
+                  class="flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 text-primary"
+                >
+                  📍
+                </div>
+                <div>Stockholm</div>
+              </div>
+              <div class="text-text-muted ml-13">
+                Kungsgatan 9<br />
+                111 43 Stockholm
+              </div>
+            </dd>
+          </div>
+
+          <div>
+            <dt class="sr-only">Göteborg Address</dt>
+            <dd class="flex flex-col gap-2">
+              <div class="flex items-center gap-3 font-semibold text-lg">
+                <div
+                  class="flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 text-primary"
+                >
+                  📍
+                </div>
+                <div>Göteborg</div>
+              </div>
+              <div class="text-text-muted ml-13">
+                Kungsportsavenyn 21<br />
+                411 36 Göteborg
+              </div>
+            </dd>
+          </div>
+
+          <div
+            class="sm:col-span-2 pt-6 border-t border-border/40 grid grid-cols-1 sm:grid-cols-2 gap-4"
+          >
+            <div>
+              <dt class="sr-only">Phone number</dt>
+              <dd class="flex items-center gap-3">
+                <div
+                  class="flex items-center justify-center w-10 h-10 rounded-full bg-surface text-text-muted shadow-sm border border-border/50"
+                >
+                  📞
+                </div>
+                <a
+                  href="tel:0703877177"
+                  class="text-foreground font-medium hover:text-primary transition-colors"
+                  >070 387 71 77</a
+                >
+              </dd>
+            </div>
+            <div>
+              <dt class="sr-only">Email</dt>
+              <dd class="flex items-center gap-3">
+                <div
+                  class="flex items-center justify-center w-10 h-10 rounded-full bg-surface text-text-muted shadow-sm border border-border/50"
+                >
+                  ✉️
+                </div>
+                <a
+                  href="mailto:info@newcustomers.se"
+                  class="text-foreground font-medium hover:text-primary transition-colors"
+                  >info@newcustomers.se</a
+                >
+              </dd>
+            </div>
+          </div>
+        </dl>
+
+        <p class="mt-8 text-base text-text-muted">
+          Letar du efter våra medarbetare?
+          <a
+            href="/om-oss/"
+            class="font-semibold text-foreground underline decoration-primary/30 decoration-2 underline-offset-4 hover:decoration-primary transition-colors"
+            >Hitta dem här</a
+          >.
+        </p>
+      </div>
+
+      <div
+        class="bg-surface rounded-3xl p-6 sm:p-10 shadow-xl border border-border/50 relative overflow-hidden"
+      >
+        {/* Subtle form background accent */}
+        <div
+          class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-full pointer-events-none"
+        >
+        </div>
+
+        <p
+          class="text-primary font-bold text-center my-auto hidden"
+          data-success
+        >
+        </p>
+        <form
+          action="#"
+          method="POST"
+          class="lg:flex-auto relative z-10"
+          data-form
+        >
+          <div class="grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-2">
+            <div>
+              <label
+                for="cf-name"
+                class="mb-2 block text-sm font-semibold leading-6 text-foreground"
+                >Namn</label
+              >
+              <Input
+                id="cf-name"
+                type="text"
+                name="name"
+                aria-label="Namn"
+                autoComplete="name"
+                className={fieldClassName}
+              />
+            </div>
+            <div>
+              <label
+                for="cf-phone"
+                class="mb-2 block text-sm font-semibold leading-6 text-foreground"
+                >Telefon</label
+              >
+              <Input
+                id="cf-phone"
+                type="text"
+                name="phone"
+                aria-label="Telefon"
+                autoComplete="phone"
+                className={fieldClassName}
+              />
+            </div>
+            <div>
+              <label
+                for="cf-email"
+                class="mb-2 block text-sm font-semibold leading-6 text-foreground"
+                >E-post</label
+              >
+              <Input
+                id="cf-email"
+                type="text"
+                name="email"
+                aria-label="E-post"
+                className={fieldClassName}
+              />
+            </div>
+            <div>
+              <label
+                for="cf-website"
+                class="mb-2 block text-sm font-semibold leading-6 text-foreground"
+                >Hemsida</label
+              >
+              <Input
+                id="cf-website"
+                type="text"
+                name="website"
+                aria-label="Hemsida"
+                className={fieldClassName}
+              />
+            </div>
+            <div class="sm:col-span-2">
+              <label
+                for="cf-message"
+                class="mb-2 block text-sm font-semibold leading-6 text-foreground"
+                >Meddelande</label
+              >
+              <TextArea
+                id="cf-message"
+                name="message"
+                rows={4}
+                aria-label="Meddelande"
+                className={fieldClassName}
+              />
+            </div>
+          </div>
+
+          <div class="mt-8">
+            <button type="submit" class={submitClassName}>
+              Skicka meddelande
+            </button>
+          </div>
+
+          <div
+            class="mt-6 p-4 rounded-xl bg-surface-secondary/50 border border-border/40"
+          >
+            <Checkbox
+              id="cf-gdpr"
+              name="gdpr"
+              className="text-sm leading-relaxed text-text-muted"
+            >
+              Genom att skicka detta meddelande godkänner du att vi lagrar och
+              hanterar dina personuppgifter i enlighet med vår
+              <a
+                href="/integritetspolicy/"
+                class="text-foreground font-medium hover:text-primary transition-colors"
+                >integritetspolicy</a
+              >.
+            </Checkbox>
+          </div>
+
+          <p
+            class="mt-4 text-sm font-medium text-red-500 hidden p-3 rounded-lg bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20"
+            data-error
+          >
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
 </section>
 
 <script is:inline>
-	document.querySelectorAll('[data-contact-form]').forEach((root) => {
-		if (root.dataset.bound === 'true') return;
-		root.dataset.bound = 'true';
+  document.querySelectorAll("[data-contact-form]").forEach((root) => {
+    if (root.dataset.bound === "true") return;
+    root.dataset.bound = "true";
 
-		const form = root.querySelector('[data-form]');
-		const success = root.querySelector('[data-success]');
-		const error = root.querySelector('[data-error]');
+    const form = root.querySelector("[data-form]");
+    const success = root.querySelector("[data-success]");
+    const error = root.querySelector("[data-error]");
 
-		if (!form || !success || !error) return;
+    if (!form || !success || !error) return;
 
-		form.addEventListener('submit', async (event) => {
-			event.preventDefault();
-			error.textContent = '';
-			error.classList.add('hidden');
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      error.textContent = "";
+      error.classList.add("hidden");
 
-			const gdpr = form.querySelector('[name="gdpr"]');
-			if (!(gdpr instanceof HTMLInputElement) || !gdpr.checked) {
-				error.textContent = 'Du behöver godkänna vår integritetspolicy innan du kan skicka meddelandet.';
-				error.classList.remove('hidden');
-				return;
-			}
+      const gdpr = form.querySelector('[name="gdpr"]');
+      if (!(gdpr instanceof HTMLInputElement) || !gdpr.checked) {
+        error.textContent =
+          "Du behöver godkänna vår integritetspolicy innan du kan skicka meddelandet.";
+        error.classList.remove("hidden");
+        return;
+      }
 
-			const target = event.currentTarget;
-			const formData = new FormData();
-			formData.append('cc_name', target.elements.name?.value || '');
-			formData.append('cc_email', target.elements.email?.value || '');
-			formData.append('cc_phone', target.elements.phone?.value || '');
-			formData.append('cc_website', target.elements.website?.value || '');
-			formData.append('cc_message', target.elements.message?.value || '');
-			formData.append('apiKey', '6321a3ced5af44fcd7338ac0');
+      const target = event.currentTarget;
+      const formData = new FormData();
+      formData.append("cc_name", target.elements.name?.value || "");
+      formData.append("cc_email", target.elements.email?.value || "");
+      formData.append("cc_phone", target.elements.phone?.value || "");
+      formData.append("cc_website", target.elements.website?.value || "");
+      formData.append("cc_message", target.elements.message?.value || "");
+      formData.append("apiKey", "6321a3ced5af44fcd7338ac0");
 
-			document.cookie.split('; ').forEach((cookie) => {
-				const [key, value] = cookie.split('=');
-				if (key === '_cc' && value) formData.append('cookie', value);
-			});
+      document.cookie.split("; ").forEach((cookie) => {
+        const [key, value] = cookie.split("=");
+        if (key === "_cc" && value) formData.append("cookie", value);
+      });
 
-			try {
-				await fetch('https://api.customerconnect.se/submissions', {
-					method: 'POST',
-					body: formData,
-				});
-				success.textContent = 'Tack för ditt meddelande!';
-				success.classList.remove('hidden');
-				form.classList.add('hidden');
-				target.reset();
-			} catch {
-				error.textContent = 'Något gick fel. Försök igen.';
-				error.classList.remove('hidden');
-			}
-		});
-	});
+      try {
+        await fetch("https://api.customerconnect.se/submissions", {
+          method: "POST",
+          body: formData,
+        });
+        success.textContent = "Tack för ditt meddelande!";
+        success.classList.remove("hidden");
+        form.classList.add("hidden");
+        target.reset();
+      } catch {
+        error.textContent = "Något gick fel. Försök igen.";
+        error.classList.remove("hidden");
+      }
+    });
+  });
 </script>

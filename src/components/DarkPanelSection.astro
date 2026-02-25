@@ -1,0 +1,45 @@
+---
+import SectionEyebrow from './SectionEyebrow.astro';
+
+interface Props {
+	eyebrow?: string;
+	centerEyebrow?: boolean;
+	sectionClass?: string;
+	panelClass?: string;
+	containerClass?: string;
+	contentClass?: string;
+	withOverlay?: boolean;
+}
+
+const {
+	eyebrow,
+	centerEyebrow = true,
+	sectionClass = '',
+	panelClass = '',
+	containerClass = '',
+	contentClass = '',
+	withOverlay = true,
+} = Astro.props as Props;
+
+const sectionClasses = ['section-spacing-tight', sectionClass].filter(Boolean).join(' ');
+const panelClasses = [
+	'relative overflow-hidden bg-surface-dark text-on-dark mx-4 sm:mx-8 lg:mx-auto max-w-[82rem] rounded-[var(--radius-card-lg)] shadow-2xl py-12 lg:py-16',
+	panelClass,
+]
+	.filter(Boolean)
+	.join(' ');
+const innerContainerClasses = ['site-container relative z-10', containerClass].filter(Boolean).join(' ');
+const contentClasses = ['flex flex-col items-center gap-10 lg:gap-12', contentClass].filter(Boolean).join(' ');
+---
+
+<section class={sectionClasses}>
+	<div class={panelClasses}>
+		{withOverlay && <div class="absolute inset-0 bg-gradient-to-r from-white/8 via-transparent to-white/6 pointer-events-none"></div>}
+		<div class={innerContainerClasses}>
+			<div class={contentClasses}>
+				{eyebrow && <SectionEyebrow text={eyebrow} onDark center={centerEyebrow} />}
+				<slot />
+			</div>
+		</div>
+	</div>
+</section>

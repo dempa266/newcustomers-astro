@@ -1,50 +1,106 @@
 ---
-import { parseEncodedJson } from '../components/utils';
+import { parseEncodedJson } from "../components/utils";
 
 interface Testimonial {
-	text?: string;
-	image?: { url?: string; alt?: string };
-	logo?: { url?: string; alt?: string };
+  text?: string;
+  image?: { url?: string; alt?: string };
+  logo?: { url?: string; alt?: string };
 }
 
 interface Props {
-	data?: {
-		testimonials?: string;
-	};
+  data?: {
+    testimonials?: string;
+  };
 }
 
 const { data = {} } = Astro.props as Props;
 const testimonials = parseEncodedJson<Testimonial[]>(data.testimonials, []);
+
+// Simple helper to extract the author from the text (assuming "- Author Name" format)
+const formatTestimonial = (fullText?: string) => {
+  if (!fullText) return { quote: "", author: "" };
+  const parts = fullText.split(" - ");
+  if (parts.length > 1) {
+    const author = parts.pop()?.trim() || "";
+    const quote = parts.join(" - ").trim();
+    return { quote, author };
+  }
+  return { quote: fullText, author: "" };
+};
 ---
 
-<section class="section-spacing">
-	<div class="site-container">
-		<div class="grid gap-8 lg:grid-cols-2 text-dark">
-			{testimonials.map((testimonial) => (
-				<div class="surface-card-muted flex flex-col overflow-hidden">
-					{testimonial.image?.url && (
-						<img
-							class="w-full aspect-[16/9] object-cover"
-							src={testimonial.image.url}
-							alt={testimonial.image.alt ?? ''}
-							width="800"
-							height="400"
-							loading="lazy"
-						/>
-					)}
-					<p class="leading-relaxed px-6 pt-8 lg:px-12 text-lg text-center text-gray prose-measure mx-auto">{testimonial.text}</p>
-					{testimonial.logo?.url && (
-						<img
-							class="w-40 h-auto mx-auto py-10"
-							src={testimonial.logo.url}
-							alt={testimonial.logo.alt ?? ''}
-							width="200"
-							height="200"
-							loading="lazy"
-						/>
-					)}
-				</div>
-			))}
-		</div>
-	</div>
+<section class="section-spacing bg-surface-secondary/10">
+  <div class="site-container">
+    <div class="grid gap-12 lg:gap-16 lg:grid-cols-2 text-dark">
+      {
+        testimonials.map((testimonial) => {
+          const { quote, author } = formatTestimonial(testimonial.text);
+
+          return (
+            <div class="relative flex flex-col bg-surface rounded-3xl overflow-hidden shadow-sm border border-border/40 transition-all duration-300 hover:shadow-xl hover:border-primary/20 hover:-translate-y-2 group">
+              {testimonial.image?.url && (
+                <div class="relative w-full aspect-[21/9] sm:aspect-[16/7] overflow-hidden bg-surface-secondary">
+                  <img
+                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    src={testimonial.image.url}
+                    alt={testimonial.image.alt ?? ""}
+                    width="800"
+                    height="400"
+                    loading="lazy"
+                  />
+                  {/* Subtle gradient overlay to blend image into card */}
+                  <div class="absolute inset-0 bg-gradient-to-t from-surface via-surface/20 to-transparent" />
+                </div>
+              )}
+
+              <div class="flex flex-col flex-1 px-6 sm:px-10 pb-10 pt-4 relative z-10">
+                {/* Decorative quote icon */}
+                <div class="text-primary/20 mb-4">
+                  <svg
+                    width="40"
+                    height="40"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M14.017 21L16.439 16.59H11.839L11.839 3H21.579L21.579 16.59L19.157 21H14.017ZM2.177 21L4.599 16.59H0L0 3H9.74L9.74 16.59L7.318 21H2.177Z" />
+                  </svg>
+                </div>
+
+                <p class="text-lg sm:text-xl leading-relaxed text-foreground font-medium flex-1 italic relative mb-8">
+                  "{quote}"
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-6 pt-6 border-t border-border/40 mt-auto">
+                  <div class="text-center sm:text-left">
+                    {author && (
+                      <p class="font-semibold text-foreground">
+                        {author.split(" på ")[0]}
+                      </p>
+                    )}
+                    {author && author.includes(" på ") && (
+                      <p class="text-sm font-medium text-text-muted mt-0.5">
+                        på {author.split(" på ")[1]}
+                      </p>
+                    )}
+                  </div>
+
+                  {testimonial.logo?.url && (
+                    <img
+                      class="h-8 w-auto object-contain shrink-0"
+                      src={testimonial.logo.url}
+                      alt={testimonial.logo.alt ?? ""}
+                      width="120"
+                      height="30"
+                      loading="lazy"
+                    />
+                  )}
+                </div>
+              </div>
+            </div>
+          );
+        })
+      }
+    </div>
+  </div>
 </section>

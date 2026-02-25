@@ -231,7 +231,7 @@ p {
 }
 
 .section-eyebrow--on-dark {
-	color: color-mix(in oklab, var(--text-on-dark) 72%, transparent);
+	color: color-mix(in oklab, var(--text-on-dark) 88%, transparent);
 }
 
 @layer components {

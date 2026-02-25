@@ -1,48 +1,128 @@
 ---
-import CompactContactForm from '../components/CompactContactForm.astro';
+import CompactContactForm from "../components/CompactContactForm.astro";
 
 interface Props {
-	data?: {
-		title?: string;
-		description?: string;
-	};
+  data?: {
+    title?: string;
+    description?: string;
+  };
 }
 
 const { data = {} } = Astro.props as Props;
 ---
 
-<section class="section-spacing">
-	<div class="site-container">
-		<div class="surface-card-dark w-full text-center px-6 py-10 lg:px-10 lg:py-12">
-		{(data.title || data.description) && (
-			<div class="section-intro section-intro--center section-intro--spaced max-w-3xl mx-auto text-on-dark">
-				{data.title && <h2>{data.title}</h2>}
-				{data.description && <p>{data.description}</p>}
-			</div>
-		)}
-			<div class="section-after-intro grid max-w-5xl grid-cols-2 lg:grid-cols-4 gap-6 mx-auto mb-10">
-				<div class="flex flex-col">
-					<div class="flex flex-col justify-center w-20 h-20 mx-auto bg-primary rounded-xl"><div class="my-auto text-5xl text-gray font-semibold">1</div></div>
-					<div class="h-12 mx-auto my-3 border-l-2 border-white/35"></div>
-					<div class="surface-card p-3 mx-auto"><p class="my-auto text-gray">Skicka in ditt namn och telefonnummer.</p></div>
-				</div>
-				<div class="flex flex-col">
-					<div class="flex flex-col justify-center w-20 h-20 mx-auto bg-white text-gray rounded-xl"><div class="my-auto text-5xl font-semibold">2</div></div>
-					<div class="h-12 mx-auto my-3 border-l-2 border-white/35"></div>
-					<div class="surface-card p-3 mx-auto"><p class="my-auto text-gray">Någon från oss tar kontakt med dig och lyssnar av dina funderingar och behov.</p></div>
-				</div>
-				<div class="flex flex-col">
-					<div class="flex flex-col justify-center w-20 h-20 mx-auto bg-white text-gray rounded-xl"><div class="my-auto text-5xl font-semibold">3</div></div>
-					<div class="h-12 mx-auto my-3 border-l-2 border-white/35"></div>
-					<div class="surface-card p-3 mx-auto"><p class="my-auto text-gray">Rätt person med rätt kompetens sätter upp ett möte tillsammans med dig så vi kan påbörja vår affärsanalys.</p></div>
-				</div>
-				<div class="flex flex-col">
-					<div class="flex flex-col justify-center w-20 h-20 mx-auto bg-white text-gray rounded-xl"><div class="my-auto text-5xl font-semibold">4</div></div>
-					<div class="h-12 mx-auto my-3 border-l-2 border-white/35"></div>
-					<div class="surface-card p-3 mx-auto"><p class="my-auto text-gray">Vi återkommer med ett konkret förslag på hur vi tillsammans skapar fler affärer.</p></div>
-				</div>
-			</div>
-			<CompactContactForm />
-		</div>
-	</div>
+<section
+  class="section-spacing relative overflow-hidden bg-surface-dark text-white rounded-[var(--radius-card-lg)] mx-4 sm:mx-8 lg:mx-auto max-w-[82rem] shadow-2xl"
+>
+  {/* Decorative background elements */}
+  <div
+    class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-white/8 blur-3xl pointer-events-none"
+  >
+  </div>
+  <div
+    class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full bg-white/5 blur-3xl pointer-events-none"
+  >
+  </div>
+
+  <div class="site-container relative z-10 py-16 lg:py-24">
+    {
+      (data.title || data.description) && (
+        <div class="section-intro section-intro--center section-intro--spaced max-w-3xl mx-auto mb-16">
+          {data.title && (
+            <h2 class="text-3xl sm:text-4xl text-white font-bold tracking-tight">
+              {data.title}
+            </h2>
+          )}
+          {data.description && (
+            <p class="mt-4 text-lg text-white/70">{data.description}</p>
+          )}
+        </div>
+      )
+    }
+
+    <div
+      class="section-after-intro grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6 max-w-6xl mx-auto mb-20 relative"
+    >
+      {/* Horizontal connecting line for large screens */}
+      <div
+        class="hidden lg:block absolute top-[2.5rem] left-[10%] right-[10%] h-[2px] bg-gradient-to-r from-transparent via-white/25 to-transparent -z-10"
+      >
+      </div>
+
+      {/* Step 1 */}
+      <div
+        class="flex flex-row lg:flex-col items-start lg:items-center gap-6 lg:gap-8 group"
+      >
+        <div
+          class="flex-shrink-0 flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-2xl border border-white/20 bg-white/12 shadow-lg shadow-black/20 transform transition-transform group-hover:scale-105 group-hover:rotate-3 group-hover:bg-white/20"
+        >
+          <span class="text-3xl sm:text-4xl font-bold text-white">1</span>
+        </div>
+        <div class="flex flex-col flex-1 lg:text-center mt-2 lg:mt-0">
+          <p class="text-base sm:text-lg text-white/90 font-medium">
+            Skicka in ditt namn och telefonnummer.
+          </p>
+        </div>
+      </div>
+
+      {/* Step 2 */}
+      <div
+        class="flex flex-row lg:flex-col items-start lg:items-center gap-6 lg:gap-8 group"
+      >
+        <div
+          class="flex-shrink-0 flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-2xl border border-white/20 bg-white/12 text-white shadow-lg shadow-black/20 transition-all group-hover:bg-white/20 group-hover:scale-105 group-hover:-rotate-3"
+        >
+          <span class="text-3xl sm:text-4xl font-bold">2</span>
+        </div>
+        <div class="flex flex-col flex-1 lg:text-center mt-2 lg:mt-0">
+          <p class="text-base sm:text-lg text-white/90">
+            Någon från oss tar kontakt med dig och lyssnar av dina funderingar
+            och behov.
+          </p>
+        </div>
+      </div>
+
+      {/* Step 3 */}
+      <div
+        class="flex flex-row lg:flex-col items-start lg:items-center gap-6 lg:gap-8 group"
+      >
+        <div
+          class="flex-shrink-0 flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-2xl border border-white/20 bg-white/12 text-white shadow-lg shadow-black/20 transition-all group-hover:bg-white/20 group-hover:scale-105 group-hover:rotate-3"
+        >
+          <span class="text-3xl sm:text-4xl font-bold">3</span>
+        </div>
+        <div class="flex flex-col flex-1 lg:text-center mt-2 lg:mt-0">
+          <p class="text-base sm:text-lg text-white/90">
+            Rätt person med rätt kompetens sätter upp ett möte för att påbörja
+            vår affärsanalys.
+          </p>
+        </div>
+      </div>
+
+      {/* Step 4 */}
+      <div
+        class="flex flex-row lg:flex-col items-start lg:items-center gap-6 lg:gap-8 group relative lg:top-[2rem]"
+      >
+        {/* Slight offset for dynamic layout */}
+        <div
+          class="flex-shrink-0 flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-2xl border border-white/20 bg-white/12 text-white shadow-lg shadow-black/20 transition-all group-hover:bg-white/20 group-hover:scale-105 group-hover:-rotate-3"
+        >
+          <span class="text-3xl sm:text-4xl font-bold">4</span>
+        </div>
+        <div class="flex flex-col flex-1 lg:text-center mt-2 lg:mt-0">
+          <p
+            class="text-base sm:text-lg text-white/90 font-medium tracking-wide"
+          >
+            Vi återkommer med ett konkret förslag på hur vi skapar fler affärer.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="max-w-xl mx-auto backdrop-blur-sm bg-surface/10 p-6 sm:p-8 rounded-3xl border border-white/10 shadow-2xl"
+    >
+      <CompactContactForm />
+    </div>
+  </div>
 </section>

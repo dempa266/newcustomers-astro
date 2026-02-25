@@ -1,0 +1,26 @@
+---
+interface Props {
+	text: string;
+	onDark?: boolean;
+	center?: boolean;
+	class?: string;
+}
+
+const {
+	text,
+	onDark = false,
+	center = false,
+	class: className = '',
+} = Astro.props as Props;
+
+const classes = [
+	'section-eyebrow',
+	onDark ? 'section-eyebrow--on-dark' : '',
+	center ? 'text-center' : '',
+	className,
+]
+	.filter(Boolean)
+	.join(' ');
+---
+
+<p class={classes}>{text}</p>

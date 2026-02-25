@@ -1,40 +1,60 @@
 ---
-type ButtonVariant = 'primary' | 'secondary' | 'transparent' | 'tertiary' | 'default';
-type ButtonSize = 'sm' | 'md' | 'lg';
+type ButtonVariant =
+  | "primary"
+  | "secondary"
+  | "transparent"
+  | "tertiary"
+  | "default";
+type ButtonSize = "sm" | "md" | "lg";
 
 interface Props {
-	type?: ButtonVariant;
-	size?: ButtonSize;
-	text: string;
-	href?: string;
-	target?: string;
-	rel?: string;
-	class?: string;
+  type?: ButtonVariant;
+  size?: ButtonSize;
+  text: string;
+  href?: string;
+  target?: string;
+  rel?: string;
+  class?: string;
 }
 
-const { type = 'default', size = 'md', text, href = '#', target, rel, class: className = '' } = Astro.props as Props;
+const {
+  type = "default",
+  size = "md",
+  text,
+  href = "#",
+  target,
+  rel,
+  class: className = "",
+} = Astro.props as Props;
 
 const baseClasses =
-	'inline-flex items-center justify-center rounded-[var(--radius-button)] border font-semibold tracking-tight leading-none no-underline hover:no-underline transition duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background';
+  "inline-flex items-center justify-center rounded-xl border font-semibold tracking-wide leading-none no-underline transition-all duration-300 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-95 cursor-pointer";
 
 const classesBySize: Record<ButtonSize, string> = {
-	sm: 'h-9 px-4 text-sm',
-	md: 'h-11 px-5 text-base',
-	lg: 'h-12 px-6 text-lg',
+  sm: "h-9 px-4 text-sm",
+  md: "h-11 px-6 text-base",
+  lg: "h-12 px-8 text-lg",
 };
 
 const classesByType: Record<ButtonVariant, string> = {
-	primary: 'border-primary bg-primary text-dark shadow-sm hover:-translate-y-0.5 hover:border-primary-dark hover:bg-primary-dark',
-	secondary: 'border-border bg-white text-foreground hover:-translate-y-0.5 hover:bg-surface-secondary',
-	transparent: 'border-white/35 bg-transparent text-white hover:-translate-y-0.5 hover:border-white hover:bg-white/10',
-	tertiary: 'border-transparent bg-transparent text-foreground hover:border-border hover:bg-surface-secondary',
-	default: 'border-primary bg-primary text-dark shadow-sm hover:-translate-y-0.5 hover:border-primary-dark hover:bg-primary-dark',
+  primary:
+    "border-transparent bg-primary text-primary-foreground shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/40 hover:-translate-y-0.5 hover:bg-primary/90",
+  secondary:
+    "border-border/50 bg-surface text-foreground shadow-sm hover:border-border hover:shadow-md hover:-translate-y-0.5 hover:bg-surface-secondary",
+  transparent:
+    "border-white/20 bg-white/5 text-white backdrop-blur-sm hover:bg-white/10 hover:border-white/40 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/10",
+  tertiary:
+    "border-transparent bg-transparent text-foreground hover:bg-surface-secondary/80 hover:text-primary",
+  default:
+    "border-transparent bg-primary text-primary-foreground shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/40 hover:-translate-y-0.5 hover:bg-primary/90",
 };
 
-const classes = `${baseClasses} ${classesBySize[size]} ${classesByType[type]} ${className}`.trim();
-const computedRel = rel ?? (target === '_blank' ? 'noreferrer noopener' : undefined);
+const classes =
+  `${baseClasses} ${classesBySize[size]} ${classesByType[type]} ${className}`.trim();
+const computedRel =
+  rel ?? (target === "_blank" ? "noreferrer noopener" : undefined);
 ---
 
 <a href={href} class={classes} target={target} rel={computedRel}>
-	{text}
+  {text}
 </a>
