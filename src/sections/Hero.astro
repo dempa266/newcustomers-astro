@@ -1,0 +1,47 @@
+---
+import Button from '../components/Button.astro';
+import { parseEncodedJson } from '../components/utils';
+
+interface Props {
+	h1?: string;
+	description?: string;
+	data?: {
+		title?: string;
+		description?: string;
+		image?: string;
+		video?: string;
+	};
+}
+
+const { h1, description, data = {} } = Astro.props as Props;
+const video = parseEncodedJson<{ url?: string }>(data.video, {});
+const title = data.title ?? h1;
+const text = data.description ?? description;
+---
+
+<section class="section-spacing">
+	<div class="site-container">
+		<div class="grid gap-12 lg:gap-24 lg:grid-cols-2 text-gray">
+			<div class="my-auto space-y-4">
+				{title && <h1 class="text-4xl lg:text-5xl">{title}</h1>}
+				{text && <p>{text}</p>}
+				<div class="flex space-x-4">
+					<Button href="/kontakt/" type="primary" text="Kontakt" />
+					<Button href="/om-oss/" type="secondary" text="Om oss" />
+				</div>
+			</div>
+
+			{data.image && (
+				<div class="flex w-auto overflow-hidden bg-white rounded-2xl h-96">
+					<img src={data.image} alt={title ?? ''} class="object-cover w-full h-full" loading="lazy" />
+				</div>
+			)}
+
+			{video.url && (
+				<figure class="flex w-full h-full wp-block-video">
+					<video class="w-full h-full object-fit" autoplay loop muted src={video.url} playsinline></video>
+				</figure>
+			)}
+		</div>
+	</div>
+</section>

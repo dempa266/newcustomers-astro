@@ -1,0 +1,28 @@
+---
+interface Props {
+	data?: {
+		title?: string;
+		description?: string;
+		image?: string;
+	};
+}
+
+const { data = {} } = Astro.props as Props;
+---
+
+<section class="section-spacing">
+	<div class="site-container">
+	<div class="flex flex-col bg-gray-light rounded-2xl">
+		{data.title && <h2 class="mx-auto mt-20 text-4xl text-gray text-center">{data.title}</h2>}
+		{data.description && <p class="mx-auto mt-5 text-lg text-gray">{data.description}</p>}
+		<div class="grid gap-10 p-10 lg:grid-cols-2 lg:p-20">
+			<div class="lg:mr-20 space-y-4">
+				<slot />
+			</div>
+			<div class="overflow-hidden rounded-2xl">
+				{data.image && <img src={data.image} alt={data.title ?? ''} class="object-cover w-full h-full" loading="lazy" />}
+			</div>
+		</div>
+	</div>
+	</div>
+</section>

@@ -1,0 +1,149 @@
+---
+layout: ../layouts/PageLayout.astro
+title: "Från ett sök på Google till en konkret affär - new customers"
+description: "97% av Sveriges befolkning googlar innan sina köp. Som SEO byrå hjälper vi dig att synas i toppen när kunder söker på dina tjänster. Välkommen!"
+---
+
+import Hero from '../sections/Hero.astro';
+import PageLinks from '../sections/PageLinks.astro';
+import Logos from '../sections/Logos.astro';
+import SplitCoworkers from '../sections/SplitCoworkers.astro';
+import Banner from '../sections/Banner.astro';
+import CtaImage from '../sections/CtaImage.astro';
+import Process from '../sections/Process.astro';
+import Testimonials from '../sections/Testimonials.astro';
+import ContactForm from '../components/ContactForm.astro';
+import Button from '../components/Button.astro';
+
+export const pageLinks = encodeURIComponent(
+	JSON.stringify([
+		{
+			text: 'Jag vill ha mer trafik till min webb',
+			url: '#kontakt',
+			icon: { url: 'https://wp.newcustomers.se/wp-content/uploads/2023/03/NC_Symboler_Rityta-1.png' },
+		},
+		{
+			text: 'Jag vill att min webb säljer mer',
+			url: '#kontakt',
+			icon: { url: 'https://wp.newcustomers.se/wp-content/uploads/2023/03/NC_Symboler-02.png' },
+		},
+		{
+			text: 'Jag vill bli bättre på att ta hand om mina leads',
+			url: '#kontakt',
+			icon: { url: 'https://wp.newcustomers.se/wp-content/uploads/2023/03/NC_Symboler-03.png' },
+		},
+	]),
+);
+
+export const logos = encodeURIComponent(
+	JSON.stringify([
+		{ icon: { url: 'https://wp.newcustomers.se/wp-content/uploads/2024/01/ATG_Vit_logo.png' } },
+		{ icon: { url: 'https://wp.newcustomers.se/wp-content/uploads/2025/02/Weber_vit-1.png' } },
+		{ icon: { url: 'https://wp.newcustomers.se/wp-content/uploads/2024/01/Elexir-Pharma_vit.png' } },
+		{ icon: { url: 'https://wp.newcustomers.se/wp-content/uploads/2025/02/IG_Logo.png' } },
+		{ icon: { url: 'https://wp.newcustomers.se/wp-content/uploads/2024/01/Convendum_Vit.png' } },
+		{ icon: { url: 'https://wp.newcustomers.se/wp-content/uploads/2024/01/Seasea-logo_vit_2.png' } },
+		{ icon: { url: 'https://wp.newcustomers.se/wp-content/uploads/2024/04/HusmanHagberg_logo.png' } },
+	]),
+);
+
+export const coworkers = encodeURIComponent(
+	JSON.stringify([
+		{
+			name: 'Nicklas Sångberg',
+			title: 'Grundare | VD | Digital affärsutvecklare',
+			phone: '+46 70 387 71 77',
+			email: 'nicklas@newcustomers.se',
+			image: { url: 'https://wp.newcustomers.se/wp-content/uploads/2024/01/Nicklas_Sangberg.webp' },
+		},
+		{
+			name: 'Robert Nyberg',
+			title: 'Grundare | Senior SEO',
+			phone: '+46 70 718 96 97',
+			email: 'robert@newcustomers.se',
+			image: { url: 'https://wp.newcustomers.se/wp-content/uploads/2024/01/Robert_Nyberg.webp' },
+		},
+	]),
+);
+
+export const testimonials = encodeURIComponent(
+	JSON.stringify([
+		{
+			image: { url: 'https://wp.newcustomers.se/wp-content/uploads/2023/03/Texas_Recension-2.webp', alt: 'Texas recension' },
+			text:
+				'Toppklass! Från första mötet har new customers-teamet visat en stor förståelse för våra behov och önskemål. De är lyhörda, lösnings-orienterade och levererar alltid över förväntan. Deras expertis och kunskap inom SEO & Google är oöverträffad vilket lett till att vi tagit toppositioner och fått in nya gäster och bokningar till våra restauranger. - Andrea Huntzinger Marketing Coordinator på Texas Longhorn Group',
+			logo: { url: 'https://wp.newcustomers.se/wp-content/uploads/2024/01/stjarnor.png', alt: '5 stjärnor' },
+		},
+		{
+			image: { url: 'https://wp.newcustomers.se/wp-content/uploads/2023/05/Villa-Fridhem_recension-1.webp', alt: 'Villa Fridhem recension' },
+			text:
+				'Så tacksam över att vi valde att samarbeta med new customers. Vi kan redan efter ett par veckor se hur vi klättrar på google och får in nya helt gäster och bokningar. De är experter på sina områden och otroligt bra på att förklara och lära ut. Rekommenderar new customers till alla som har en digital närvaro. - Erica Medberg Marknadschef på Villa Fridhem',
+			logo: { url: 'https://wp.newcustomers.se/wp-content/uploads/2024/01/stjarnor.png', alt: '5 stjärnor' },
+		},
+	]),
+);
+
+export const heroVideo = encodeURIComponent(
+	JSON.stringify({
+		url: 'https://wp.newcustomers.se/wp-content/uploads/2024/01/Hemsida_Banner_260124_820x670_AME.mp4',
+	}),
+);
+
+<Hero
+	data={{
+		title: 'Från ett sök på Google till en konkret affär',
+		description: 'Vi hjälper dig hela vägen!',
+		video: heroVideo,
+	}}
+/>
+
+<PageLinks data={{ links: pageLinks }} />
+<Logos data={{ logos }} />
+
+<SplitCoworkers data={{ title: 'Därför väljer våra kunder oss', coworkers }}>
+	<div class="section-stack">
+		<h3 class="text-2xl text-gray mt-0">Resultatfokuserat</h3>
+		<p>Vårt erfarna team jobbar engagerat och dedikerat för att ge er fler nya kunder och affärer från Google.</p>
+		<h3 class="text-2xl text-gray mt-0">Vår process</h3>
+		<p>Genom våra välbeprövade metoder optimerar och maximerar vi resultaten från Google. Från ett sök, till en konkret affär.</p>
+		<h3 class="text-2xl text-gray mt-0">Begriplig affärsrapport</h3>
+		<p>Vi tar fram lättbegripliga och överskådliga affärsrapporter så att ni får en tydlig och transparent överblick över resultaten från vårt arbete.</p>
+	</div>
+</SplitCoworkers>
+
+<Banner />
+
+<CtaImage
+	data={{
+		title: 'Vad innebär SEO?',
+		image: 'https://wp.newcustomers.se/wp-content/uploads/2024/01/Allt-du-behover-veta-om-SEOjpg.webp',
+		buttontext: 'Läs vår guide om SEO',
+		buttonlink: '/seo/',
+	}}
+/>
+
+<Process
+	data={{
+		title: 'Så hjälper vi dig ta reda på din fulla affärspotential',
+		description: 'Skriv in din namn och telefonnummer så kontaktar vi dig!',
+	}}
+/>
+
+<Testimonials data={{ testimonials }} />
+
+<section class="section-spacing-tight">
+	<div class="site-container text-center">
+		<Button type="primary" text="Fler recensioner" href="/recensioner/" />
+	</div>
+</section>
+
+<CtaImage
+	data={{
+		title: 'Vad menar vi med begripliga affärsrapporter?',
+		image: 'https://wp.newcustomers.se/wp-content/uploads/2023/11/Rapport_NC_Dator.png',
+		buttontext: 'Kolla in vår affärsrapport här!',
+		buttonlink: '/affarsrapport/',
+	}}
+/>
+
+<ContactForm />

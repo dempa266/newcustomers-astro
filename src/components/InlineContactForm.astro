@@ -1,0 +1,81 @@
+---
+import { Button, Checkbox, Input } from '@heroui/react';
+---
+
+<div data-contact-form-include>
+	<p class="text-primary font-bold text-center my-auto hidden" data-success></p>
+	<form action="#" method="POST" class="lg:flex-auto text-white pt-5" data-form>
+		<div class="space-y-3">
+			<Input type="text" name="name" autoComplete="name" placeholder="Namn" aria-label="Namn" className="block w-full rounded-2xl border-0 px-3.5 py-2 text-gray shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6" />
+			<Input type="text" name="phone" autoComplete="phone" placeholder="Telefon" aria-label="Telefon" className="block w-full rounded-2xl border-0 px-3.5 py-2 text-gray shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6" />
+			<Input type="text" name="email" autoComplete="email" placeholder="E-post" aria-label="E-post" className="block w-full rounded-2xl border-0 px-3.5 py-2 text-gray shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6" />
+			<Input type="text" name="company" autoComplete="organization" placeholder="Företag" aria-label="Företag" className="block w-full rounded-2xl border-0 px-3.5 py-2 text-gray shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6" />
+			<div>
+				<Button type="submit" className="block rounded-2xl bg-primary px-10 py-2.5 text-center text-sm text-black shadow-sm hover:bg-primary-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+					Skicka
+				</Button>
+			</div>
+			<div class="space-x-2">
+				<Checkbox id="gdpr-include" name="gdpr" className="text-sm leading-6 text-gray-300">
+					Genom att skicka detta meddelande godkänner du att vi lagrar och hanterar dina personuppgifter i enlighet med vår
+					<a href="/integritetspolicy/" class="text-primary">integritetspolicy</a>.
+				</Checkbox>
+			</div>
+		</div>
+		<p class="text-red-500 hidden" data-error></p>
+	</form>
+</div>
+
+<script is:inline>
+	document.querySelectorAll('[data-contact-form-include]').forEach((root) => {
+		if (root.dataset.bound === 'true') return;
+		root.dataset.bound = 'true';
+
+		const form = root.querySelector('[data-form]');
+		const success = root.querySelector('[data-success]');
+		const error = root.querySelector('[data-error]');
+
+		if (!form || !success || !error) return;
+
+		form.addEventListener('submit', async (event) => {
+			event.preventDefault();
+			error.textContent = '';
+			error.classList.add('hidden');
+
+			const gdpr = form.querySelector('[name="gdpr"]');
+			if (!(gdpr instanceof HTMLInputElement) || !gdpr.checked) {
+				error.textContent = 'Du behöver godkänna vår integritetspolicy innan du kan skicka meddelandet.';
+				error.classList.remove('hidden');
+				return;
+			}
+
+			const target = event.currentTarget;
+			const formData = new FormData();
+			formData.append('cc_name', target.elements.name?.value || '');
+			formData.append('cc_email', target.elements.email?.value || '');
+			formData.append('cc_phone', target.elements.phone?.value || '');
+			formData.append('cc_company', target.elements.company?.value || '');
+			formData.append('cc_message', target.elements.message?.value || '');
+			formData.append('apiKey', '6321a3ced5af44fcd7338ac0');
+
+			document.cookie.split('; ').forEach((cookie) => {
+				const [key, value] = cookie.split('=');
+				if (key === '_cc' && value) formData.append('cookie', value);
+			});
+
+			try {
+				await fetch('https://api.customerconnect.se/submissions', {
+					method: 'POST',
+					body: formData,
+				});
+				success.textContent = 'Tack för ditt meddelande!';
+				success.classList.remove('hidden');
+				form.classList.add('hidden');
+				target.reset();
+			} catch {
+				error.textContent = 'Något gick fel. Försök igen.';
+				error.classList.remove('hidden');
+			}
+		});
+	});
+</script>

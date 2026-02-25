@@ -1,0 +1,17 @@
+---
+interface Props {
+	value?: number;
+	step?: number;
+	max?: number;
+	name?: string;
+	class?: string;
+}
+
+const { value = 0, step = 1, max = 100, name = '', class: className = '' } = Astro.props as Props;
+---
+
+<div class="wrapper">
+	<div class="input-wrapper">
+		<input class={`w-full bg-black slider ${className}`.trim()} type="range" value={value} step={step} max={max} name={name} />
+	</div>
+</div>

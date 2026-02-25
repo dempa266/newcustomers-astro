@@ -1,0 +1,40 @@
+---
+import type { NavColumn } from '../../data/navigation';
+
+interface Props {
+	title: string;
+	path: string;
+	columns?: NavColumn[];
+}
+
+const { title, path, columns = [] } = Astro.props as Props;
+---
+
+<li class="relative mb-0 list-none">
+	<details class="group">
+		<summary class="inline-flex items-center text-sm leading-6 text-white gap-x-1 hover:text-primary cursor-pointer list-none">
+			<span>{title}</span>
+			<span aria-hidden="true">▾</span>
+		</summary>
+		<div class="absolute left-1/2 z-20 mt-5 w-screen max-w-5xl -translate-x-1/2 px-4">
+			<div class="w-full rounded-3xl bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5 p-6">
+				<div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
+					{columns.map((column) => (
+					<div>
+						<h3 class="text-sm font-medium leading-6 text-gray-500">{column.title}</h3>
+						<div class="flow-root mt-5">
+							<div class="-my-2">
+								{column.links.map((item) => (
+									<a href={item.path} class="flex py-2 text-sm font-semibold leading-6 text-gray-900 gap-x-4">
+										{item.label}
+									</a>
+								))}
+							</div>
+						</div>
+					</div>
+					))}
+				</div>
+			</div>
+		</div>
+	</details>
+</li>

@@ -1,0 +1,51 @@
+---
+import { parseEncodedJson } from '../components/utils';
+
+interface Coworker {
+	image?: { url?: string };
+	name?: string;
+	title?: string;
+	phone?: string;
+	email?: string;
+}
+
+interface Props {
+	data?: {
+		title?: string;
+		description?: string;
+		coworkers?: string;
+	};
+}
+
+const { data = {} } = Astro.props as Props;
+const coworkers = parseEncodedJson<Coworker[]>(data.coworkers, []);
+---
+
+<section class="section-spacing">
+	<div class="site-container">
+	<div class="flex flex-col bg-gray-light rounded-2xl">
+		{data.title && <h2 class="mx-auto mt-20 text-4xl text-gray text-center">{data.title}</h2>}
+		{data.description && <p class="mx-auto mt-5 text-lg text-gray">{data.description}</p>}
+		<div class="grid gap-10 p-10 lg:grid-cols-2 lg:p-20">
+			<div class="lg:mr-20 my-auto space-y-4"><slot /></div>
+			<div class="space-y-2 flex flex-col">
+				{coworkers.map((coworker, index) => (
+					<div class={`grid lg:h-1/2 h-auto sm:grid-cols-2 items-center justify-center w-full bg-gray overflow-hidden ${index === 0 ? 'rounded-t-2xl' : 'rounded-b-2xl'}`}>
+						<div class="flex w-full h-full">
+							{coworker.image?.url && (
+								<img src={coworker.image.url} width="320" height="240" alt={coworker.title ?? ''} class="object-cover" loading="lazy" />
+							)}
+						</div>
+						<div class="col-span-1 flex flex-col w-full h-full text-left my-auto p-6">
+							<div class="text-white font-medium">{coworker.name}</div>
+							<p class="font-light text-gray-300">{coworker.title}</p>
+							{coworker.phone && <a href={`tel:${coworker.phone}`} class="text-white my-1">{coworker.phone}</a>}
+							{coworker.email && <a href={`mailto:${coworker.email}`} class="text-white my-1">{coworker.email}</a>}
+						</div>
+					</div>
+				))}
+			</div>
+		</div>
+	</div>
+	</div>
+</section>

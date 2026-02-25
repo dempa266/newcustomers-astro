@@ -1,0 +1,38 @@
+---
+import InlineContactForm from '../components/InlineContactForm.astro';
+
+interface Props {
+	data?: {
+		preTitle?: string;
+		title?: string;
+		description?: string;
+		image?: string;
+		content?: string;
+	};
+}
+
+const { data = {} } = Astro.props as Props;
+---
+
+<section class="section-spacing">
+	<div class="site-container">
+		<div class="bg-gray text-white rounded-2xl px-6 py-12 lg:px-10 lg:py-16">
+			<div class="lg:flex justify-between gap-10">
+				<div class="max-w-lg my-auto section-stack">
+					{data.preTitle && <div class="text-base font-medium text-primary uppercase">{data.preTitle}</div>}
+					{data.title && <h2 class="text-4xl mt-0">{data.title}</h2>}
+					{data.description && <div class="text-gray-300">{data.description}</div>}
+					<InlineContactForm />
+				</div>
+				<div class="flex justify-between space-x-5 my-auto">
+					{data.image && (
+						<div class="max-w-xl h-64 w-64 flex overflow-hidden rounded-2xl">
+							<img src={data.image} alt={data.title ?? ''} class="object-cover w-full h-full" loading="lazy" />
+						</div>
+					)}
+					{data.content && <div class="textOnDark" set:html={data.content}></div>}
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

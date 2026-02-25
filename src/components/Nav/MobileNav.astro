@@ -1,0 +1,86 @@
+---
+import type { NavGroup, NavLink } from '../../data/navigation';
+
+interface Props {
+	groups?: NavGroup[];
+	links?: NavLink[];
+}
+
+const { groups = [], links = [] } = Astro.props as Props;
+---
+
+<div class="flex lg:hidden">
+	<details class="relative" data-mobile-nav>
+		<summary class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-white cursor-pointer list-none">
+			<span class="sr-only">Open main menu</span>
+			<span aria-hidden="true">☰</span>
+		</summary>
+		<div class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-gray px-6 py-6 sm:max-w-sm">
+			<div class="flex items-center justify-between">
+				<a href="/" class="my-auto">
+					<img src="/newcustomers.svg" alt="Logo" width="240" height="36" class="h-10 my-auto" />
+				</a>
+				<button type="button" class="-m-2.5 rounded-md p-2.5 text-white" data-close-menu>
+					<span class="sr-only">Close menu</span>
+					✕
+				</button>
+			</div>
+			<div class="mt-5 flow-root">
+				<div class="-my-5 divide-y divide-gray-500/10">
+					<ul class="space-y-2 py-6 list-none">
+						{groups.map((group) => (
+							<li class="mb-0 list-none">
+								<details class="-mx-3">
+									<summary class="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base leading-7 text-white hover:bg-gray-600 cursor-pointer list-none">
+										{group.title}
+										<span aria-hidden="true">▾</span>
+									</summary>
+									<div class="mt-2 space-y-3">
+										<a class="text-white hover:text-white block rounded-lg py-2 pl-6 pr-3 text-sm leading-7 hover:bg-gray-600 font-semibold" href={group.path}>
+											Se alla {group.title}
+										</a>
+										{group.columns.map((column) => (
+											<div class="px-6">
+												<p class="mb-2 text-xs uppercase tracking-wide text-gray-300">{column.title}</p>
+												<div class="space-y-1">
+													{column.links.map((item) => (
+														<a class="text-white hover:text-white block rounded-lg py-2 pl-3 pr-3 text-sm leading-7 hover:bg-gray-600" href={item.path}>
+															{item.label}
+														</a>
+													))}
+												</div>
+											</div>
+										))}
+									</div>
+								</details>
+							</li>
+						))}
+						{links.map((link) => (
+							<li class="mb-0 list-none">
+								<a class="-mx-3 block rounded-lg px-3 py-2 text-base leading-7 text-white hover:text-white hover:bg-gray-600" href={link.path}>
+									{link.label}
+								</a>
+							</li>
+						))}
+					</ul>
+				</div>
+			</div>
+		</div>
+	</details>
+</div>
+
+<script is:inline>
+	document.querySelectorAll('[data-mobile-nav]').forEach((root) => {
+		if (root.dataset.bound === 'true') return;
+		root.dataset.bound = 'true';
+
+		const close = root.querySelector('[data-close-menu]');
+		close?.addEventListener('click', () => {
+			root.removeAttribute('open');
+		});
+
+		root.querySelectorAll('a').forEach((link) => {
+			link.addEventListener('click', () => root.removeAttribute('open'));
+		});
+	});
+</script>

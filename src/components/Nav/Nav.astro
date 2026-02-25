@@ -1,0 +1,24 @@
+---
+import Dropdown from './Dropdown.astro';
+import type { NavGroup, NavLink } from '../../data/navigation';
+
+interface Props {
+	groups?: NavGroup[];
+	links?: NavLink[];
+}
+
+const { groups = [], links = [] } = Astro.props as Props;
+---
+
+<div class="flex h-full">
+	<ul class="flex my-auto gap-6 list-none">
+		{groups.map((group) => (
+			<Dropdown title={group.title} path={group.path} columns={group.columns} />
+		))}
+		{links.map((link) => (
+			<li class="mb-0 list-none">
+				<a class="text-white text-sm hover:text-primary" href={link.path}>{link.label}</a>
+			</li>
+		))}
+	</ul>
+</div>

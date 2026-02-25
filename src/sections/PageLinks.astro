@@ -1,0 +1,44 @@
+---
+import { parseEncodedJson } from '../components/utils';
+
+interface PageLink {
+	text?: string;
+	url?: string;
+	icon?: {
+		url?: string;
+	};
+}
+
+interface Props {
+	data?: {
+		links?: string;
+	};
+}
+
+const { data = {} } = Astro.props as Props;
+const links = parseEncodedJson<PageLink[]>(data.links, []);
+---
+
+<section class="section-spacing">
+	<div class="site-container">
+		<div class="grid w-full gap-10 lg:grid-cols-3">
+		{links.map((link) => (
+			<a href={link.url ?? '#kontakt'} class="flex p-5 cursor-pointer group bg-gray-light text-gray hover:bg-gray hover:text-white rounded-2xl">
+				<div class="shrink-0">
+					{link.icon?.url && (
+						<img
+							class="w-16 h-16 mr-5 group-hover:invert group-hover:contrast-200 group-hover:grayscale"
+							src={link.icon.url}
+							alt="Link icon"
+							width="256"
+							height="256"
+							loading="lazy"
+						/>
+					)}
+				</div>
+				<p class="my-auto group-hover:text-white">{link.text}</p>
+			</a>
+		))}
+		</div>
+	</div>
+</section>

@@ -1,0 +1,21 @@
+---
+import Nav from './Nav/Nav.astro';
+import Button from './Button.astro';
+import MobileNav from './Nav/MobileNav.astro';
+import { mainNavGroups, mainNavLinks, mobileNavLinks } from '../data/navigation';
+---
+
+<header class="sticky z-10 top-0 w-full text-white shadow-lg bg-gray">
+	<div class="site-container flex h-20 items-center justify-between py-2">
+		<a href="/" class="my-auto">
+			<img src="/newcustomers.svg" alt="Logo" width="240" height="36" class="h-10 my-auto" />
+		</a>
+		<div class="hidden lg:block">
+			<Nav groups={mainNavGroups} links={mainNavLinks} />
+		</div>
+		<div class="hidden gap-3 my-auto lg:flex">
+			<Button href="/kontakt/" type="primary" text="Kontakt" />
+		</div>
+		<MobileNav groups={mainNavGroups} links={mobileNavLinks} />
+	</div>
+</header>

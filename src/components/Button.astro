@@ -1,0 +1,29 @@
+---
+import { Link as HeroLink } from '@heroui/react';
+
+interface Props {
+	type?: string;
+	text: string;
+	href?: string;
+	class?: string;
+}
+
+const { type = 'default', text, href = '#', class: className = '' } = Astro.props as Props;
+
+const classesByType: Record<string, string> = {
+	primary:
+		'bg-primary px-5 py-2 rounded-2xl text-sm text-black cursor-pointer hover:bg-primary-dark border border-primary hover:text-black transition',
+	secondary:
+		'bg-white px-5 py-2 rounded-2xl text-sm text-gray cursor-pointer hover:bg-secondary-dark border border-gray',
+	transparent:
+		'text-white px-5 py-2 rounded-2xl text-sm text-gray cursor-pointer hover:bg-secondary-dark border border-gray hover:bg-white hover:text-gray',
+	default:
+		'bg-primary px-5 py-2 rounded-2xl text-sm text-white cursor-pointer hover:bg-primary-dark hover:text-white border border-primary',
+};
+
+const classes = `${classesByType[type] ?? classesByType.default} ${className}`.trim();
+---
+
+<HeroLink href={href} className={classes}>
+	{text}
+</HeroLink>

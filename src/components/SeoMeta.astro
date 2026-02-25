@@ -1,0 +1,18 @@
+---
+interface Props {
+	pageTitle?: string;
+	pageDescription?: string;
+}
+
+const {
+	pageTitle = 'New Site',
+	pageDescription = 'Default page description',
+} = Astro.props as Props;
+---
+
+<title>{pageTitle}</title>
+<meta name="description" content={pageDescription} />
+<meta
+	name="google-site-verification"
+	content="HvZgR396UtF026Id-AiV9hVt4sJKifRXA2DweRJDWs8"
+/>

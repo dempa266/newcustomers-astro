@@ -1,0 +1,18 @@
+---
+import { globalSections } from './index';
+
+interface Props {
+	section: string;
+}
+
+const { section } = Astro.props as Props;
+const SectionComponent = globalSections[section as keyof typeof globalSections];
+---
+
+{SectionComponent ? (
+	<SectionComponent />
+) : (
+	<div class="section-spacing-tight">
+		<div class="site-container text-sm text-slate-500">Unknown global section: {section}</div>
+	</div>
+)}

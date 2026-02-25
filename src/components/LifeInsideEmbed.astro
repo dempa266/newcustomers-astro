@@ -1,0 +1,17 @@
+<div id="widget-container"></div>
+<script src="https://app.lifeinside.io/widget.1.0.0.js"></script>
+<script is:inline>
+	(() => {
+		const initializeWidget = () => {
+			if (typeof window !== 'undefined' && window.WidgetWrapper) {
+				window.WidgetWrapper.mount({ id: '0pQ5qkjQG3' });
+			}
+		};
+
+		if (typeof window !== 'undefined' && window.WidgetWrapper) {
+			initializeWidget();
+		} else {
+			window.addEventListener('load', initializeWidget, { once: true });
+		}
+	})();
+</script>

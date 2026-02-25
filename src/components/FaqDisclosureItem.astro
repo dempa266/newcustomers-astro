@@ -1,0 +1,19 @@
+---
+interface Props {
+	question: string;
+	answer: string;
+}
+
+const { question, answer } = Astro.props as Props;
+---
+
+<details class="pt-5 cursor-pointer group" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+	<summary class="flex items-start justify-between w-full text-left list-none">
+		<span class="text-lg font-medium leading-7 text-gray-800" itemprop="name">{question}</span>
+		<span class="flex items-center ml-6 h-7 text-primary group-open:hidden" aria-hidden="true">+</span>
+		<span class="hidden items-center ml-6 h-7 text-gray group-open:flex" aria-hidden="true">-</span>
+	</summary>
+	<div class="pr-12 mt-2" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+		<div class="font-light text-gray" set:html={answer} itemprop="text"></div>
+	</div>
+</details>

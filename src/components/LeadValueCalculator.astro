@@ -1,0 +1,109 @@
+<div class="flex" data-calculator>
+	<div class="w-full grid grid-cols-1 mx-auto my-auto lg:grid-cols-2 gap-x-8 gap-y-4">
+		<div class="mt-2 mb-4 text-4xl font-bold text-center lg:col-span-2 text-primary" data-result>
+			0 kr
+		</div>
+
+		<div class="px-4 py-10 space-y-2 rounded-lg text-white bg-gray bg-opacity-10" data-field="visitors" data-max="10000" data-step="10">
+			<div>
+				<h2 class="text-2xl font-bold text-center">Antal besökare per månad</h2>
+				<p class="text-sm text-center opacity-70 text-white">Hur många besökare per månad har ni idag?</p>
+			</div>
+			<div class="relative">
+				<input class="w-full text-center bg-transparent border rounded-lg focus:outline-none border-gray-300" type="number" value="0" data-input />
+			</div>
+			<input class="w-full bg-black slider" type="range" value="0" step="10" max="10000" data-range />
+		</div>
+
+		<div class="px-4 py-10 space-y-2 rounded-lg text-white bg-gray bg-opacity-10" data-field="conversionRate" data-max="100" data-step="0.1">
+			<div>
+				<h2 class="text-2xl font-bold text-center">Konverteringsfrekvens</h2>
+				<p class="text-sm text-center opacity-70 text-white">Hur stor del av era besökare konverterar?</p>
+			</div>
+			<div class="relative">
+				<input class="w-full text-center bg-transparent border rounded-lg focus:outline-none border-gray-300" type="number" step="0.1" value="0" data-input />
+				<span class="absolute top-0 bottom-0 right-0 mr-4 text-white opacity-70 mt-2">%</span>
+			</div>
+			<input class="w-full bg-black slider" type="range" value="0" step="0.1" max="100" data-range />
+		</div>
+
+		<div class="px-4 py-10 space-y-2 rounded-lg text-white bg-gray bg-opacity-10" data-field="conversionToCustomerRate" data-max="100" data-step="0.1">
+			<div>
+				<h2 class="text-2xl font-bold text-center">Konvertering till kund</h2>
+				<p class="text-sm text-center opacity-70 text-white">Hur stor del av de som har hört av sig blir kunder?</p>
+			</div>
+			<div class="relative">
+				<input class="w-full text-center bg-transparent border rounded-lg focus:outline-none border-gray-300" type="number" step="0.1" value="0" data-input />
+				<span class="absolute top-0 bottom-0 right-0 mr-4 text-white opacity-70 mt-2">%</span>
+			</div>
+			<input class="w-full bg-black slider" type="range" value="0" step="0.1" max="100" data-range />
+		</div>
+
+		<div class="px-4 py-10 space-y-2 rounded-lg text-white bg-gray bg-opacity-10" data-field="averageCustomerValue" data-max="10000" data-step="10">
+			<div>
+				<h2 class="text-2xl font-bold text-center">Snittvärde per kund</h2>
+				<p class="text-sm text-center opacity-70 text-white">Vad har ni för genomsnittligt värde per kund?</p>
+			</div>
+			<div class="relative">
+				<input class="w-full text-center bg-transparent border rounded-lg focus:outline-none border-gray-300" type="number" value="0" data-input />
+				<span class="absolute top-0 bottom-0 right-0 mr-4 text-white opacity-70 mt-2">kr</span>
+			</div>
+			<input class="w-full bg-black slider" type="range" value="0" step="10" max="10000" data-range />
+		</div>
+	</div>
+</div>
+
+<script is:inline>
+	document.querySelectorAll('[data-calculator]').forEach((root) => {
+		if (root.dataset.bound === 'true') return;
+		root.dataset.bound = 'true';
+
+		const resultEl = root.querySelector('[data-result]');
+		const fields = {};
+
+		root.querySelectorAll('[data-field]').forEach((field) => {
+			const key = field.getAttribute('data-field');
+			const input = field.querySelector('[data-input]');
+			const range = field.querySelector('[data-range]');
+			const max = Number(field.getAttribute('data-max') || 0);
+
+			if (!key || !input || !range) return;
+			fields[key] = { input, range, max };
+
+			const syncValue = (value) => {
+				const numericValue = Number.isFinite(Number(value)) ? Number(value) : 0;
+				input.value = String(numericValue);
+				range.value = String(numericValue);
+			};
+
+			input.addEventListener('input', () => {
+				syncValue(input.value);
+				calculate();
+			});
+
+			range.addEventListener('input', () => {
+				syncValue(range.value);
+				calculate();
+			});
+		});
+
+		const valueOf = (name) => Number(fields[name]?.input?.value || 0);
+
+		const calculate = () => {
+			const visitors = valueOf('visitors');
+			const conversionRate = valueOf('conversionRate');
+			const conversionToCustomerRate = valueOf('conversionToCustomerRate');
+			const averageCustomerValue = valueOf('averageCustomerValue');
+			const result = (visitors * conversionRate * conversionToCustomerRate * averageCustomerValue) / 10000;
+
+			if (resultEl) {
+				resultEl.textContent = new Intl.NumberFormat('sv-SE', {
+					style: 'currency',
+					currency: 'SEK',
+				}).format(result);
+			}
+		};
+
+		calculate();
+	});
+</script>

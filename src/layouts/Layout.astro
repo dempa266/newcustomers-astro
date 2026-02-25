@@ -1,0 +1,93 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const {
+	title = 'New Site',
+	description = 'Clean Astro starter page.',
+} = Astro.props as Props;
+
+const site = Astro.site ?? new URL('http://localhost:4321');
+const canonicalUrl = new URL(Astro.url.pathname, site).toString();
+const pathname = Astro.url.pathname;
+const isHomePage = pathname === '/';
+
+const slugLabelMap: Record<string, string> = {
+	seo: 'SEO',
+	ads: 'Google Ads',
+	sem: 'SEM',
+	byra: 'Byrå',
+	konsult: 'Konsult',
+	'e-handel': 'E-handel',
+	pris: 'Pris',
+	stockholm: 'Stockholm',
+	goteborg: 'Göteborg',
+	malmo: 'Malmö',
+	'om-oss': 'Om oss',
+	kontakt: 'Kontakt',
+};
+
+function toLabel(segment: string): string {
+	const normalized = decodeURIComponent(segment).toLowerCase();
+	const mapped = slugLabelMap[normalized];
+
+	if (mapped) return mapped;
+
+	return normalized
+		.split('-')
+		.filter(Boolean)
+		.map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+		.join(' ');
+}
+
+const breadcrumbs = isHomePage
+	? []
+	: (() => {
+			const segments = pathname.split('/').filter(Boolean);
+			const items: Array<{ url: string; text: string }> = [{ url: '/', text: 'Hem' }];
+			let currentPath = '';
+
+			for (const segment of segments) {
+				currentPath += `/${segment}`;
+				items.push({
+					url: `${currentPath}/`,
+					text: toLabel(segment),
+				});
+			}
+
+			return items;
+		})();
+---
+
+<!doctype html>
+<html lang="sv" class="light" data-theme="newcustomers">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<link rel="canonical" href={canonicalUrl} />
+	</head>
+	<body class="bg-background text-foreground">
+		<Header />
+		{!isHomePage && (
+			<div class="site-container py-4">
+				<Breadcrumbs breadcrumbs={breadcrumbs} />
+			</div>
+		)}
+		<main>
+			<slot />
+		</main>
+		<Footer />
+	</body>
+</html>

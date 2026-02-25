@@ -1,0 +1,47 @@
+---
+import { parseEncodedJson } from '../components/utils';
+
+interface Feature {
+	title?: string;
+}
+
+interface Props {
+	data?: {
+		preTitle?: string;
+		title?: string;
+		description?: string;
+		image?: string;
+		features?: string;
+	};
+}
+
+const { data = {} } = Astro.props as Props;
+const features = parseEncodedJson<Feature[]>(data.features, []);
+---
+
+<section class="section-spacing">
+	<div class="site-container">
+	<div class="lg:flex justify-between">
+		<div class="max-w-lg my-auto space-y-2">
+			{data.preTitle && <div class="text-base font-medium text-primary uppercase">{data.preTitle}</div>}
+			{data.title && <h2 class="text-4xl text-gray mt-0">{data.title}</h2>}
+			{data.description && <div class="text-gray-500">{data.description}</div>}
+		</div>
+		{data.image && (
+			<div class="relative max-w-xl h-96 w-full flex overflow-hidden rounded-2xl my-10 lg:my-0">
+				<img src={data.image} alt={data.title ?? ''} class="object-cover w-full h-full" loading="lazy" />
+			</div>
+		)}
+	</div>
+	<div class="grid w-full gap-6 grid-cols-1 sm:grid-cols-3 mt-10">
+		{features.map((feature) => (
+			<div class="items-center bg-gray-light rounded-2xl p-6">
+				<div class="text-gray font-medium flex">
+					<span class="w-6 h-6 text-primary">✓</span>
+					<div class="ml-6">{feature.title}</div>
+				</div>
+			</div>
+		))}
+	</div>
+	</div>
+</section>

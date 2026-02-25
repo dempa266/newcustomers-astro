@@ -1,0 +1,25 @@
+---
+import Coworkers from '../sections/Coworkers.astro';
+import { globalSections } from '../data/global-sections';
+
+const section = globalSections.teamMembers;
+const coworkersPayload = encodeURIComponent(
+	JSON.stringify(
+		section.members.map((member) => ({
+			name: member.name,
+			title: member.title,
+			phone: member.phone,
+			email: member.email,
+			linkedin: member.linkedin,
+			image: member.imageUrl ? { url: member.imageUrl } : undefined,
+		})),
+	),
+);
+---
+
+<section class="section-spacing">
+	<div class="site-container-narrow">
+		<h2 class="mb-8 text-3xl font-semibold text-slate-900">{section.heading}</h2>
+		<Coworkers compact data={{ coworkers: coworkersPayload }} />
+	</div>
+</section>

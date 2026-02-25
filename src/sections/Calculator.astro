@@ -1,0 +1,24 @@
+---
+import LeadValueCalculator from '../components/LeadValueCalculator.astro';
+
+interface Props {
+	data?: {
+		title?: string;
+		description?: string;
+	};
+}
+
+const { data = {} } = Astro.props as Props;
+---
+
+<section class="section-spacing">
+	<div class="site-container">
+		<div class="w-full text-center bg-gray rounded-xl px-6 py-10 lg:px-10 lg:py-12">
+			<div class="max-w-3xl mx-auto section-stack">
+			{data.title && <h2 class="mx-auto text-white text-4xl">{data.title}</h2>}
+			{data.description && <p class="mx-auto text-white">{data.description}</p>}
+			</div>
+			<LeadValueCalculator />
+		</div>
+	</div>
+</section>

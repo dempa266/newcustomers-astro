@@ -1,0 +1,32 @@
+---
+import FaqDisclosureItem from '../components/FaqDisclosureItem.astro';
+import { parseEncodedJson } from '../components/utils';
+
+interface Question {
+	question?: string;
+	answer?: string;
+}
+
+interface Props {
+	data?: {
+		heading?: string;
+		questions?: string;
+	};
+}
+
+const { data = {} } = Astro.props as Props;
+const questions = parseEncodedJson<Question[]>(data.questions, []);
+---
+
+<section class="section-spacing" itemscope itemtype="https://schema.org/FAQPage">
+	<div class="site-container-narrow">
+		<div class="max-w-5xl mx-auto divide-y divide-gray/10">
+			{data.heading && <h2>{data.heading}</h2>}
+			<dl class="mt-10 space-y-6 divide-y divide-gray/10">
+				{questions.map((question) => (
+					<FaqDisclosureItem question={question.question ?? ''} answer={question.answer ?? ''} />
+				))}
+			</dl>
+		</div>
+	</div>
+</section>

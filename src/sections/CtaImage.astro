@@ -1,0 +1,32 @@
+---
+interface Props {
+	data?: {
+		title?: string;
+		image?: string;
+		buttontext?: string;
+		buttonlink?: string;
+	};
+}
+
+const { data = {} } = Astro.props as Props;
+---
+
+<section class="section-spacing">
+	<div class="site-container">
+		<div class="grid lg:grid-cols-2 py-6 overflow-hidden text-white bg-gray rounded-xl">
+			<div class="flex -mt-5 lg:-my-5">
+				{data.image && <img src={data.image} alt={data.title ?? ''} class="object-cover w-full h-full" loading="lazy" />}
+			</div>
+			<div class="flex flex-col justify-center space-y-6 text-white lg:px-24">
+				<div class="text-2xl text-center mt-5">{data.title}</div>
+				<a
+					href={data.buttonlink ?? '#'}
+					class="flex px-4 py-2 mx-auto text-sm leading-6 text-white border group rounded-2xl border-light hover:bg-primary hover:text-white"
+				>
+					{data.buttontext}
+					<div class="w-3 h-3 my-auto ml-2 rounded-full bg-primary group-hover:bg-white"></div>
+				</a>
+			</div>
+		</div>
+	</div>
+</section>
