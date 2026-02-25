@@ -1,40 +1,102 @@
 ---
-import type { NavColumn } from '../../data/navigation';
+import type { NavArticleLink, NavColumn } from '../../data/navigation';
 
 interface Props {
 	title: string;
 	path: string;
 	columns?: NavColumn[];
+	latestArticles?: NavArticleLink[];
 }
 
-const { title, path, columns = [] } = Astro.props as Props;
+const { title, path, columns = [], latestArticles = [] } = Astro.props as Props;
+const hasLatestArticles = latestArticles.length > 0;
 ---
 
 <li class="relative mb-0 list-none">
-	<details class="group">
-		<summary class="inline-flex items-center text-sm leading-6 text-white gap-x-1 hover:text-primary cursor-pointer list-none">
+	<details class="group/nav" data-nav-dropdown>
+		<summary class="inline-flex list-none cursor-pointer items-center gap-x-2 rounded-full px-3 py-2 text-sm font-medium leading-none text-white/90 transition hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70">
 			<span>{title}</span>
-			<span aria-hidden="true">▾</span>
+			<svg
+				class="h-3 w-3 transition-transform duration-200 group-open/nav:rotate-180"
+				viewBox="0 0 12 12"
+				fill="none"
+				xmlns="http://www.w3.org/2000/svg"
+				aria-hidden="true"
+			>
+				<path d="M2.25 4.5 6 8.25 9.75 4.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+			</svg>
 		</summary>
-		<div class="absolute left-1/2 z-20 mt-5 w-screen max-w-5xl -translate-x-1/2 px-4">
-			<div class="w-full rounded-3xl bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5 p-6">
-				<div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
-					{columns.map((column) => (
-					<div>
-						<h3 class="text-sm font-medium leading-6 text-gray-500">{column.title}</h3>
-						<div class="flow-root mt-5">
-							<div class="-my-2">
-								{column.links.map((item) => (
-									<a href={item.path} class="flex py-2 text-sm font-semibold leading-6 text-gray-900 gap-x-4">
-										{item.label}
+		<div class="absolute left-1/2 z-20 mt-4 w-screen max-w-6xl -translate-x-1/2 px-4">
+			<div class="w-full rounded-3xl border border-border/70 bg-white/95 p-6 text-sm leading-6 text-foreground shadow-2xl shadow-black/10 backdrop-blur">
+				<div class:list={['grid gap-8', hasLatestArticles ? 'xl:grid-cols-[minmax(0,1fr)_18rem]' : 'xl:grid-cols-1']}>
+					<div class="grid gap-6 md:grid-cols-3">
+						{columns.map((column) => (
+							<div class="rounded-2xl bg-surface-secondary/70 p-4">
+								<h3 class="mt-0 text-xs font-semibold uppercase tracking-[0.08em] text-muted">{column.title}</h3>
+								<div class="mt-3 space-y-1">
+									{column.links.map((item) => (
+										<a
+											href={item.path}
+											class="block rounded-xl px-3 py-2 text-sm font-medium text-foreground no-underline transition hover:bg-white hover:text-primary hover:no-underline"
+										>
+											{item.label}
+										</a>
+									))}
+								</div>
+							</div>
+						))}
+					</div>
+					{hasLatestArticles && (
+						<aside class="rounded-2xl border border-border bg-surface p-5">
+							<p class="mb-3 text-xs font-semibold uppercase tracking-[0.08em] text-muted">Senaste artiklar</p>
+							<div class="space-y-2">
+								{latestArticles.map((article) => (
+									<a
+										href={article.path}
+										class="block rounded-xl border border-transparent px-3 py-2 no-underline transition hover:border-border hover:bg-surface-secondary hover:no-underline"
+									>
+										<span class="block text-sm font-semibold text-foreground">{article.label}</span>
+										{article.description && <span class="mt-0.5 block text-xs text-muted">{article.description}</span>}
 									</a>
 								))}
 							</div>
-						</div>
-					</div>
-					))}
+							<a
+								href={path}
+								class="mt-4 inline-flex rounded-full border border-border px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.06em] text-foreground no-underline transition hover:border-primary hover:text-primary hover:no-underline"
+							>
+								Alla {title}
+							</a>
+						</aside>
+					)}
 				</div>
 			</div>
 		</div>
 	</details>
 </li>
+
+<script is:inline>
+	document.querySelectorAll('[data-nav-dropdown]').forEach((root) => {
+		if (root.dataset.bound === 'true') return;
+		root.dataset.bound = 'true';
+
+		const summary = root.querySelector('summary');
+		summary?.addEventListener('click', () => {
+			requestAnimationFrame(() => {
+				if (!root.hasAttribute('open')) return;
+				document.querySelectorAll('[data-nav-dropdown][open]').forEach((other) => {
+					if (other !== root) other.removeAttribute('open');
+				});
+			});
+		});
+
+		document.addEventListener('click', (event) => {
+			const target = event.target;
+			if (!(target instanceof Node) || root.contains(target)) return;
+			root.removeAttribute('open');
+		});
+
+		document.addEventListener('keydown', (event) => {
+			if (event.key === 'Escape') root.removeAttribute('open');
+		});
+	});
+</script>

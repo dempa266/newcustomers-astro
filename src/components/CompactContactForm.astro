@@ -1,20 +1,25 @@
 ---
-import { Button, Checkbox, Input } from '@heroui/react';
+import { Checkbox, Input } from '@heroui/react';
+
+const fieldClassName =
+	'field block w-full border border-border bg-white px-3.5 py-2.5 text-base leading-6 text-gray shadow-none placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/30';
+const submitClassName =
+	'button button--primary inline-flex h-11 w-full sm:w-56 items-center justify-center rounded-[var(--radius-button)] border border-primary bg-primary px-6 text-base font-semibold text-dark shadow-sm transition duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-primary-dark hover:bg-primary-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background';
 ---
 
 <section class="pt-8" data-contact-form-small>
 	<div class="w-full">
 		<p class="text-primary font-bold text-center my-auto hidden" data-success></p>
 		<form action="#" method="POST" class="lg:flex-auto" data-form>
-			<div class="max-w-5xl mx-auto sm:flex space-y-6 sm:space-y-0 sm:space-x-2">
-				<Input type="text" name="name" placeholder="Namn" autoComplete="name" aria-label="Namn" className="block w-full rounded-md border-0 px-3.5 py-2 text-gray shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6" />
-				<Input type="text" name="phone" autoComplete="phone" placeholder="Telefon" aria-label="Telefon" className="block w-full rounded-md border-0 px-3.5 py-2 text-gray shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6" />
-				<Button type="submit" className="block w-56 rounded-md bg-primary px-3.5 py-2.5 text-center text-sm text-black shadow-sm hover:bg-primary-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+			<div class="max-w-5xl mx-auto sm:flex space-y-4 sm:space-y-0 sm:space-x-3">
+				<Input type="text" name="name" placeholder="Namn" autoComplete="name" aria-label="Namn" className={fieldClassName} />
+				<Input type="text" name="phone" autoComplete="phone" placeholder="Telefon" aria-label="Telefon" className={fieldClassName} />
+				<button type="submit" class={submitClassName}>
 					Skicka
-				</Button>
+				</button>
 			</div>
-			<div class="mt-5 space-x-2">
-				<Checkbox id="gdpr-small" name="gdpr" className="text-sm leading-6 text-white">
+			<div class="mt-5">
+				<Checkbox id="gdpr-small" name="gdpr" className="text-sm leading-6 text-white/75">
 					Genom att skicka detta meddelande godkänner du att vi lagrar och hanterar dina personuppgifter i enlighet med vår
 					<a href="/integritetspolicy/" class="text-primary">integritetspolicy</a>.
 				</Checkbox>

@@ -23,14 +23,18 @@ const coworkers = parseEncodedJson<Coworker[]>(data.coworkers, []);
 
 <section class="section-spacing">
 	<div class="site-container">
-	<div class="flex flex-col bg-gray-light rounded-2xl">
-		{data.title && <h2 class="mx-auto mt-20 text-4xl text-gray text-center">{data.title}</h2>}
-		{data.description && <p class="mx-auto mt-5 text-lg text-gray">{data.description}</p>}
-		<div class="grid gap-10 p-10 lg:grid-cols-2 lg:p-20">
+	<div class="surface-card-muted flex flex-col">
+		{(data.title || data.description) && (
+			<div class="section-intro section-intro--center section-intro--spaced section-intro--inset px-6 lg:px-10 text-gray">
+				{data.title && <h2>{data.title}</h2>}
+				{data.description && <p class="text-lg prose-measure">{data.description}</p>}
+			</div>
+		)}
+		<div class="section-after-intro grid gap-10 px-10 pb-10 lg:grid-cols-2 lg:px-20 lg:pb-20">
 			<div class="lg:mr-20 my-auto space-y-4"><slot /></div>
 			<div class="space-y-2 flex flex-col">
 				{coworkers.map((coworker, index) => (
-					<div class={`grid lg:h-1/2 h-auto sm:grid-cols-2 items-center justify-center w-full bg-gray overflow-hidden ${index === 0 ? 'rounded-t-2xl' : 'rounded-b-2xl'}`}>
+						<div class={`grid lg:h-1/2 h-auto sm:grid-cols-2 items-center justify-center w-full bg-gray overflow-hidden ${index === 0 ? 'rounded-t-[1rem]' : 'rounded-b-[1rem]'}`}>
 						<div class="flex w-full h-full">
 							{coworker.image?.url && (
 								<img src={coworker.image.url} width="320" height="240" alt={coworker.title ?? ''} class="object-cover" loading="lazy" />
@@ -38,7 +42,7 @@ const coworkers = parseEncodedJson<Coworker[]>(data.coworkers, []);
 						</div>
 						<div class="col-span-1 flex flex-col w-full h-full text-left my-auto p-6">
 							<div class="text-white font-medium">{coworker.name}</div>
-							<p class="font-light text-gray-300">{coworker.title}</p>
+							<p class="font-light text-white/75">{coworker.title}</p>
 							{coworker.phone && <a href={`tel:${coworker.phone}`} class="text-white my-1">{coworker.phone}</a>}
 							{coworker.email && <a href={`mailto:${coworker.email}`} class="text-white my-1">{coworker.email}</a>}
 						</div>

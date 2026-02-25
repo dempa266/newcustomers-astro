@@ -3,12 +3,39 @@
 @import "tailwindcss";
 @import "@heroui/styles";
 @import "./themes/newcustomers.css" layer(theme);
+@import "@fontsource/poppins/500.css";
+@import "@fontsource/poppins/600.css";
+@import "@fontsource/poppins/700.css";
+@import "@fontsource/source-sans-3/400.css";
+@import "@fontsource/source-sans-3/500.css";
+@import "@fontsource/source-sans-3/600.css";
 
 :root {
-	font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-	--space-section: clamp(3rem, 5vw, 5.5rem);
-	--space-section-tight: clamp(2rem, 3vw, 3.5rem);
-	--space-stack: clamp(0.75rem, 1.5vw, 1.5rem);
+	--font-heading: "Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+	--font-body: "Source Sans 3", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+	--heading-h1: clamp(2.2rem, 5vw, 3.8rem);
+	--heading-h2: clamp(1.8rem, 3.8vw, 2.8rem);
+	--heading-h3: clamp(1.35rem, 2.5vw, 1.9rem);
+	--heading-h4: clamp(1.15rem, 2vw, 1.45rem);
+	--heading-h5: 1.05rem;
+	--heading-h6: 0.95rem;
+	--text-body: clamp(1.05rem, 1.01rem + 0.18vw, 1.125rem);
+	--space-intro-to-content: clamp(1.5rem, 2.6vw, 2.5rem);
+	--space-section: clamp(3.5rem, 6vw, 6rem);
+	--space-section-tight: clamp(2.25rem, 4vw, 4rem);
+	--space-stack: clamp(1rem, 1.6vw, 1.6rem);
+	--radius-card: 1.25rem;
+	--radius-card-lg: 1.5rem;
+	--radius-button: 0.75rem;
+	--radius-control: 0.9rem;
+	--measure-text: 72ch;
+	--duration-fast: 180ms;
+	--duration-base: 240ms;
+	--ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
+	--shadow-card: 0 10px 34px -22px color-mix(in oklab, var(--foreground) 40%, transparent);
+	--shadow-card-hover: 0 18px 44px -24px color-mix(in oklab, var(--foreground) 55%, transparent);
+	--text-muted: color-mix(in oklab, var(--foreground) 72%, white 28%);
+	--text-on-dark: oklch(0.92 0.006 255);
 }
 
 * {
@@ -20,19 +47,129 @@ body {
 	min-height: 100vh;
 	background-color: var(--background);
 	color: var(--foreground);
+	font-family: var(--font-body);
+	font-size: var(--text-body);
+	line-height: 1.65;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+}
+
+a {
+	text-underline-offset: 0.15em;
+	text-decoration-thickness: 0.08em;
+}
+
+:where(a, button, input, textarea, summary, select) {
+	transition-property: color, background-color, border-color, box-shadow, opacity, transform;
+	transition-duration: var(--duration-fast);
+	transition-timing-function: var(--ease-standard);
+}
+
+summary::-webkit-details-marker {
+	display: none;
+}
+
+main :where(h1, h2, h3, h4, h5, h6) {
+	margin: 0;
+	font-family: var(--font-heading);
+	line-height: 1.12;
+	font-weight: 600;
+}
+
+main h1 {
+	font-size: var(--heading-h1);
+	letter-spacing: -0.02em;
+}
+
+main h2 {
+	font-size: var(--heading-h2);
+	letter-spacing: -0.02em;
+}
+
+main h3 {
+	font-size: var(--heading-h3);
+	font-weight: 500;
+	letter-spacing: -0.01em;
+}
+
+main h4 {
+	font-size: var(--heading-h4);
+	font-weight: 500;
+	letter-spacing: -0.01em;
+}
+
+main h5 {
+	font-size: var(--heading-h5);
+	font-weight: 500;
+	letter-spacing: 0;
+}
+
+main h6 {
+	font-size: var(--heading-h6);
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	font-weight: 500;
+}
+
+p {
+	margin: 0;
+	color: var(--text-muted);
+	line-height: 1.7;
 }
 
 .textOnDark {
-	color: oklch(0.9 0.005 255);
+	color: var(--text-on-dark);
 }
 
 .textOnDark a {
 	color: var(--accent);
 }
 
+.text-muted {
+	color: var(--text-muted);
+}
+
+.text-on-dark {
+	color: var(--text-on-dark);
+}
+
+.prose-measure {
+	max-width: var(--measure-text);
+}
+
+.surface-card {
+	border: 1px solid color-mix(in oklab, var(--border) 92%, transparent);
+	border-radius: var(--radius-card);
+	background: color-mix(in oklab, var(--surface) 97%, transparent);
+	box-shadow: var(--shadow-card);
+}
+
+.surface-card-muted {
+	border: 1px solid color-mix(in oklab, var(--border) 85%, transparent);
+	border-radius: var(--radius-card);
+	background: color-mix(in oklab, var(--surface-secondary) 94%, white 6%);
+}
+
+.surface-card-dark {
+	border: 1px solid color-mix(in oklab, white 16%, transparent);
+	border-radius: var(--radius-card-lg);
+	background: linear-gradient(140deg, color-mix(in oklab, var(--gray) 94%, black 6%), color-mix(in oklab, var(--gray) 86%, black 14%));
+	color: var(--text-on-dark);
+	box-shadow: var(--shadow-card);
+}
+
+.surface-card-interactive {
+	will-change: transform;
+}
+
+.surface-card-interactive:hover {
+	transform: translateY(-3px);
+	box-shadow: var(--shadow-card-hover);
+}
+
 .site-container {
 	margin-inline: auto;
-	max-width: 80rem;
+	max-width: 82rem;
 	padding-inline: 1.5rem;
 }
 
@@ -54,6 +191,63 @@ body {
 	display: flex;
 	flex-direction: column;
 	gap: var(--space-stack);
+}
+
+.section-intro {
+	display: flex;
+	flex-direction: column;
+	gap: clamp(0.6rem, 1vw, 1rem);
+}
+
+.section-intro p {
+	color: inherit;
+	max-width: var(--measure-text);
+}
+
+.section-intro--center {
+	margin-inline: auto;
+	align-items: center;
+	text-align: center;
+}
+
+.section-intro--spaced {
+	margin-bottom: clamp(1.25rem, 2.3vw, 2.25rem);
+}
+
+.section-intro--inset {
+	padding-top: clamp(2rem, 4vw, 4rem);
+}
+
+.section-after-intro {
+	margin-top: var(--space-intro-to-content);
+}
+
+.section-eyebrow {
+	font-size: 0.75rem;
+	font-weight: 600;
+	letter-spacing: 0.12em;
+	line-height: 1.25;
+	text-transform: uppercase;
+}
+
+.section-eyebrow--on-dark {
+	color: color-mix(in oklab, var(--text-on-dark) 72%, transparent);
+}
+
+@layer components {
+	.button {
+		border-radius: var(--radius-button);
+		font-weight: 600;
+		letter-spacing: -0.01em;
+	}
+
+	.button--primary {
+		box-shadow: 0 10px 26px -16px color-mix(in oklab, var(--primary) 70%, transparent);
+	}
+
+	.field {
+		border-radius: var(--radius-control);
+	}
 }
 
 @media (min-width: 1024px) {

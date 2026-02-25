@@ -1,0 +1,7 @@
+interface:
+  display_name: "Astro MDX Architecture"
+  short_description: "Enforce Astro page/section/component structure"
+  default_prompt: "Use $astro-mdx-architecture to apply the page/section/component/global-section architecture rules for this Astro MDX task."
+
+policy:
+  allow_implicit_invocation: true

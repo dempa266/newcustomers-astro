@@ -24,13 +24,13 @@ const structuredData = {
 
 {breadcrumbs.length > 0 && (
 	<nav aria-label="Breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
-		<ol class="flex mx-0 px-0 list-none text-gray-400 gap-2">
+		<ol class="flex mx-0 px-0 list-none text-muted gap-2">
 			{breadcrumbs.map((breadcrumb, index) => (
 				<li class="my-0 flex items-center gap-2" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
 						{index === breadcrumbs.length - 1 ? (
 							<span class="text-sm" itemprop="name">{breadcrumb.text}</span>
 						) : (
-							<a itemprop="item" href={breadcrumb.url} class="text-gray-500 text-sm hover:text-primary transition">
+							<a itemprop="item" href={breadcrumb.url} class="text-muted text-sm hover:text-primary transition">
 								<span itemprop="name">{breadcrumb.text}</span>
 							</a>
 						)}

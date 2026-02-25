@@ -1,22 +1,27 @@
 ---
-import { Button, Checkbox, Input } from '@heroui/react';
+import { Checkbox, Input } from '@heroui/react';
+
+const fieldClassName =
+	'field block w-full border border-border bg-white px-3.5 py-2.5 text-base leading-6 text-gray shadow-none placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/30';
+const submitClassName =
+	'button button--primary inline-flex h-11 items-center justify-center rounded-[var(--radius-button)] border border-primary bg-primary px-8 text-base font-semibold text-dark shadow-sm transition duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-primary-dark hover:bg-primary-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background';
 ---
 
 <div data-contact-form-include>
 	<p class="text-primary font-bold text-center my-auto hidden" data-success></p>
-	<form action="#" method="POST" class="lg:flex-auto text-white pt-5" data-form>
+	<form action="#" method="POST" class="lg:flex-auto pt-4" data-form>
 		<div class="space-y-3">
-			<Input type="text" name="name" autoComplete="name" placeholder="Namn" aria-label="Namn" className="block w-full rounded-2xl border-0 px-3.5 py-2 text-gray shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6" />
-			<Input type="text" name="phone" autoComplete="phone" placeholder="Telefon" aria-label="Telefon" className="block w-full rounded-2xl border-0 px-3.5 py-2 text-gray shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6" />
-			<Input type="text" name="email" autoComplete="email" placeholder="E-post" aria-label="E-post" className="block w-full rounded-2xl border-0 px-3.5 py-2 text-gray shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6" />
-			<Input type="text" name="company" autoComplete="organization" placeholder="Företag" aria-label="Företag" className="block w-full rounded-2xl border-0 px-3.5 py-2 text-gray shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6" />
+			<Input type="text" name="name" autoComplete="name" placeholder="Namn" aria-label="Namn" className={fieldClassName} />
+			<Input type="text" name="phone" autoComplete="phone" placeholder="Telefon" aria-label="Telefon" className={fieldClassName} />
+			<Input type="text" name="email" autoComplete="email" placeholder="E-post" aria-label="E-post" className={fieldClassName} />
+			<Input type="text" name="company" autoComplete="organization" placeholder="Företag" aria-label="Företag" className={fieldClassName} />
 			<div>
-				<Button type="submit" className="block rounded-2xl bg-primary px-10 py-2.5 text-center text-sm text-black shadow-sm hover:bg-primary-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+				<button type="submit" class={submitClassName}>
 					Skicka
-				</Button>
+				</button>
 			</div>
-			<div class="space-x-2">
-				<Checkbox id="gdpr-include" name="gdpr" className="text-sm leading-6 text-gray-300">
+			<div>
+				<Checkbox id="gdpr-include" name="gdpr" className="text-sm leading-6 text-white/75">
 					Genom att skicka detta meddelande godkänner du att vi lagrar och hanterar dina personuppgifter i enlighet med vår
 					<a href="/integritetspolicy/" class="text-primary">integritetspolicy</a>.
 				</Checkbox>

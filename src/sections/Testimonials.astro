@@ -21,10 +21,10 @@ const testimonials = parseEncodedJson<Testimonial[]>(data.testimonials, []);
 	<div class="site-container">
 		<div class="grid gap-8 lg:grid-cols-2 text-dark">
 			{testimonials.map((testimonial) => (
-				<div class="flex flex-col space-y-12 bg-gray-light rounded-xl overflow-hidden">
+				<div class="surface-card-muted flex flex-col overflow-hidden">
 					{testimonial.image?.url && (
 						<img
-							class="w-full"
+							class="w-full aspect-[16/9] object-cover"
 							src={testimonial.image.url}
 							alt={testimonial.image.alt ?? ''}
 							width="800"
@@ -32,10 +32,10 @@ const testimonials = parseEncodedJson<Testimonial[]>(data.testimonials, []);
 							loading="lazy"
 						/>
 					)}
-					<p class="leading-relaxed px-6 lg:px-12 text-lg text-center text-gray-800">{testimonial.text}</p>
+					<p class="leading-relaxed px-6 pt-8 lg:px-12 text-lg text-center text-gray prose-measure mx-auto">{testimonial.text}</p>
 					{testimonial.logo?.url && (
 						<img
-							class="w-48 h-auto mx-auto pb-12"
+							class="w-40 h-auto mx-auto py-10"
 							src={testimonial.logo.url}
 							alt={testimonial.logo.alt ?? ''}
 							width="200"

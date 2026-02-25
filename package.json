@@ -11,6 +11,8 @@
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",
     "@astrojs/react": "^4.4.2",
+    "@fontsource/poppins": "^5.2.7",
+    "@fontsource/source-sans-3": "^5.2.9",
     "@heroui/react": "^3.0.0-beta.7",
     "@heroui/styles": "^3.0.0-beta.7",
     "@tailwindcss/vite": "^4.1.18",

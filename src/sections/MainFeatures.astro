@@ -27,28 +27,28 @@ const features = parseEncodedJson<Feature[]>(data.features, []);
 
 <section class="section-spacing">
 	<div class="site-container">
-	<div class="lg:flex justify-between">
-		<div class="max-w-lg my-auto space-y-2">
+	<div class="lg:flex justify-between gap-10">
+		<div class="max-w-xl my-auto section-intro section-intro--spaced">
 			{data.preTitle && <div class="text-base font-medium text-primary uppercase">{data.preTitle}</div>}
-			{data.title && <h2 class="text-4xl text-gray mt-0">{data.title}</h2>}
-			{data.description && <div class="text-gray-500">{data.description}</div>}
+			{data.title && <h2 class="text-gray">{data.title}</h2>}
+			{data.description && <p class="text-muted prose-measure">{data.description}</p>}
 		</div>
 		{data.buttonText && (
-			<div class="max-w-sm mt-10 lg:my-auto">
-				<Button type="primary" href={data.buttonLink ?? '#'} text={data.buttonText} />
+			<div class="max-w-sm mt-2 lg:my-auto">
+				<Button type="primary" size="lg" href={data.buttonLink ?? '#'} text={data.buttonText} />
 			</div>
 		)}
 	</div>
-	<div class="grid w-full gap-6 grid-cols-1 sm:grid-cols-3 mt-10">
+	<div class="section-after-intro grid w-full gap-6 grid-cols-1 sm:grid-cols-3">
 		{features.map((feature) => (
-			<div class="text-center flex flex-col items-center">
+			<div class="surface-card-muted surface-card-interactive text-center flex flex-col items-center p-4">
 				{feature.image?.url && (
-					<div class="relative w-full h-64 flex overflow-hidden rounded-2xl">
+					<div class="relative w-full aspect-[4/3] flex overflow-hidden rounded-[1rem]">
 						<img src={feature.image.url} alt={feature.title ?? ''} class="object-cover" width="1024" height="1024" loading="lazy" />
 					</div>
 				)}
-				<h3 class="text-gray mt-4 text-2xl">{feature.title}</h3>
-				<p class="text-gray-500 max-w-xs">{feature.description}</p>
+				<h3 class="text-gray mt-4">{feature.title}</h3>
+				<p class="text-muted max-w-xs">{feature.description}</p>
 			</div>
 		))}
 	</div>

@@ -13,32 +13,36 @@ const { data = {} } = Astro.props as Props;
 
 <section class="section-spacing">
 	<div class="site-container">
-		<div class="w-full text-center text-white bg-gray rounded-xl px-6 py-10 lg:px-10 lg:py-12">
-		{data.title && <h2 class="max-w-xl mx-auto text-4xl">{data.title}</h2>}
-		{data.description && <p class="max-w-lg mx-auto text-white">{data.description}</p>}
-		<div class="grid max-w-5xl grid-cols-2 lg:grid-cols-4 gap-6 mx-auto my-10">
-			<div class="flex flex-col">
-				<div class="flex flex-col justify-center w-20 h-20 mx-auto bg-primary rounded-xl"><div class="my-auto text-5xl text-gray font-semibold">1</div></div>
-				<div class="h-12 mx-auto my-3 border-l-2 border-white"></div>
-				<div class="p-2 mx-auto border border-primary rounded-xl"><p class="my-auto text-white">Skicka in ditt namn och telefonnummer.</p></div>
+		<div class="surface-card-dark w-full text-center px-6 py-10 lg:px-10 lg:py-12">
+		{(data.title || data.description) && (
+			<div class="section-intro section-intro--center section-intro--spaced max-w-3xl mx-auto text-on-dark">
+				{data.title && <h2>{data.title}</h2>}
+				{data.description && <p>{data.description}</p>}
 			</div>
-			<div class="flex flex-col">
-				<div class="flex flex-col justify-center w-20 h-20 mx-auto bg-white text-gray rounded-xl"><div class="my-auto text-5xl font-semibold">2</div></div>
-				<div class="h-12 mx-auto my-3 border-l-2 border-white"></div>
-				<div class="p-2 mx-auto border border-white rounded-xl"><p class="my-auto text-white">Någon från oss tar kontakt med dig och lyssnar av dina funderingar och behov.</p></div>
+		)}
+			<div class="section-after-intro grid max-w-5xl grid-cols-2 lg:grid-cols-4 gap-6 mx-auto mb-10">
+				<div class="flex flex-col">
+					<div class="flex flex-col justify-center w-20 h-20 mx-auto bg-primary rounded-xl"><div class="my-auto text-5xl text-gray font-semibold">1</div></div>
+					<div class="h-12 mx-auto my-3 border-l-2 border-white/35"></div>
+					<div class="surface-card p-3 mx-auto"><p class="my-auto text-gray">Skicka in ditt namn och telefonnummer.</p></div>
+				</div>
+				<div class="flex flex-col">
+					<div class="flex flex-col justify-center w-20 h-20 mx-auto bg-white text-gray rounded-xl"><div class="my-auto text-5xl font-semibold">2</div></div>
+					<div class="h-12 mx-auto my-3 border-l-2 border-white/35"></div>
+					<div class="surface-card p-3 mx-auto"><p class="my-auto text-gray">Någon från oss tar kontakt med dig och lyssnar av dina funderingar och behov.</p></div>
+				</div>
+				<div class="flex flex-col">
+					<div class="flex flex-col justify-center w-20 h-20 mx-auto bg-white text-gray rounded-xl"><div class="my-auto text-5xl font-semibold">3</div></div>
+					<div class="h-12 mx-auto my-3 border-l-2 border-white/35"></div>
+					<div class="surface-card p-3 mx-auto"><p class="my-auto text-gray">Rätt person med rätt kompetens sätter upp ett möte tillsammans med dig så vi kan påbörja vår affärsanalys.</p></div>
+				</div>
+				<div class="flex flex-col">
+					<div class="flex flex-col justify-center w-20 h-20 mx-auto bg-white text-gray rounded-xl"><div class="my-auto text-5xl font-semibold">4</div></div>
+					<div class="h-12 mx-auto my-3 border-l-2 border-white/35"></div>
+					<div class="surface-card p-3 mx-auto"><p class="my-auto text-gray">Vi återkommer med ett konkret förslag på hur vi tillsammans skapar fler affärer.</p></div>
+				</div>
 			</div>
-			<div class="flex flex-col">
-				<div class="flex flex-col justify-center w-20 h-20 mx-auto bg-white text-gray rounded-xl"><div class="my-auto text-5xl font-semibold">3</div></div>
-				<div class="h-12 mx-auto my-3 border-l-2 border-white"></div>
-				<div class="p-2 mx-auto border border-white rounded-xl"><p class="my-auto text-white">Rätt person med rätt kompetens sätter upp ett möte tillsammans med dig så vi kan påbörja vår affärsanalys.</p></div>
-			</div>
-			<div class="flex flex-col">
-				<div class="flex flex-col justify-center w-20 h-20 mx-auto bg-white text-gray rounded-xl"><div class="my-auto text-5xl font-semibold">4</div></div>
-				<div class="h-12 mx-auto my-3 border-l-2 border-white"></div>
-				<div class="p-2 mx-auto border border-white rounded-xl"><p class="my-auto text-white">Vi återkommer med ett konkret förslag på hur vi tillsammans skapar fler affärer.</p></div>
-			</div>
-		</div>
-		<CompactContactForm />
+			<CompactContactForm />
 		</div>
 	</div>
 </section>

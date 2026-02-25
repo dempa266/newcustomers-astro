@@ -5,15 +5,15 @@ import MobileNav from './Nav/MobileNav.astro';
 import { mainNavGroups, mainNavLinks, mobileNavLinks } from '../data/navigation';
 ---
 
-<header class="sticky z-10 top-0 w-full text-white shadow-lg bg-gray">
-	<div class="site-container flex h-20 items-center justify-between py-2">
-		<a href="/" class="my-auto">
-			<img src="/newcustomers.svg" alt="Logo" width="240" height="36" class="h-10 my-auto" />
+<header class="sticky top-0 z-40 w-full border-b border-white/10 bg-[#15151f]/95 text-white shadow-lg shadow-black/10 backdrop-blur supports-[backdrop-filter]:bg-[#15151f]/85">
+	<div class="site-container flex min-h-20 items-center justify-between py-3">
+		<a href="/" class="inline-flex items-center rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70">
+			<img src="/newcustomers.svg" alt="Logo" width="240" height="36" class="h-9 w-auto" />
 		</a>
 		<div class="hidden lg:block">
 			<Nav groups={mainNavGroups} links={mainNavLinks} />
 		</div>
-		<div class="hidden gap-3 my-auto lg:flex">
+		<div class="my-auto hidden gap-3 lg:flex">
 			<Button href="/kontakt/" type="primary" text="Kontakt" />
 		</div>
 		<MobileNav groups={mainNavGroups} links={mobileNavLinks} />

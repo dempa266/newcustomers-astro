@@ -8,10 +8,15 @@ export interface NavColumn {
 	links: NavLink[];
 }
 
+export interface NavArticleLink extends NavLink {
+	description?: string;
+}
+
 export interface NavGroup {
 	title: string;
 	path: string;
 	columns: NavColumn[];
+	latestArticles?: NavArticleLink[];
 }
 
 export const mainNavGroups: NavGroup[] = [
@@ -47,6 +52,18 @@ export const mainNavGroups: NavGroup[] = [
 				],
 			},
 		],
+		latestArticles: [
+			{
+				label: 'SEO Pris: vad påverkar kostnaden?',
+				path: '/seo/pris/',
+				description: 'En snabb genomgång av nivåer, upplägg och förväntad effekt.',
+			},
+			{
+				label: 'SEO för e-handel',
+				path: '/seo/e-handel/',
+				description: 'Prioriteringar som lyfter både trafik och försäljning.',
+			},
+		],
 	},
 	{
 		title: 'Google Ads',
@@ -78,6 +95,18 @@ export const mainNavGroups: NavGroup[] = [
 					{ label: 'Göteborg', path: '/ads/konsult/goteborg/' },
 					{ label: 'Malmö', path: '/ads/konsult/malmo/' },
 				],
+			},
+		],
+		latestArticles: [
+			{
+				label: 'Google Ads Byrå pris',
+				path: '/ads/byra/pris/',
+				description: 'Så jämför du upplägg och får koll på vad du betalar för.',
+			},
+			{
+				label: 'Google Ads för e-handel',
+				path: '/ads/e-handel/',
+				description: 'Praktiska upplägg för skalbar, lönsam annonsering.',
 			},
 		],
 	},

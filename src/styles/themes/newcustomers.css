@@ -6,7 +6,7 @@
 		--field-radius: 0.75rem;
 		--field-border-width: 1px;
 
-		--background: oklch(0.99 0.002 95);
+		--background: #ffffff;
 		--foreground: oklch(0.3 0.01 265);
 
 		--surface: oklch(1 0 0);
@@ -23,7 +23,7 @@
 		--default: var(--surface-secondary);
 		--default-foreground: var(--foreground);
 
-		--accent: oklch(0.86 0.16 95);
+		--accent: #d5a438;
 		--accent-foreground: oklch(0.28 0.01 260);
 
 		--success: oklch(0.72 0.16 155);
@@ -49,7 +49,7 @@
 		--primary: var(--accent);
 		--primary-dark: color-mix(in oklab, var(--accent) 82%, var(--foreground) 18%);
 		--secondary-dark: color-mix(in oklab, var(--surface-secondary) 82%, var(--foreground) 18%);
-		--gray: oklch(0.3 0.01 265);
+		--gray: #34343d;
 		--gray-light: oklch(0.96 0.005 255);
 		--grayLight: var(--gray-light);
 		--light: oklch(0.9 0.006 255);

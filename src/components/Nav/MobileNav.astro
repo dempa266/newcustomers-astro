@@ -1,5 +1,6 @@
 ---
 import type { NavGroup, NavLink } from '../../data/navigation';
+import Button from '../Button.astro';
 
 interface Props {
 	groups?: NavGroup[];
@@ -11,40 +12,53 @@ const { groups = [], links = [] } = Astro.props as Props;
 
 <div class="flex lg:hidden">
 	<details class="relative" data-mobile-nav>
-		<summary class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-white cursor-pointer list-none">
+		<summary class="inline-flex h-10 w-10 list-none cursor-pointer items-center justify-center rounded-full border border-white/25 text-white transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70">
 			<span class="sr-only">Open main menu</span>
-			<span aria-hidden="true">☰</span>
+			<svg class="h-5 w-5" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+				<path d="M3.5 5.75h13M3.5 10h13M3.5 14.25h13" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" />
+			</svg>
 		</summary>
-		<div class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-gray px-6 py-6 sm:max-w-sm">
-			<div class="flex items-center justify-between">
+		<button type="button" class="fixed inset-0 z-20 bg-black/35 backdrop-blur-[2px]" data-close-menu aria-label="Close menu overlay"></button>
+		<div class="fixed inset-y-0 right-0 z-30 w-full overflow-y-auto border-l border-border bg-white px-6 py-6 shadow-2xl sm:max-w-sm">
+			<div class="flex items-center justify-between border-b border-border pb-5">
 				<a href="/" class="my-auto">
-					<img src="/newcustomers.svg" alt="Logo" width="240" height="36" class="h-10 my-auto" />
+					<img src="/newcustomers.svg" alt="Logo" width="240" height="36" class="h-9 my-auto" />
 				</a>
-				<button type="button" class="-m-2.5 rounded-md p-2.5 text-white" data-close-menu>
+				<button type="button" class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border text-foreground transition hover:bg-surface-secondary" data-close-menu>
 					<span class="sr-only">Close menu</span>
-					✕
+					<svg class="h-5 w-5" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+						<path d="M5.75 5.75 14.25 14.25M14.25 5.75 5.75 14.25" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" />
+					</svg>
 				</button>
 			</div>
-			<div class="mt-5 flow-root">
-				<div class="-my-5 divide-y divide-gray-500/10">
-					<ul class="space-y-2 py-6 list-none">
+			<div class="mt-6 flow-root">
+				<div>
+					<ul class="space-y-2 list-none">
 						{groups.map((group) => (
 							<li class="mb-0 list-none">
-								<details class="-mx-3">
-									<summary class="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base leading-7 text-white hover:bg-gray-600 cursor-pointer list-none">
-										{group.title}
-										<span aria-hidden="true">▾</span>
+								<details class="group/mobile rounded-2xl border border-border bg-surface-secondary/70 p-2">
+									<summary class="flex list-none w-full cursor-pointer items-center justify-between rounded-xl px-3 py-2 text-sm font-semibold text-foreground transition hover:bg-white">
+										<span>{group.title}</span>
+										<svg
+											class="h-4 w-4 text-muted transition-transform duration-200 group-open/mobile:rotate-180"
+											viewBox="0 0 12 12"
+											fill="none"
+											xmlns="http://www.w3.org/2000/svg"
+											aria-hidden="true"
+										>
+											<path d="M2.25 4.5 6 8.25 9.75 4.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+										</svg>
 									</summary>
-									<div class="mt-2 space-y-3">
-										<a class="text-white hover:text-white block rounded-lg py-2 pl-6 pr-3 text-sm leading-7 hover:bg-gray-600 font-semibold" href={group.path}>
-											Se alla {group.title}
-										</a>
+									<div class="mt-1 space-y-3 pb-2">
 										{group.columns.map((column) => (
-											<div class="px-6">
-												<p class="mb-2 text-xs uppercase tracking-wide text-gray-300">{column.title}</p>
+											<div class="px-3">
+												<p class="mb-1 text-[0.7rem] font-semibold uppercase tracking-[0.08em] text-muted">{column.title}</p>
 												<div class="space-y-1">
 													{column.links.map((item) => (
-														<a class="text-white hover:text-white block rounded-lg py-2 pl-3 pr-3 text-sm leading-7 hover:bg-gray-600" href={item.path}>
+														<a
+															class="block rounded-lg px-3 py-1.5 text-sm text-foreground no-underline transition hover:bg-white hover:text-primary hover:no-underline"
+															href={item.path}
+														>
 															{item.label}
 														</a>
 													))}
@@ -57,12 +71,18 @@ const { groups = [], links = [] } = Astro.props as Props;
 						))}
 						{links.map((link) => (
 							<li class="mb-0 list-none">
-								<a class="-mx-3 block rounded-lg px-3 py-2 text-base leading-7 text-white hover:text-white hover:bg-gray-600" href={link.path}>
+								<a
+									class="block rounded-xl border border-border bg-white px-4 py-2.5 text-sm font-semibold text-foreground no-underline transition hover:border-primary hover:text-primary hover:no-underline"
+									href={link.path}
+								>
 									{link.label}
 								</a>
 							</li>
 						))}
 					</ul>
+					<div class="mt-6 border-t border-border pt-5">
+						<Button href="/kontakt/" type="primary" text="Kontakt" class="w-full" />
+					</div>
 				</div>
 			</div>
 		</div>
@@ -74,9 +94,8 @@ const { groups = [], links = [] } = Astro.props as Props;
 		if (root.dataset.bound === 'true') return;
 		root.dataset.bound = 'true';
 
-		const close = root.querySelector('[data-close-menu]');
-		close?.addEventListener('click', () => {
-			root.removeAttribute('open');
+		root.querySelectorAll('[data-close-menu]').forEach((close) => {
+			close.addEventListener('click', () => root.removeAttribute('open'));
 		});
 
 		root.querySelectorAll('a').forEach((link) => {

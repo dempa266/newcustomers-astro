@@ -1,16 +1,23 @@
 ---
-import { Button, Checkbox, Input, TextArea } from '@heroui/react';
+import { Checkbox, Input, TextArea } from '@heroui/react';
+
+const fieldClassName =
+	'field block w-full border border-border bg-white px-3.5 py-2.5 text-base leading-6 text-gray shadow-none placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/30';
+const submitClassName =
+	'button button--primary inline-flex h-12 w-full items-center justify-center rounded-[var(--radius-button)] border border-primary bg-primary px-6 text-base font-semibold text-dark shadow-sm transition duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-primary-dark hover:bg-primary-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background';
 ---
 
 <section id="kontakt" class="section-spacing bg-gray-light" data-contact-form>
 	<div class="site-container">
-		<div class="grid gap-16 lg:grid-cols-2 sm:gap-y-20 lg:flex-row">
-			<div>
-				<h2>Kontakta oss</h2>
-				<p class="mt-3 text-lg leading-6 text-gray">
-					Varmt välkommen till oss på new customers. Vi har specialiserat oss på att skapa mer trafik till din webb, få ut mer affärer från webben och uppgradera dina kunders kundresa.
-				</p>
-				<dl class="mt-8 text-base text-gray grid grid-cols-2">
+		<div class="grid gap-8 lg:grid-cols-2">
+			<div class="p-6 lg:p-8">
+				<div class="section-intro section-intro--spaced section-intro--inset text-gray">
+					<h2>Kontakta oss</h2>
+					<p class="text-lg leading-6">
+						Varmt välkommen till oss på new customers. Vi har specialiserat oss på att skapa mer trafik till din webb, få ut mer affärer från webben och uppgradera dina kunders kundresa.
+					</p>
+				</div>
+				<dl class="text-base text-gray grid grid-cols-1 gap-6 sm:grid-cols-2">
 					<dt class="sr-only">Stockholm Address</dt>
 					<dd>
 						<div class="flex h-10 font-semibold"><span class="w-6 h-6 mt-1 text-primary">📍</span><div class="my-auto ml-1">Stockholm</div></div>
@@ -32,15 +39,15 @@ import { Button, Checkbox, Input, TextArea } from '@heroui/react';
 				</dl>
 				<p class="mt-6 text-base text-gray">
 					Letar du efter våra medarbetare?
-					<a href="/om-oss/" class="font-medium text-gray-700 underline">Hitta dem här</a>.
+					<a href="/om-oss/" class="font-medium text-gray no-underline hover:text-primary">Hitta dem här</a>.
 				</p>
 			</div>
-			<div>
+			<div class="surface-card p-6 lg:p-8">
 				<p class="text-primary font-bold text-center my-auto hidden" data-success></p>
 				<form action="#" method="POST" class="lg:flex-auto" data-form>
 					<div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
 						<div>
-							<label for="cf-name" class="block text-sm leading-6 text-gray">Namn</label>
+							<label for="cf-name" class="mb-1.5 block text-base font-medium leading-6 text-gray">Namn</label>
 							<div class="mt-2.5">
 								<Input
 									id="cf-name"
@@ -48,12 +55,12 @@ import { Button, Checkbox, Input, TextArea } from '@heroui/react';
 									name="name"
 									aria-label="Namn"
 									autoComplete="name"
-									className="block w-full rounded-md border-0 px-3.5 py-2 text-gray shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
+									className={fieldClassName}
 								/>
 							</div>
 						</div>
 						<div>
-							<label for="cf-phone" class="block text-sm leading-6 text-gray">Telefon</label>
+							<label for="cf-phone" class="mb-1.5 block text-base font-medium leading-6 text-gray">Telefon</label>
 							<div class="mt-2.5">
 								<Input
 									id="cf-phone"
@@ -61,57 +68,54 @@ import { Button, Checkbox, Input, TextArea } from '@heroui/react';
 									name="phone"
 									aria-label="Telefon"
 									autoComplete="phone"
-									className="block w-full rounded-md border-0 px-3.5 py-2 text-gray shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
+									className={fieldClassName}
 								/>
 							</div>
 						</div>
 						<div>
-							<label for="cf-email" class="block text-sm leading-6 text-gray">E-post</label>
+							<label for="cf-email" class="mb-1.5 block text-base font-medium leading-6 text-gray">E-post</label>
 							<div class="mt-2.5">
 								<Input
 									id="cf-email"
 									type="text"
 									name="email"
 									aria-label="E-post"
-									className="block w-full rounded-md border-0 px-3.5 py-2 text-gray shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
+									className={fieldClassName}
 								/>
 							</div>
 						</div>
 						<div>
-							<label for="cf-website" class="block text-sm leading-6 text-gray">Hemsida</label>
+							<label for="cf-website" class="mb-1.5 block text-base font-medium leading-6 text-gray">Hemsida</label>
 							<div class="mt-2.5">
 								<Input
 									id="cf-website"
 									type="text"
 									name="website"
 									aria-label="Hemsida"
-									className="block w-full rounded-md border-0 px-3.5 py-2 text-gray shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
+									className={fieldClassName}
 								/>
 							</div>
 						</div>
 						<div class="sm:col-span-2">
-							<label for="cf-message" class="block text-sm leading-6 text-gray">Meddelande</label>
+							<label for="cf-message" class="mb-1.5 block text-base font-medium leading-6 text-gray">Meddelande</label>
 							<div class="mt-2.5">
 								<TextArea
 									id="cf-message"
 									name="message"
 									rows={4}
 									aria-label="Meddelande"
-									className="block w-full rounded-md border-0 px-3.5 py-2 text-gray shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
+									className={fieldClassName}
 								/>
 							</div>
 						</div>
 					</div>
 					<div class="mt-10">
-						<Button
-							type="submit"
-							className="block w-full rounded-md bg-primary px-3.5 py-2.5 text-center text-sm text-black shadow-sm hover:bg-primary-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-						>
+						<button type="submit" class={submitClassName}>
 							Skicka meddelande
-						</Button>
+						</button>
 					</div>
-					<div class="mt-5 space-x-2">
-						<Checkbox id="cf-gdpr" name="gdpr" className="text-sm leading-6 text-gray">
+					<div class="mt-5">
+						<Checkbox id="cf-gdpr" name="gdpr" className="text-sm leading-6 text-muted">
 							Genom att skicka detta meddelande godkänner du att vi lagrar och hanterar dina personuppgifter i enlighet med vår
 							<a href="/integritetspolicy/" class="text-primary">integritetspolicy</a>.
 						</Checkbox>

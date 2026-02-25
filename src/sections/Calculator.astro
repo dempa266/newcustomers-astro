@@ -13,11 +13,13 @@ const { data = {} } = Astro.props as Props;
 
 <section class="section-spacing">
 	<div class="site-container">
-		<div class="w-full text-center bg-gray rounded-xl px-6 py-10 lg:px-10 lg:py-12">
-			<div class="max-w-3xl mx-auto section-stack">
-			{data.title && <h2 class="mx-auto text-white text-4xl">{data.title}</h2>}
-			{data.description && <p class="mx-auto text-white">{data.description}</p>}
-			</div>
+			<div class="surface-card-dark w-full text-center px-6 py-10 lg:px-10 lg:py-12">
+				{(data.title || data.description) && (
+					<div class="section-intro section-intro--center section-intro--spaced max-w-3xl mx-auto text-on-dark">
+						{data.title && <h2>{data.title}</h2>}
+						{data.description && <p>{data.description}</p>}
+					</div>
+			)}
 			<LeadValueCalculator />
 		</div>
 	</div>

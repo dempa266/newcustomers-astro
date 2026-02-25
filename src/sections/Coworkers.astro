@@ -26,7 +26,7 @@ const sectionClass = compact ? '' : 'section-spacing';
 	<div class="site-container-narrow">
 		<div class="grid w-full gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
 		{coworkers.map((coworker) => (
-			<div class="relative w-64 flex flex-col z-0 mx-auto">
+			<div class="surface-card-muted surface-card-interactive relative w-64 flex flex-col z-0 mx-auto p-3">
 				{coworker.image?.url && (
 					<div class="h-64 flex">
 						<img
@@ -39,10 +39,10 @@ const sectionClass = compact ? '' : 'section-spacing';
 						/>
 					</div>
 				)}
-				<div class="font-medium text-lg mt-3">{coworker.name}</div>
-				{coworker.title && <div class="text-sm font-light text-gray mb-1">{coworker.title}</div>}
-				{coworker.phone && <a href={`tel:${coworker.phone}`} class="text-base text-gray my-1">{coworker.phone}</a>}
-				{coworker.email && <a href={`mailto:${coworker.email}`} class="text-base text-gray my-1">{coworker.email}</a>}
+				<div class="font-medium text-lg mt-3 px-1">{coworker.name}</div>
+				{coworker.title && <div class="text-sm font-light text-muted mb-1 px-1">{coworker.title}</div>}
+				{coworker.phone && <a href={`tel:${coworker.phone}`} class="text-base text-gray my-1 px-1 no-underline hover:text-primary">{coworker.phone}</a>}
+				{coworker.email && <a href={`mailto:${coworker.email}`} class="text-base text-gray my-1 px-1 no-underline hover:text-primary">{coworker.email}</a>}
 				{coworker.linkedin && (
 					<a href={coworker.linkedin} target="_blank" rel="noreferrer">
 						<img

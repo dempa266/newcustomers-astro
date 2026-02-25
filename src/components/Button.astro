@@ -1,29 +1,40 @@
 ---
-import { Link as HeroLink } from '@heroui/react';
+type ButtonVariant = 'primary' | 'secondary' | 'transparent' | 'tertiary' | 'default';
+type ButtonSize = 'sm' | 'md' | 'lg';
 
 interface Props {
-	type?: string;
+	type?: ButtonVariant;
+	size?: ButtonSize;
 	text: string;
 	href?: string;
+	target?: string;
+	rel?: string;
 	class?: string;
 }
 
-const { type = 'default', text, href = '#', class: className = '' } = Astro.props as Props;
+const { type = 'default', size = 'md', text, href = '#', target, rel, class: className = '' } = Astro.props as Props;
 
-const classesByType: Record<string, string> = {
-	primary:
-		'bg-primary px-5 py-2 rounded-2xl text-sm text-black cursor-pointer hover:bg-primary-dark border border-primary hover:text-black transition',
-	secondary:
-		'bg-white px-5 py-2 rounded-2xl text-sm text-gray cursor-pointer hover:bg-secondary-dark border border-gray',
-	transparent:
-		'text-white px-5 py-2 rounded-2xl text-sm text-gray cursor-pointer hover:bg-secondary-dark border border-gray hover:bg-white hover:text-gray',
-	default:
-		'bg-primary px-5 py-2 rounded-2xl text-sm text-white cursor-pointer hover:bg-primary-dark hover:text-white border border-primary',
+const baseClasses =
+	'inline-flex items-center justify-center rounded-[var(--radius-button)] border font-semibold tracking-tight leading-none no-underline hover:no-underline transition duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background';
+
+const classesBySize: Record<ButtonSize, string> = {
+	sm: 'h-9 px-4 text-sm',
+	md: 'h-11 px-5 text-base',
+	lg: 'h-12 px-6 text-lg',
 };
 
-const classes = `${classesByType[type] ?? classesByType.default} ${className}`.trim();
+const classesByType: Record<ButtonVariant, string> = {
+	primary: 'border-primary bg-primary text-dark shadow-sm hover:-translate-y-0.5 hover:border-primary-dark hover:bg-primary-dark',
+	secondary: 'border-border bg-white text-foreground hover:-translate-y-0.5 hover:bg-surface-secondary',
+	transparent: 'border-white/35 bg-transparent text-white hover:-translate-y-0.5 hover:border-white hover:bg-white/10',
+	tertiary: 'border-transparent bg-transparent text-foreground hover:border-border hover:bg-surface-secondary',
+	default: 'border-primary bg-primary text-dark shadow-sm hover:-translate-y-0.5 hover:border-primary-dark hover:bg-primary-dark',
+};
+
+const classes = `${baseClasses} ${classesBySize[size]} ${classesByType[type]} ${className}`.trim();
+const computedRel = rel ?? (target === '_blank' ? 'noreferrer noopener' : undefined);
 ---
 
-<HeroLink href={href} className={classes}>
+<a href={href} class={classes} target={target} rel={computedRel}>
 	{text}
-</HeroLink>
+</a>

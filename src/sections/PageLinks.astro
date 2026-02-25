@@ -21,24 +21,43 @@ const links = parseEncodedJson<PageLink[]>(data.links, []);
 
 <section class="section-spacing">
 	<div class="site-container">
-		<div class="grid w-full gap-10 lg:grid-cols-3">
+		<ul class="grid w-full list-none gap-6 pl-0 md:grid-cols-3">
 		{links.map((link) => (
-			<a href={link.url ?? '#kontakt'} class="flex p-5 cursor-pointer group bg-gray-light text-gray hover:bg-gray hover:text-white rounded-2xl">
-				<div class="shrink-0">
-					{link.icon?.url && (
-						<img
-							class="w-16 h-16 mr-5 group-hover:invert group-hover:contrast-200 group-hover:grayscale"
-							src={link.icon.url}
-							alt="Link icon"
-							width="256"
-							height="256"
-							loading="lazy"
-						/>
-					)}
-				</div>
-				<p class="my-auto group-hover:text-white">{link.text}</p>
-			</a>
+			<li class="mb-0">
+				<a
+					href={link.url ?? '#kontakt'}
+					class="surface-card group flex h-full flex-col p-5 sm:p-6 no-underline transition duration-200 hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_18px_38px_-26px_color-mix(in_oklab,var(--primary)_60%,transparent)] hover:no-underline"
+				>
+					<div class="mb-6 flex items-center justify-between gap-4">
+						<div class="flex h-16 w-16 shrink-0 items-center justify-center rounded-[0.95rem] bg-surface-secondary p-3 ring-1 ring-border/70">
+							{link.icon?.url && (
+								<img
+									class="h-full w-full object-contain"
+									src={link.icon.url}
+									alt={`Illustration: ${link.text ?? 'Länk'}`}
+									width="144"
+									height="144"
+									loading="lazy"
+								/>
+							)}
+						</div>
+					</div>
+
+					<h3 class="text-[1.22rem] font-medium leading-[1.35] text-gray">
+						{link.text}
+					</h3>
+
+					<div class="mt-4">
+						<span class="inline-flex items-center gap-2 text-sm font-semibold text-primary">
+							Starta här
+							<svg class="h-4 w-4 transition duration-200 group-hover:translate-x-0.5" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+								<path d="M4.75 10H15.25M10.75 5.5L15.25 10L10.75 14.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path>
+							</svg>
+						</span>
+					</div>
+				</a>
+			</li>
 		))}
-		</div>
+		</ul>
 	</div>
 </section>

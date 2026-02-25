@@ -21,24 +21,24 @@ const text = data.description ?? description;
 
 <section class="section-spacing">
 	<div class="site-container">
-		<div class="grid gap-12 lg:gap-24 lg:grid-cols-2 text-gray">
-			<div class="my-auto space-y-4">
-				{title && <h1 class="text-4xl lg:text-5xl">{title}</h1>}
-				{text && <p>{text}</p>}
-				<div class="flex space-x-4">
-					<Button href="/kontakt/" type="primary" text="Kontakt" />
-					<Button href="/om-oss/" type="secondary" text="Om oss" />
+		<div class="grid items-center gap-12 lg:grid-cols-2 lg:gap-20 text-gray">
+			<div class="my-auto section-intro">
+				{title && <h1>{title}</h1>}
+				{text && <p class="prose-measure">{text}</p>}
+				<div class="flex flex-wrap gap-3 pt-2">
+					<Button href="/kontakt/" type="primary" size="lg" text="Kontakt" />
+					<Button href="/om-oss/" type="secondary" size="lg" text="Om oss" />
 				</div>
 			</div>
 
 			{data.image && (
-				<div class="flex w-auto overflow-hidden bg-white rounded-2xl h-96">
+				<div class="flex aspect-[4/3] w-full overflow-hidden rounded-[var(--radius-card)]">
 					<img src={data.image} alt={title ?? ''} class="object-cover w-full h-full" loading="lazy" />
 				</div>
 			)}
 
 			{video.url && (
-				<figure class="flex w-full h-full wp-block-video">
+				<figure class="flex aspect-[4/3] w-full overflow-hidden rounded-[var(--radius-card)] wp-block-video">
 					<video class="w-full h-full object-fit" autoplay loop muted src={video.url} playsinline></video>
 				</figure>
 			)}

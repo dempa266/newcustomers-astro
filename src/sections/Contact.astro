@@ -16,12 +16,16 @@ const { data = {} } = Astro.props as Props;
 
 <section class="section-spacing">
 	<div class="site-container">
-		<div class="bg-gray text-white rounded-2xl px-6 py-12 lg:px-10 lg:py-16">
+		<div class="surface-card-dark px-6 py-12 lg:px-10 lg:py-16">
 			<div class="lg:flex justify-between gap-10">
-				<div class="max-w-lg my-auto section-stack">
-					{data.preTitle && <div class="text-base font-medium text-primary uppercase">{data.preTitle}</div>}
-					{data.title && <h2 class="text-4xl mt-0">{data.title}</h2>}
-					{data.description && <div class="text-gray-300">{data.description}</div>}
+				<div class="max-w-lg my-auto">
+					{(data.preTitle || data.title || data.description) && (
+						<div class="section-intro section-intro--spaced text-on-dark">
+							{data.preTitle && <div class="text-base font-medium text-primary uppercase">{data.preTitle}</div>}
+							{data.title && <h2>{data.title}</h2>}
+							{data.description && <p class="prose-measure">{data.description}</p>}
+						</div>
+					)}
 					<InlineContactForm />
 				</div>
 				<div class="flex justify-between space-x-5 my-auto">

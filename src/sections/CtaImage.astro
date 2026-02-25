@@ -1,4 +1,6 @@
 ---
+import Button from '../components/Button.astro';
+
 interface Props {
 	data?: {
 		title?: string;
@@ -13,19 +15,13 @@ const { data = {} } = Astro.props as Props;
 
 <section class="section-spacing">
 	<div class="site-container">
-		<div class="grid lg:grid-cols-2 py-6 overflow-hidden text-white bg-gray rounded-xl">
-			<div class="flex -mt-5 lg:-my-5">
+		<div class="surface-card-dark grid overflow-hidden lg:grid-cols-2">
+			<div class="flex aspect-[4/3] lg:aspect-auto">
 				{data.image && <img src={data.image} alt={data.title ?? ''} class="object-cover w-full h-full" loading="lazy" />}
 			</div>
-			<div class="flex flex-col justify-center space-y-6 text-white lg:px-24">
-				<div class="text-2xl text-center mt-5">{data.title}</div>
-				<a
-					href={data.buttonlink ?? '#'}
-					class="flex px-4 py-2 mx-auto text-sm leading-6 text-white border group rounded-2xl border-light hover:bg-primary hover:text-white"
-				>
-					{data.buttontext}
-					<div class="w-3 h-3 my-auto ml-2 rounded-full bg-primary group-hover:bg-white"></div>
-				</a>
+			<div class="section-intro section-intro--center justify-center px-6 py-10 text-on-dark lg:px-16">
+				{data.title && <h2 class="prose-measure">{data.title}</h2>}
+				{data.buttontext && <Button href={data.buttonlink ?? '#'} type="transparent" size="lg" text={data.buttontext} />}
 			</div>
 		</div>
 	</div>

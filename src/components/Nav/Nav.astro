@@ -11,13 +11,18 @@ const { groups = [], links = [] } = Astro.props as Props;
 ---
 
 <div class="flex h-full">
-	<ul class="flex my-auto gap-6 list-none">
+	<ul class="my-auto flex list-none gap-2">
 		{groups.map((group) => (
-			<Dropdown title={group.title} path={group.path} columns={group.columns} />
+			<Dropdown title={group.title} path={group.path} columns={group.columns} latestArticles={group.latestArticles} />
 		))}
 		{links.map((link) => (
 			<li class="mb-0 list-none">
-				<a class="text-white text-sm hover:text-primary" href={link.path}>{link.label}</a>
+				<a
+					class="inline-flex items-center rounded-full px-3 py-2 text-sm font-medium text-white/90 no-underline transition hover:bg-white/10 hover:text-white hover:no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
+					href={link.path}
+				>
+					{link.label}
+				</a>
 			</li>
 		))}
 	</ul>

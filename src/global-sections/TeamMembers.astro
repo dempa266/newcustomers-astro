@@ -19,7 +19,9 @@ const coworkersPayload = encodeURIComponent(
 
 <section class="section-spacing">
 	<div class="site-container-narrow">
-		<h2 class="mb-8 text-3xl font-semibold text-slate-900">{section.heading}</h2>
+		<div class="section-intro section-intro--spaced text-slate-900">
+			<h2>{section.heading}</h2>
+		</div>
 		<Coworkers compact data={{ coworkers: coworkersPayload }} />
 	</div>
 </section>
