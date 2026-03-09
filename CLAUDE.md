@@ -48,4 +48,5 @@ The homepage (`src/pages/index.mdx`) uses `PageLayout.astro` (extends `Layout.as
 - Uses `color-mix(in oklab, ...)` extensively for derived colors
 
 ### Design Reference
-`LANDINGPAGE.md` defines the recommended section flow for service pages: Hero → Social Proof → Problem → Solution → Results → Process → Services → Authority → Testimonials → CTA. Follow this structure when creating new service pages.
+- **`.claude/skills/design-system.md`** — Complete design system: colors, typography, section anatomy, component patterns, animation system, accessibility rules. **Read this before creating or modifying any section or component.**
+- `LANDINGPAGE.md` — Recommended section flow for service pages: Hero → Social Proof → Problem → Solution → Results → Process → Services → Authority → Testimonials → CTA.

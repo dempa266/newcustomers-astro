@@ -24,6 +24,8 @@ const DEFAULTS = {
 };
 
 function init() {
+	if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
 	// Single-element reveals
 	document.querySelectorAll<HTMLElement>('[data-reveal]').forEach((el) => {
 		const delay = parseFloat(el.dataset.revealDelay ?? '0');

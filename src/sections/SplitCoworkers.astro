@@ -45,6 +45,8 @@ const coworkers = parseEncodedJson<Coworker[]>(data.coworkers, []);
 									src={coworker.image.url}
 									alt={coworker.name ?? ''}
 									class="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+									width="104"
+									height="104"
 									loading="lazy"
 								/>
 							) : (

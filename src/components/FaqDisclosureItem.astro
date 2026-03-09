@@ -8,9 +8,9 @@ const { question, answer } = Astro.props as Props;
 ---
 
 <details class="faq-item group cursor-pointer border-b border-black/6" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-	<summary class="flex items-center justify-between w-full py-6 text-left list-none">
+	<summary class="flex items-center justify-between w-full py-6 text-left list-none focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 focus-visible:rounded">
 		<span class="font-[var(--font-heading)] text-lg font-medium leading-snug text-foreground pr-6" itemprop="name">{question}</span>
-		<span class="faq-icon shrink-0 flex items-center justify-center w-8 h-8 rounded-full border border-black/8 text-foreground/40 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-open:rotate-45 group-open:border-primary/30 group-open:text-primary" aria-hidden="true">
+		<span class="faq-icon shrink-0 flex items-center justify-center w-9 h-9 rounded-full border border-black/8 text-foreground/40 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-open:rotate-45 group-open:border-primary/30 group-open:text-primary" aria-hidden="true">
 			<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
 				<line x1="7" y1="2" x2="7" y2="12" />
 				<line x1="2" y1="7" x2="12" y2="7" />
@@ -35,6 +35,10 @@ const { question, answer } = Astro.props as Props;
 		grid-template-rows: 1fr;
 	}
 
+	.faq-item.is-closing > .faq-answer {
+		grid-template-rows: 0fr;
+	}
+
 	.faq-answer-inner {
 		overflow: hidden;
 	}
@@ -50,17 +54,15 @@ const { question, answer } = Astro.props as Props;
 			e.preventDefault();
 
 			if (details.hasAttribute('open')) {
-				// Closing: animate first, then remove open
-				answer.style.gridTemplateRows = '0fr';
+				// Closing: add class to trigger 0fr transition, then remove open
+				details.classList.add('is-closing');
 				answer.addEventListener('transitionend', () => {
 					details.removeAttribute('open');
+					details.classList.remove('is-closing');
 				}, { once: true });
 			} else {
-				// Opening: set open, then animate on next frame
+				// Opening: set open attribute, CSS handles the 1fr transition
 				details.setAttribute('open', '');
-				requestAnimationFrame(() => {
-					answer.style.gridTemplateRows = '1fr';
-				});
 			}
 		});
 	});
