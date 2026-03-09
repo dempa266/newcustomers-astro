@@ -9,6 +9,7 @@ interface Props {
 	containerClass?: string;
 	contentClass?: string;
 	withOverlay?: boolean;
+	'aria-label'?: string;
 }
 
 const {
@@ -19,6 +20,7 @@ const {
 	containerClass = '',
 	contentClass = '',
 	withOverlay = true,
+	'aria-label': ariaLabel,
 } = Astro.props as Props;
 
 const sectionClasses = ['section-spacing-tight', sectionClass].filter(Boolean).join(' ');
@@ -32,7 +34,7 @@ const innerContainerClasses = ['site-container relative z-10', containerClass].f
 const contentClasses = ['flex flex-col items-center gap-10 lg:gap-12', contentClass].filter(Boolean).join(' ');
 ---
 
-<section class={sectionClasses}>
+<section class={sectionClasses} aria-label={ariaLabel}>
 	<div class={panelClasses}>
 		{withOverlay && <div class="absolute inset-0 bg-gradient-to-r from-white/8 via-transparent to-white/6 pointer-events-none"></div>}
 		<div class={innerContainerClasses}>

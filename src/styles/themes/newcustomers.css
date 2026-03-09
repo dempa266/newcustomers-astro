@@ -48,7 +48,7 @@
 		--segment: var(--surface);
 		--segment-foreground: var(--foreground);
 
-		--primary: var(--accent);
+		--primary: #d5a438;
 		--primary-dark: color-mix(in oklab, var(--accent) 82%, var(--foreground) 18%);
 		--secondary-dark: color-mix(in oklab, var(--surface-secondary) 82%, var(--foreground) 18%);
 		--gray: #34343d;

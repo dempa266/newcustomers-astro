@@ -1,77 +1,157 @@
 ---
-import { parseEncodedJson } from "../components/utils";
+import { parseEncodedJson } from '../components/utils';
 
 interface PageLink {
-  text?: string;
-  url?: string;
-  icon?: {
-    url?: string;
-  };
+	text?: string;
+	url?: string;
 }
 
 interface Props {
-  data?: {
-    links?: string;
-  };
+	data?: {
+		links?: string;
+	};
 }
 
 const { data = {} } = Astro.props as Props;
 const links = parseEncodedJson<PageLink[]>(data.links, []);
+
+const cardMeta = [
+	{
+		eyebrow: 'SEO',
+		help: 'Långsiktigt lönsam synlighet som bygger stabil organisk tillväxt över tid.',
+	},
+	{
+		eyebrow: 'SEM',
+		help: 'Snabb affärseffekt genom datadriven annonsering som ger mätbar avkastning.',
+	},
+	{
+		eyebrow: 'CRO',
+		help: 'Vi utvecklar värdet av hela trafiken till er webb genom löpande konverteringsoptimering.',
+	},
+];
 ---
 
-<section class="section-spacing relative z-10 -mt-8">
-  <div class="site-container">
-    <ul class="grid w-full list-none gap-6 lg:gap-8 pl-0 md:grid-cols-3">
-      {
-        links.map((link) => (
-          <li class="mb-0">
-            <a
-              href={link.url ?? "#kontakt"}
-              class="surface-card group flex h-full flex-col p-6 sm:p-8 no-underline transition-all duration-300 hover:-translate-y-2 hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5 hover:bg-surface/50"
-            >
-              <div class="mb-8 flex items-center justify-between gap-4">
-                <div class="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-primary/5 p-3 text-primary transition-colors group-hover:bg-primary/10">
-                  {link.icon?.url && (
-                    <img
-                      class="h-full w-full object-contain drop-shadow-sm transition-transform duration-300 group-hover:scale-110"
-                      src={link.icon.url}
-                      alt={`Illustration: ${link.text ?? "Länk"}`}
-                      width="144"
-                      height="144"
-                      loading="lazy"
-                    />
-                  )}
-                </div>
-              </div>
+<section id="features" aria-label="Tjänster" class="section-spacing relative z-10 -mt-6">
+	<div class="site-container">
+		<div class="mb-8 max-w-3xl">
+			<p class="type-section-lead text-foreground/66">SEO för långsiktig lönsamhet, SEM för snabb affärseffekt och CRO för att utveckla värdet av all trafik till er webb.</p>
+		</div>
+		<ul class="grid w-full list-none gap-6 pl-0 md:grid-cols-3">
+			{links.map((link, index) => {
+				const meta = cardMeta[index] ?? cardMeta[0];
+				return (
+					<li class="mb-0">
+						<a
+							href={link.url ?? '#kontakt'}
+							class="group block h-full rounded-[2rem] border border-black/10 bg-white p-6 text-foreground no-underline shadow-[0_18px_48px_-42px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-1 hover:border-primary/45 hover:shadow-[0_24px_62px_-40px_rgba(0,0,0,0.16)] hover:no-underline"
+						>
+							<div class="mb-5 rounded-[1.35rem] border border-black/10 bg-[#f8fafc] p-4">
+								<div class="mb-3">
+									<span class="type-micro-label text-foreground/56">{meta.eyebrow}</span>
+								</div>
 
-              <h3 class="text-xl font-semibold leading-tight text-foreground group-hover:text-primary transition-colors">
-                {link.text}
-              </h3>
+								{index === 0 && (
+									<div class="space-y-3">
+										<svg viewBox="0 0 320 120" class="h-24 w-full rounded-xl border border-black/10 bg-white p-2" fill="none" aria-hidden="true">
+											<path d="M20 98H300" stroke="rgba(17,17,17,0.14)" stroke-width="1.5" />
+											<rect x="36" y="66" width="24" height="32" rx="4" fill="rgba(213,164,56,0.45)" />
+											<rect x="88" y="56" width="24" height="42" rx="4" fill="rgba(213,164,56,0.55)" />
+											<rect x="140" y="48" width="24" height="50" rx="4" fill="rgba(213,164,56,0.62)" />
+											<rect x="192" y="40" width="24" height="58" rx="4" fill="rgba(213,164,56,0.7)" />
+											<rect x="244" y="34" width="24" height="64" rx="4" fill="rgba(213,164,56,0.78)" />
+											<path d="M36 78C58 72 72 68 88 66C104 64 122 58 140 54C158 50 174 48 192 44C210 40 228 34 244 32C258 30 270 30 284 28" stroke="rgba(17,17,17,0.72)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+										</svg>
+										<div class="grid grid-cols-2 gap-2">
+											<div class="rounded-lg border border-black/10 bg-white px-3 py-2">
+												<p class="type-micro-label text-foreground/52">Organisk synlighet</p>
+												<p class="mt-1 type-micro-value text-foreground">+31%</p>
+											</div>
+											<div class="rounded-lg border border-black/10 bg-white px-3 py-2">
+												<p class="type-micro-label text-foreground/52">Topplaceringar</p>
+												<p class="mt-1 type-micro-value text-primary">42</p>
+											</div>
+										</div>
+									</div>
+								)}
 
-              <div class="mt-6 mt-auto pt-6 border-t border-border/40">
-                <span class="inline-flex items-center gap-2 text-sm font-semibold text-primary">
-                  Starta här
-                  <svg
-                    class="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
-                    viewBox="0 0 20 20"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true"
-                  >
-                    <path
-                      d="M4.75 10H15.25M10.75 5.5L15.25 10L10.75 14.5"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
-                </span>
-              </div>
-            </a>
-          </li>
-        ))
-      }
-    </ul>
-  </div>
+								{index === 1 && (
+									<div class="space-y-2.5">
+										<div class="rounded-lg border border-black/10 bg-white px-3 py-2">
+											<div class="mb-1.5 flex items-center justify-between">
+												<span class="type-micro-value text-foreground/66">Annonsklick (CTR)</span>
+												<span class="type-micro-label text-primary">7.1%</span>
+											</div>
+											<div class="h-2 rounded-full bg-black/8">
+												<span class="block h-2 w-[71%] rounded-full bg-primary/70"></span>
+											</div>
+										</div>
+										<div class="rounded-lg border border-black/10 bg-white px-3 py-2">
+											<div class="mb-1.5 flex items-center justify-between">
+												<span class="type-micro-value text-foreground/66">Kostnad per klick</span>
+												<span class="type-micro-label text-primary">-14%</span>
+											</div>
+											<div class="h-2 rounded-full bg-black/8">
+												<span class="block h-2 w-[64%] rounded-full bg-primary/65"></span>
+											</div>
+										</div>
+										<div class="rounded-lg border border-primary/35 bg-white px-3 py-2">
+											<div class="mb-1.5 flex items-center justify-between">
+												<span class="type-micro-value text-foreground/72">ROAS</span>
+												<span class="type-micro-label text-primary">5.4x</span>
+											</div>
+											<div class="h-2 rounded-full bg-black/8">
+												<span class="block h-2 w-[86%] rounded-full bg-primary/82"></span>
+											</div>
+										</div>
+									</div>
+								)}
+
+								{index === 2 && (
+									<div class="space-y-2.5">
+										<div class="rounded-lg border border-black/10 bg-white px-3 py-2">
+											<div class="mb-1.5 flex items-center justify-between">
+												<span class="type-micro-value text-foreground/66">Besök till klick</span>
+												<span class="type-micro-label text-primary">42%</span>
+											</div>
+											<div class="h-2 rounded-full bg-black/8">
+												<span class="block h-2 w-[42%] rounded-full bg-primary/70"></span>
+											</div>
+										</div>
+										<div class="rounded-lg border border-black/10 bg-white px-3 py-2">
+											<div class="mb-1.5 flex items-center justify-between">
+												<span class="type-micro-value text-foreground/66">Klick till lead</span>
+												<span class="type-micro-label text-primary">21%</span>
+											</div>
+											<div class="h-2 rounded-full bg-black/8">
+												<span class="block h-2 w-[21%] rounded-full bg-primary/65"></span>
+											</div>
+										</div>
+										<div class="rounded-lg border border-primary/35 bg-white px-3 py-2">
+											<div class="mb-1.5 flex items-center justify-between">
+												<span class="type-micro-value text-foreground/72">Lead till kund</span>
+												<span class="type-micro-label text-primary">+2.4pp</span>
+											</div>
+											<div class="h-2 rounded-full bg-black/8">
+												<span class="block h-2 w-[34%] rounded-full bg-primary/82"></span>
+											</div>
+										</div>
+									</div>
+								)}
+							</div>
+
+							<h3 class="type-card-title text-foreground group-hover:text-primary transition-colors">{link.text}</h3>
+							<p class="type-card-body mt-3 text-foreground/66">{meta.help}</p>
+
+							<div class="mt-6 border-t border-black/10 pt-4">
+								<span class="micro-link inline-flex items-center gap-2 text-sm font-semibold text-primary">
+									Starta dialog
+									<span class="h-px w-5 bg-current transition-all duration-300 group-hover:w-7"></span>
+								</span>
+							</div>
+						</a>
+					</li>
+				);
+			})}
+		</ul>
+	</div>
 </section>

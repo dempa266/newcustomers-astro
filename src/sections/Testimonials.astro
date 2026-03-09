@@ -1,106 +1,91 @@
 ---
-import { parseEncodedJson } from "../components/utils";
+import SectionEyebrow from '../components/SectionEyebrow.astro';
+import Button from '../components/Button.astro';
+import { parseEncodedJson } from '../components/utils';
 
 interface Testimonial {
-  text?: string;
-  image?: { url?: string; alt?: string };
-  logo?: { url?: string; alt?: string };
+	text?: string;
+	image?: { url?: string; alt?: string };
+	logo?: { url?: string; alt?: string };
 }
 
 interface Props {
-  data?: {
-    testimonials?: string;
-  };
+	data?: {
+		eyebrow?: string;
+		title?: string;
+		testimonials?: string;
+		buttonText?: string;
+		buttonLink?: string;
+	};
 }
 
 const { data = {} } = Astro.props as Props;
 const testimonials = parseEncodedJson<Testimonial[]>(data.testimonials, []);
 
-// Simple helper to extract the author from the text (assuming "- Author Name" format)
 const formatTestimonial = (fullText?: string) => {
-  if (!fullText) return { quote: "", author: "" };
-  const parts = fullText.split(" - ");
-  if (parts.length > 1) {
-    const author = parts.pop()?.trim() || "";
-    const quote = parts.join(" - ").trim();
-    return { quote, author };
-  }
-  return { quote: fullText, author: "" };
+	if (!fullText) return { quote: '', author: '', company: '' };
+	const parts = fullText.split(' - ');
+	if (parts.length > 1) {
+		const authorFull = parts.pop()?.trim() || '';
+		const quote = parts.join(' - ').trim();
+		const authorParts = authorFull.split(' på ');
+		return {
+			quote,
+			author: authorParts[0]?.trim() || '',
+			company: authorParts[1]?.trim() || '',
+		};
+	}
+	return { quote: fullText, author: '', company: '' };
 };
 ---
 
-<section class="section-spacing bg-surface-secondary/10">
-  <div class="site-container">
-    <div class="grid gap-12 lg:gap-16 lg:grid-cols-2 text-dark">
-      {
-        testimonials.map((testimonial) => {
-          const { quote, author } = formatTestimonial(testimonial.text);
+<section class="section-spacing" aria-label={data.eyebrow ?? 'Recensioner'}>
+	<div class="site-container">
+		<div class="section-intro section-intro--center section-intro--spaced" data-reveal>
+			{data.eyebrow && <SectionEyebrow text={data.eyebrow} center />}
+			{data.title && <h2>{data.title}</h2>}
+		</div>
 
-          return (
-            <div class="relative flex flex-col bg-surface rounded-3xl overflow-hidden shadow-sm border border-border/40 transition-all duration-300 hover:shadow-xl hover:border-primary/20 hover:-translate-y-2 group">
-              {testimonial.image?.url && (
-                <div class="relative w-full aspect-[21/9] sm:aspect-[16/7] overflow-hidden bg-surface-secondary">
-                  <img
-                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    src={testimonial.image.url}
-                    alt={testimonial.image.alt ?? ""}
-                    width="800"
-                    height="400"
-                    loading="lazy"
-                  />
-                  {/* Subtle gradient overlay to blend image into card */}
-                  <div class="absolute inset-0 bg-gradient-to-t from-surface via-surface/20 to-transparent" />
-                </div>
-              )}
+		<div class="section-after-intro max-w-4xl mx-auto border-t border-black/6" data-reveal-children>
+			{testimonials.map((testimonial, i) => {
+				const { quote, author, company } = formatTestimonial(testimonial.text);
+				return (
+					<div class="py-10 border-b border-black/6">
+						<div class="flex gap-5">
+							<span class="shrink-0 font-[var(--font-heading)] text-base font-semibold leading-[1.12] text-primary tabular-nums">
+								{String(i + 1).padStart(2, '0')}
+							</span>
+							<div>
+								<blockquote class="m-0">
+									<p class="text-foreground/82 leading-relaxed max-w-[58ch]">{quote}</p>
+								</blockquote>
+								<div class="mt-5 flex flex-wrap items-center gap-4">
+									<div>
+										{author && <p class="font-[var(--font-heading)] text-sm font-semibold text-foreground">{author}</p>}
+										{company && <p class="text-sm text-foreground/44">{company}</p>}
+									</div>
+									{testimonial.logo?.url && (
+										<img
+											class="h-4 w-auto object-contain opacity-50 ml-auto"
+											src={testimonial.logo.url}
+											alt={testimonial.logo.alt ?? ''}
+											width="80"
+											height="16"
+											loading="lazy"
+										/>
+									)}
+								</div>
+							</div>
+						</div>
+					</div>
+				);
+			})}
+		</div>
 
-              <div class="flex flex-col flex-1 px-6 sm:px-10 pb-10 pt-4 relative z-10">
-                {/* Decorative quote icon */}
-                <div class="text-primary/20 mb-4">
-                  <svg
-                    width="40"
-                    height="40"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path d="M14.017 21L16.439 16.59H11.839L11.839 3H21.579L21.579 16.59L19.157 21H14.017ZM2.177 21L4.599 16.59H0L0 3H9.74L9.74 16.59L7.318 21H2.177Z" />
-                  </svg>
-                </div>
-
-                <p class="text-lg sm:text-xl leading-relaxed text-foreground font-medium flex-1 italic relative mb-8">
-                  "{quote}"
-                </p>
-
-                <div class="flex flex-col sm:flex-row items-center justify-between gap-6 pt-6 border-t border-border/40 mt-auto">
-                  <div class="text-center sm:text-left">
-                    {author && (
-                      <p class="font-semibold text-foreground">
-                        {author.split(" på ")[0]}
-                      </p>
-                    )}
-                    {author && author.includes(" på ") && (
-                      <p class="text-sm font-medium text-text-muted mt-0.5">
-                        på {author.split(" på ")[1]}
-                      </p>
-                    )}
-                  </div>
-
-                  {testimonial.logo?.url && (
-                    <img
-                      class="h-8 w-auto object-contain shrink-0"
-                      src={testimonial.logo.url}
-                      alt={testimonial.logo.alt ?? ""}
-                      width="120"
-                      height="30"
-                      loading="lazy"
-                    />
-                  )}
-                </div>
-              </div>
-            </div>
-          );
-        })
-      }
-    </div>
-  </div>
+		{data.buttonText && (
+			<div class="mt-10 text-center">
+				<Button type="secondary" size="md" href={data.buttonLink ?? '#'} text={data.buttonText} />
+			</div>
+		)}
+	</div>
 </section>

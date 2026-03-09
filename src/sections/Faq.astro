@@ -1,4 +1,5 @@
 ---
+import SectionEyebrow from '../components/SectionEyebrow.astro';
 import FaqDisclosureItem from '../components/FaqDisclosureItem.astro';
 import { parseEncodedJson } from '../components/utils';
 
@@ -9,6 +10,7 @@ interface Question {
 
 interface Props {
 	data?: {
+		eyebrow?: string;
 		heading?: string;
 		questions?: string;
 	};
@@ -18,11 +20,15 @@ const { data = {} } = Astro.props as Props;
 const questions = parseEncodedJson<Question[]>(data.questions, []);
 ---
 
-<section class="section-spacing" itemscope itemtype="https://schema.org/FAQPage">
-	<div class="site-container-narrow">
-		<div class="max-w-5xl mx-auto divide-y divide-gray/10">
-			{data.heading && <h2>{data.heading}</h2>}
-			<dl class="mt-10 space-y-6 divide-y divide-gray/10">
+<section class="section-spacing" aria-label="Vanliga frågor" itemscope itemtype="https://schema.org/FAQPage">
+	<div class="site-container">
+		<div class="max-w-4xl mx-auto">
+			<div class="section-intro section-intro--spaced" data-reveal>
+				{data.eyebrow && <SectionEyebrow text={data.eyebrow} />}
+				{data.heading && <h2>{data.heading}</h2>}
+			</div>
+
+			<dl class="section-after-intro border-t border-black/6" data-reveal-children>
 				{questions.map((question) => (
 					<FaqDisclosureItem question={question.question ?? ''} answer={question.answer ?? ''} />
 				))}

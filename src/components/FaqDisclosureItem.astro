@@ -7,13 +7,61 @@ interface Props {
 const { question, answer } = Astro.props as Props;
 ---
 
-<details class="pt-5 cursor-pointer group" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-	<summary class="flex items-start justify-between w-full text-left list-none">
-		<span class="text-lg font-medium leading-7 text-gray" itemprop="name">{question}</span>
-		<span class="flex items-center ml-6 h-7 text-primary group-open:hidden" aria-hidden="true">+</span>
-		<span class="hidden items-center ml-6 h-7 text-gray group-open:flex" aria-hidden="true">-</span>
+<details class="faq-item group cursor-pointer border-b border-black/6" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+	<summary class="flex items-center justify-between w-full py-6 text-left list-none">
+		<span class="font-[var(--font-heading)] text-lg font-medium leading-snug text-foreground pr-6" itemprop="name">{question}</span>
+		<span class="faq-icon shrink-0 flex items-center justify-center w-8 h-8 rounded-full border border-black/8 text-foreground/40 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-open:rotate-45 group-open:border-primary/30 group-open:text-primary" aria-hidden="true">
+			<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+				<line x1="7" y1="2" x2="7" y2="12" />
+				<line x1="2" y1="7" x2="12" y2="7" />
+			</svg>
+		</span>
 	</summary>
-	<div class="pr-12 mt-2" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-		<div class="font-light text-muted" set:html={answer} itemprop="text"></div>
+	<div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+		<div class="faq-answer-inner" itemprop="text">
+			<div class="leading-relaxed text-foreground/66 pb-6 pr-12" set:html={answer}></div>
+		</div>
 	</div>
 </details>
+
+<style>
+	.faq-answer {
+		display: grid;
+		grid-template-rows: 0fr;
+		transition: grid-template-rows 400ms cubic-bezier(0.22, 1, 0.36, 1);
+	}
+
+	.faq-item[open] > .faq-answer {
+		grid-template-rows: 1fr;
+	}
+
+	.faq-answer-inner {
+		overflow: hidden;
+	}
+</style>
+
+<script>
+	document.querySelectorAll('.faq-item').forEach((details) => {
+		const summary = details.querySelector('summary');
+		const answer = details.querySelector('.faq-answer') as HTMLElement;
+		if (!summary || !answer) return;
+
+		summary.addEventListener('click', (e) => {
+			e.preventDefault();
+
+			if (details.hasAttribute('open')) {
+				// Closing: animate first, then remove open
+				answer.style.gridTemplateRows = '0fr';
+				answer.addEventListener('transitionend', () => {
+					details.removeAttribute('open');
+				}, { once: true });
+			} else {
+				// Opening: set open, then animate on next frame
+				details.setAttribute('open', '');
+				requestAnimationFrame(() => {
+					answer.style.gridTemplateRows = '1fr';
+				});
+			}
+		});
+	});
+</script>

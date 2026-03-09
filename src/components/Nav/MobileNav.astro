@@ -5,26 +5,35 @@ import Button from '../Button.astro';
 interface Props {
 	groups?: NavGroup[];
 	links?: NavLink[];
+	onLight?: boolean;
 }
 
-const { groups = [], links = [] } = Astro.props as Props;
+const { groups = [], links = [], onLight = false } = Astro.props as Props;
 ---
 
 <div class="flex lg:hidden">
-	<details class="relative" data-mobile-nav>
-		<summary class="inline-flex h-10 w-10 list-none cursor-pointer items-center justify-center rounded-full border border-white/25 text-white transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70">
+		<details class="relative" data-mobile-nav>
+			<summary
+				data-mobile-summary
+				class:list={[
+					'inline-flex h-10 w-10 list-none cursor-pointer items-center justify-center rounded-full border backdrop-blur-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70',
+					onLight
+						? 'border-black/16 text-foreground hover:bg-black/6'
+					: 'border-white/25 bg-white/8 text-white hover:bg-white/16',
+			]}
+		>
 			<span class="sr-only">Open main menu</span>
 			<svg class="h-5 w-5" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 				<path d="M3.5 5.75h13M3.5 10h13M3.5 14.25h13" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" />
 			</svg>
 		</summary>
 		<button type="button" class="fixed inset-0 z-20 bg-black/35 backdrop-blur-[2px]" data-close-menu aria-label="Close menu overlay"></button>
-		<div class="fixed inset-y-0 right-0 z-30 w-full overflow-y-auto border-l border-border bg-white px-6 py-6 shadow-2xl sm:max-w-sm">
-			<div class="flex items-center justify-between border-b border-border pb-5">
-				<a href="/" class="my-auto">
-					<img src="/newcustomers.svg" alt="Logo" width="240" height="36" class="h-9 my-auto" />
-				</a>
-				<button type="button" class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border text-foreground transition hover:bg-surface-secondary" data-close-menu>
+			<div class="fixed inset-y-0 right-0 z-30 w-full overflow-y-auto border-l border-white/18 bg-[#11131b]/96 px-6 py-6 text-white shadow-2xl backdrop-blur-xl sm:max-w-sm">
+				<div class="flex items-center justify-between border-b border-white/16 pb-5">
+					<a href="/" class="my-auto">
+						<img src="/newcustomers.svg" alt="Logo" width="240" height="36" class="h-9 my-auto" />
+					</a>
+				<button type="button" class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white transition hover:bg-white/12" data-close-menu>
 					<span class="sr-only">Close menu</span>
 					<svg class="h-5 w-5" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 						<path d="M5.75 5.75 14.25 14.25M14.25 5.75 5.75 14.25" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" />
@@ -36,11 +45,11 @@ const { groups = [], links = [] } = Astro.props as Props;
 					<ul class="space-y-2 list-none">
 						{groups.map((group) => (
 							<li class="mb-0 list-none">
-								<details class="group/mobile rounded-2xl border border-border bg-surface-secondary/70 p-2">
-									<summary class="flex list-none w-full cursor-pointer items-center justify-between rounded-xl px-3 py-2 text-sm font-semibold text-foreground transition hover:bg-white">
+								<details class="group/mobile rounded-2xl border border-white/16 bg-white/8 p-2">
+									<summary class="flex list-none w-full cursor-pointer items-center justify-between rounded-xl px-3 py-2 text-sm font-semibold text-white transition hover:bg-white/12">
 										<span>{group.title}</span>
 										<svg
-											class="h-4 w-4 text-muted transition-transform duration-200 group-open/mobile:rotate-180"
+											class="h-4 w-4 text-white/68 transition-transform duration-200 group-open/mobile:rotate-180"
 											viewBox="0 0 12 12"
 											fill="none"
 											xmlns="http://www.w3.org/2000/svg"
@@ -52,11 +61,11 @@ const { groups = [], links = [] } = Astro.props as Props;
 									<div class="mt-1 space-y-3 pb-2">
 										{group.columns.map((column) => (
 											<div class="px-3">
-												<p class="mb-1 text-[0.7rem] font-semibold uppercase tracking-[0.08em] text-muted">{column.title}</p>
+												<p class="mb-1 text-[0.7rem] font-semibold uppercase tracking-[0.08em] text-white/58">{column.title}</p>
 												<div class="space-y-1">
 													{column.links.map((item) => (
 														<a
-															class="block rounded-lg px-3 py-1.5 text-sm text-foreground no-underline transition hover:bg-white hover:text-primary hover:no-underline"
+															class="block rounded-lg px-3 py-1.5 text-sm text-white/90 no-underline transition hover:bg-white/12 hover:text-primary hover:no-underline"
 															href={item.path}
 														>
 															{item.label}
@@ -72,7 +81,7 @@ const { groups = [], links = [] } = Astro.props as Props;
 						{links.map((link) => (
 							<li class="mb-0 list-none">
 								<a
-									class="block rounded-xl border border-border bg-white px-4 py-2.5 text-sm font-semibold text-foreground no-underline transition hover:border-primary hover:text-primary hover:no-underline"
+									class="block rounded-xl border border-white/18 bg-white/10 px-4 py-2.5 text-sm font-semibold text-white no-underline transition hover:border-primary/70 hover:bg-white/14 hover:text-primary hover:no-underline"
 									href={link.path}
 								>
 									{link.label}
@@ -80,7 +89,7 @@ const { groups = [], links = [] } = Astro.props as Props;
 							</li>
 						))}
 					</ul>
-					<div class="mt-6 border-t border-border pt-5">
+					<div class="mt-6 border-t border-white/16 pt-5">
 						<Button href="/kontakt/" type="primary" text="Kontakt" class="w-full" />
 					</div>
 				</div>
@@ -93,13 +102,34 @@ const { groups = [], links = [] } = Astro.props as Props;
 	document.querySelectorAll('[data-mobile-nav]').forEach((root) => {
 		if (root.dataset.bound === 'true') return;
 		root.dataset.bound = 'true';
+		const summary = root.querySelector('[data-mobile-summary]');
+
+		const closeMenu = () => {
+			root.removeAttribute('open');
+			document.body.classList.remove('mobile-nav-open');
+		};
+
+		summary?.addEventListener('click', (event) => {
+			event.preventDefault();
+			if (root.hasAttribute('open')) {
+				closeMenu();
+				return;
+			}
+
+			root.setAttribute('open', '');
+			document.body.classList.add('mobile-nav-open');
+		});
 
 		root.querySelectorAll('[data-close-menu]').forEach((close) => {
-			close.addEventListener('click', () => root.removeAttribute('open'));
+			close.addEventListener('click', closeMenu);
 		});
 
 		root.querySelectorAll('a').forEach((link) => {
-			link.addEventListener('click', () => root.removeAttribute('open'));
+			link.addEventListener('click', closeMenu);
+		});
+
+		document.addEventListener('keydown', (event) => {
+			if (event.key === 'Escape') closeMenu();
 		});
 	});
 </script>

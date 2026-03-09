@@ -13,25 +13,26 @@
 :root {
 	--font-heading: "Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 	--font-body: "Source Sans 3", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-	--heading-h1: clamp(2.2rem, 5vw, 3.8rem);
-	--heading-h2: clamp(1.8rem, 3.8vw, 2.8rem);
-	--heading-h3: clamp(1.35rem, 2.5vw, 1.9rem);
-	--heading-h4: clamp(1.15rem, 2vw, 1.45rem);
-	--heading-h5: 1.05rem;
-	--heading-h6: 0.95rem;
-	--text-body: clamp(1.05rem, 1.01rem + 0.18vw, 1.125rem);
+	--heading-h1: clamp(2.5rem, 5.5vw, 4.5rem);
+	--heading-h2: clamp(2rem, 4.2vw, 3.25rem);
+	--heading-h3: clamp(1.5rem, 2.8vw, 2.25rem);
+	--heading-h4: clamp(1.25rem, 2.2vw, 1.625rem);
+	--heading-h5: 1.125rem;
+	--heading-h6: 1rem;
+	--text-body: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
 	--space-intro-to-content: clamp(1.5rem, 2.6vw, 2.5rem);
-	--space-section: clamp(3.5rem, 6vw, 6rem);
-	--space-section-tight: clamp(2.25rem, 4vw, 4rem);
+	--space-section: clamp(5rem, 8vw, 8rem);
+	--space-section-tight: clamp(3rem, 5vw, 5rem);
 	--space-stack: clamp(1rem, 1.6vw, 1.6rem);
-	--radius-card: 1.25rem;
-	--radius-card-lg: 1.5rem;
-	--radius-button: 0.75rem;
+	--radius-card: 2rem;
+	--radius-card-lg: 2.75rem;
+	--radius-button: 9999px;
 	--radius-control: 0.9rem;
 	--measure-text: 72ch;
 	--duration-fast: 180ms;
 	--duration-base: 240ms;
 	--ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
+	--ease-cinematic: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 	--shadow-card: 0 10px 34px -22px color-mix(in oklab, var(--foreground) 40%, transparent);
 	--shadow-card-hover: 0 18px 44px -24px color-mix(in oklab, var(--foreground) 55%, transparent);
 	--text-muted: color-mix(in oklab, var(--foreground) 72%, white 28%);
@@ -52,6 +53,46 @@ body {
 	line-height: 1.65;
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
+}
+
+body.mobile-nav-open {
+	overflow: hidden;
+}
+
+body::before {
+	content: "";
+	position: fixed;
+	inset: 0;
+	pointer-events: none;
+	z-index: 1;
+	opacity: 0.05;
+	mix-blend-mode: soft-light;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+body > :not(header) {
+	position: relative;
+	z-index: 2;
+}
+
+.home-cinematic {
+	background:
+		radial-gradient(circle at 14% 12%, rgba(148, 163, 184, 0.08), transparent 38%),
+		radial-gradient(circle at 86% 78%, rgba(148, 163, 184, 0.05), transparent 46%),
+		linear-gradient(180deg, #ffffff 0%, #f6f8fb 100%);
+}
+
+.home-cinematic main {
+	overflow: clip;
+}
+
+.cinematic-serif {
+	font-family: "Playfair Display", Georgia, serif;
+	font-style: italic;
+}
+
+.home-cinematic .cinematic-mono {
+	font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 a {
@@ -187,6 +228,7 @@ p {
 	padding-block: var(--space-section-tight);
 }
 
+
 .section-stack {
 	display: flex;
 	flex-direction: column;
@@ -199,7 +241,7 @@ p {
 	gap: clamp(0.6rem, 1vw, 1rem);
 }
 
-.section-intro p {
+.section-intro p:not(.section-eyebrow) {
 	color: inherit;
 	max-width: var(--measure-text);
 }
@@ -223,22 +265,108 @@ p {
 }
 
 .section-eyebrow {
-	font-size: 0.75rem;
-	font-weight: 600;
-	letter-spacing: 0.12em;
-	line-height: 1.25;
+	font-size: 1rem;
+	font-weight: 500;
+	letter-spacing: 0.04em;
+	line-height: 1.3;
 	text-transform: uppercase;
+	color: var(--primary);
 }
 
 .section-eyebrow--on-dark {
-	color: color-mix(in oklab, var(--text-on-dark) 88%, transparent);
+	color: color-mix(in oklab, var(--primary) 80%, white 20%);
+}
+
+.home-cinematic .type-eyebrow {
+	font-size: 0.75rem;
+	letter-spacing: 0.18em;
+	line-height: 1.2;
+	text-transform: uppercase;
+}
+
+.home-cinematic .type-section-title {
+	font-size: clamp(2rem, 4.35vw, 3.8rem);
+	letter-spacing: -0.03em;
+	line-height: 1.03;
+}
+
+.type-section-lead {
+	font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
+	line-height: 1.65;
+}
+
+.home-cinematic .type-card-title {
+	font-size: clamp(1.1rem, 1.03rem + 0.34vw, 1.34rem);
+	letter-spacing: -0.012em;
+	line-height: 1.28;
+	font-weight: 600;
+}
+
+.home-cinematic .type-card-body {
+	font-size: 0.96rem;
+	line-height: 1.62;
+}
+
+.type-micro-label {
+	font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+	font-size: 0.75rem;
+	font-weight: 600;
+	letter-spacing: 0.1em;
+	line-height: 1.35;
+	text-transform: uppercase;
+}
+
+.type-micro-value {
+	font-size: 0.8rem;
+	font-weight: 600;
+	line-height: 1.4;
+	letter-spacing: 0;
+}
+
+.type-meta-note {
+	font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+	font-size: 0.72rem;
+	font-weight: 500;
+	letter-spacing: 0.08em;
+	line-height: 1.45;
+	text-transform: uppercase;
 }
 
 @layer components {
 	.button {
+		position: relative;
+		overflow: hidden;
 		border-radius: var(--radius-button);
 		font-weight: 600;
 		letter-spacing: -0.01em;
+		transform-origin: center;
+		transition:
+			transform var(--duration-fast) var(--ease-cinematic),
+			box-shadow var(--duration-fast) var(--ease-standard),
+			border-color var(--duration-fast) var(--ease-standard),
+			color var(--duration-fast) var(--ease-standard),
+			background-color var(--duration-fast) var(--ease-standard);
+	}
+
+	.button:hover {
+		transform: scale(1.03);
+	}
+
+	.button__layer {
+		position: absolute;
+		inset: 0;
+		transform: translateX(-102%);
+		transition: transform 320ms var(--ease-cinematic);
+	}
+
+	.button:hover .button__layer,
+	.button:focus-visible .button__layer {
+		transform: translateX(0);
+	}
+
+	.button__label {
+		position: relative;
+		z-index: 1;
 	}
 
 	.button--primary {
@@ -248,6 +376,16 @@ p {
 	.field {
 		border-radius: var(--radius-control);
 	}
+}
+
+.micro-link {
+	display: inline-flex;
+	align-items: center;
+	transition: transform var(--duration-fast) var(--ease-cinematic);
+}
+
+.micro-link:hover {
+	transform: translateY(-1px);
 }
 
 @media (min-width: 1024px) {

@@ -1,33 +1,30 @@
 ---
 layout: ../layouts/PageLayout.astro
-title: "Från ett sök på Google till en konkret affär - new customers"
-description: "97% av Sveriges befolkning googlar innan sina köp. Som SEO byrå hjälper vi dig att synas i toppen när kunder söker på dina tjänster. Välkommen!"
+title: "Vi ökar våra kunders försäljning och digitala närvaro - new customers"
+description: "Vi skapar nya kunder och ökar försäljningen genom SEO, SEM och CRO. Med vår metod och mjukvara Customer Intelligence 2.0 förenklar vi vägen till en ny kund och affär."
 ---
 
 import Hero from '../sections/Hero.astro';
 import PageLinks from '../sections/PageLinks.astro';
 import SplitCoworkers from '../sections/SplitCoworkers.astro';
-import CtaImage from '../sections/CtaImage.astro';
-import Process from '../sections/Process.astro';
 import Testimonials from '../sections/Testimonials.astro';
+import StatsBar from '../sections/StatsBar.astro';
 import ContactForm from '../components/ContactForm.astro';
-import Button from '../components/Button.astro';
-import DarkPanelSection from '../components/DarkPanelSection.astro';
 
 export const pageLinks = encodeURIComponent(
 	JSON.stringify([
 		{
-			text: 'Jag vill ha mer trafik till min webb',
+			text: 'SEO',
 			url: '#kontakt',
 			icon: { url: 'https://wp.newcustomers.se/wp-content/uploads/2023/03/NC_Symboler_Rityta-1.png' },
 		},
 		{
-			text: 'Jag vill att min webb säljer mer',
+			text: 'SEM',
 			url: '#kontakt',
 			icon: { url: 'https://wp.newcustomers.se/wp-content/uploads/2023/03/NC_Symboler-02.png' },
 		},
 		{
-			text: 'Jag vill bli bättre på att ta hand om mina leads',
+			text: 'CRO',
 			url: '#kontakt',
 			icon: { url: 'https://wp.newcustomers.se/wp-content/uploads/2023/03/NC_Symboler-03.png' },
 		},
@@ -63,6 +60,16 @@ export const coworkers = encodeURIComponent(
 	]),
 );
 
+export const homeStats = encodeURIComponent(
+	JSON.stringify([
+		{ image: { url: '/google.png', alt: 'Google' }, stars: 5 },
+		{ value: '35+', label: 'Kunder' },
+		{ value: '12', label: 'Specialister' },
+		{ value: '2021', label: 'Grundat' },
+		{ image: { url: '/google.png', alt: 'Google partner' }, label: 'Partner' },
+	]),
+);
+
 export const testimonials = encodeURIComponent(
 	JSON.stringify([
 		{
@@ -74,127 +81,35 @@ export const testimonials = encodeURIComponent(
 		{
 			image: { url: 'https://wp.newcustomers.se/wp-content/uploads/2023/05/Villa-Fridhem_recension-1.webp', alt: 'Villa Fridhem recension' },
 			text:
-				'Så tacksam över att vi valde att samarbeta med new customers. Vi kan redan efter ett par veckor se hur vi klättrar på google och får in nya helt gäster och bokningar. De är experter på sina områden och otroligt bra på att förklara och lära ut. Rekommenderar new customers till alla som har en digital närvaro. - Erica Medberg Marknadschef på Villa Fridhem',
+				'Så tacksam över att vi valde att samarbeta med new customers. Vi kan redan efter ett par veckor se hur vi klättrar på google och får in nya helt gäster och bokningar. De är experter på sina områden och otroligt bra på att förklara och lära ut. Rekommenderar new customers till alla som har en digital närvaro. - Marknadschef på Villa Fridhem',
 			logo: { url: 'https://wp.newcustomers.se/wp-content/uploads/2024/01/stjarnor.png', alt: '5 stjärnor' },
 		},
 	]),
 );
 
-export const heroVideo = encodeURIComponent(
-	JSON.stringify({
-		url: 'https://wp.newcustomers.se/wp-content/uploads/2024/01/Hemsida_Banner_260124_820x670_AME.mp4',
-	}),
-);
-
 <Hero
 	data={{
-		title: 'Från ett sök på Google till en konkret affär',
-		description: 'Vi hjälper dig hela vägen!',
-		video: heroVideo,
+		title: 'Vi ökar våra kunders försäljning och digitala närvaro',
+		noBackgroundImage: true,
+		logos,
 	}}
 />
 
 <PageLinks data={{ links: pageLinks }} />
-<DarkPanelSection eyebrow="Betrodd av ledande varumärken">
-	<div class="grid w-full grid-cols-2 gap-x-8 gap-y-8 sm:grid-cols-4 sm:gap-x-10 lg:grid-cols-7 lg:gap-x-8 lg:gap-y-10">
-		{logos.map((logo) => (
-			<div class="mx-auto flex h-12 w-28 items-center justify-center sm:h-14 sm:w-32 transition-all duration-300 hover:opacity-100 hover:scale-105">
-				{logo.icon?.url && (
-					<img
-						class="max-h-10 max-w-full object-contain grayscale brightness-100 contrast-125 opacity-85 transition-all duration-300 hover:opacity-100 sm:max-h-12"
-						src={logo.icon.url}
-						alt="Logo"
-						width="256"
-						height="256"
-						loading="lazy"
-					/>
-				)}
-			</div>
-		))}
-	</div>
-</DarkPanelSection>
 
-<SplitCoworkers data={{ title: 'Därför väljer våra kunder oss', coworkers }}>
+<SplitCoworkers data={{ title: 'Resultat och mission', coworkers }}>
 	<div class="section-stack">
-		<h3 class="text-gray mt-0">Resultatfokuserat</h3>
-		<p>Vårt erfarna team jobbar engagerat och dedikerat för att ge er fler nya kunder och affärer från Google.</p>
-		<h3 class="text-gray mt-0">Vår process</h3>
-		<p>Genom våra välbeprövade metoder optimerar och maximerar vi resultaten från Google. Från ett sök, till en konkret affär.</p>
-		<h3 class="text-gray mt-0">Begriplig affärsrapport</h3>
-		<p>Vi tar fram lättbegripliga och överskådliga affärsrapporter så att ni får en tydlig och transparent överblick över resultaten från vårt arbete.</p>
+		<h3 class="mt-0">Resultat</h3>
+		<p>Tillsammans skapar vi nya kunder och ökar försäljningen.</p>
+		<h3 class="mt-0">Mission</h3>
+		<p>Genom vår egen metod och mjukvara Customer Intelligence 2.0 skapar vi mer affär från webben.</p>
+		<h3 class="mt-0">Så skapar vi lönsamhet</h3>
+		<p>Vi förenklar och kostnadsoptimerar vägen till en ny kund och affär.</p>
 	</div>
 </SplitCoworkers>
 
-<DarkPanelSection eyebrow="Resultat i siffror">
-	<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 lg:gap-4 w-full divide-y md:divide-y-0 md:divide-x divide-white/10">
-		<div class="flex flex-col items-center justify-center p-4 pt-0 md:pt-4">
-			<div class="h-10 sm:h-12 flex items-center justify-center mb-3">
-				<img src="/google.png" class="h-full w-auto object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]" alt="Google" />
-			</div>
-			<div class="flex items-center gap-1">
-				<img src="/star.svg" class="w-4 h-4 sm:w-5 sm:h-5 text-yellow-400 drop-shadow-sm" alt="Star" />
-				<img src="/star.svg" class="w-4 h-4 sm:w-5 sm:h-5 text-yellow-400 drop-shadow-sm" alt="Star" />
-				<img src="/star.svg" class="w-4 h-4 sm:w-5 sm:h-5 text-yellow-400 drop-shadow-sm" alt="Star" />
-				<img src="/star.svg" class="w-4 h-4 sm:w-5 sm:h-5 text-yellow-400 drop-shadow-sm" alt="Star" />
-				<img src="/star.svg" class="w-4 h-4 sm:w-5 sm:h-5 text-yellow-400 drop-shadow-sm" alt="Star" />
-			</div>
-		</div>
+<StatsBar data={{ eyebrow: 'I siffror', stats: homeStats }} />
 
-		<div class="flex flex-col items-center text-center p-4 pt-8 md:pt-4">
-			<div class="text-4xl sm:text-5xl font-bold tracking-tight mb-1 bg-clip-text text-transparent bg-gradient-to-b from-white to-white/70">35+</div>
-			<div class="text-xs sm:text-sm font-medium tracking-widest uppercase text-white/60">Kunder</div>
-		</div>
-
-		<div class="flex flex-col items-center text-center p-4 pt-8 md:pt-4">
-			<div class="text-4xl sm:text-5xl font-bold tracking-tight mb-1 bg-clip-text text-transparent bg-gradient-to-b from-white to-white/70">12</div>
-			<div class="text-xs sm:text-sm font-medium tracking-widest uppercase text-white/60">Specialister</div>
-		</div>
-
-		<div class="flex flex-col items-center text-center p-4 pt-8 md:pt-4">
-			<div class="text-4xl sm:text-5xl font-bold tracking-tight mb-1 bg-clip-text text-transparent bg-gradient-to-b from-white to-white/70">2021</div>
-			<div class="text-xs sm:text-sm font-medium tracking-widest uppercase text-white/60">Grundat</div>
-		</div>
-
-		<div class="col-span-2 md:col-span-1 flex flex-col items-center justify-center p-4 pt-8 md:pt-4">
-			<div class="h-10 sm:h-12 flex items-center justify-center mb-3">
-				<img src="/google.png" class="h-full w-auto object-contain grayscale opacity-80" alt="Google partner" />
-			</div>
-			<div class="text-sm font-medium text-white/80">Google Partner</div>
-		</div>
-	</div>
-</DarkPanelSection>
-
-<CtaImage
-	data={{
-		title: 'Vad innebär SEO?',
-		image: 'https://wp.newcustomers.se/wp-content/uploads/2024/01/Allt-du-behover-veta-om-SEOjpg.webp',
-		buttontext: 'Läs vår guide om SEO',
-		buttonlink: '/seo/',
-	}}
-/>
-
-<Process
-	data={{
-		title: 'Så hjälper vi dig ta reda på din fulla affärspotential',
-		description: 'Skriv in din namn och telefonnummer så kontaktar vi dig!',
-	}}
-/>
-
-<Testimonials data={{ testimonials }} />
-
-<section class="section-spacing-tight">
-	<div class="site-container text-center">
-		<Button type="primary" text="Fler recensioner" href="/recensioner/" />
-	</div>
-</section>
-
-<CtaImage
-	data={{
-		title: 'Vad menar vi med begripliga affärsrapporter?',
-		image: 'https://wp.newcustomers.se/wp-content/uploads/2023/11/Rapport_NC_Dator.png',
-		buttontext: 'Kolla in vår affärsrapport här!',
-		buttonlink: '/affarsrapport/',
-	}}
-/>
+<Testimonials data={{ testimonials, buttonText: 'Fler recensioner', buttonLink: '/recensioner/' }} />
 
 <ContactForm />

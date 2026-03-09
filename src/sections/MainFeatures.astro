@@ -1,4 +1,5 @@
 ---
+import SectionEyebrow from '../components/SectionEyebrow.astro';
 import Button from '../components/Button.astro';
 import { parseEncodedJson } from '../components/utils';
 
@@ -25,32 +26,61 @@ const { data = {} } = Astro.props as Props;
 const features = parseEncodedJson<Feature[]>(data.features, []);
 ---
 
-<section class="section-spacing">
+<section class="section-spacing" aria-label="Metod">
 	<div class="site-container">
-	<div class="lg:flex justify-between gap-10">
-		<div class="max-w-xl my-auto section-intro section-intro--spaced">
-			{data.preTitle && <div class="text-base font-medium text-primary uppercase">{data.preTitle}</div>}
-			{data.title && <h2 class="text-gray">{data.title}</h2>}
-			{data.description && <p class="text-muted prose-measure">{data.description}</p>}
+		<div class="lg:flex justify-between gap-10">
+			<div class="max-w-xl my-auto section-intro section-intro--spaced" data-reveal>
+				{data.preTitle && <SectionEyebrow text={data.preTitle} />}
+				{data.title && <h2>{data.title}</h2>}
+				{data.description && <p class="type-section-lead prose-measure">{data.description}</p>}
+			</div>
+			{data.buttonText && (
+				<div class="max-w-sm mt-2 lg:my-auto">
+					<Button type="primary" size="lg" href={data.buttonLink ?? '#'} text={data.buttonText} />
+				</div>
+			)}
 		</div>
-		{data.buttonText && (
-			<div class="max-w-sm mt-2 lg:my-auto">
-				<Button type="primary" size="lg" href={data.buttonLink ?? '#'} text={data.buttonText} />
-			</div>
-		)}
-	</div>
-	<div class="section-after-intro grid w-full gap-6 grid-cols-1 sm:grid-cols-3">
-		{features.map((feature) => (
-			<div class="surface-card-muted surface-card-interactive text-center flex flex-col items-center p-4">
-				{feature.image?.url && (
-					<div class="relative w-full aspect-[4/3] flex overflow-hidden rounded-[1rem]">
-						<img src={feature.image.url} alt={feature.title ?? ''} class="object-cover" width="1024" height="1024" loading="lazy" />
-					</div>
-				)}
-				<h3 class="text-gray mt-4">{feature.title}</h3>
-				<p class="text-muted max-w-xs">{feature.description}</p>
-			</div>
-		))}
-	</div>
+
+		<div class="section-after-intro features-columns" data-reveal-children>
+			{features.map((feature, i) => (
+				<div class="features-column">
+					<span class="shrink-0 font-[var(--font-heading)] text-[clamp(2rem,3.2vw,2.8rem)] font-bold leading-none text-primary tabular-nums">
+						{String(i + 1).padStart(2, '0')}
+					</span>
+					{feature.title && <h3 class="mt-4 mb-2 text-foreground">{feature.title}</h3>}
+					{feature.description && <p class="leading-relaxed max-w-[40ch]">{feature.description}</p>}
+				</div>
+			))}
+		</div>
 	</div>
 </section>
+
+<style>
+	.features-columns {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 2.5rem;
+		border-top: 1px solid color-mix(in oklab, var(--foreground) 6%, transparent);
+		padding-top: clamp(2rem, 3.5vw, 3rem);
+	}
+
+	@media (min-width: 768px) {
+		.features-columns {
+			grid-template-columns: repeat(3, 1fr);
+			gap: 0;
+		}
+
+		.features-column {
+			padding-block: 0.5rem;
+		}
+
+		.features-column:not(:first-child) {
+			padding-left: clamp(1.5rem, 3vw, 3rem);
+			border-left: 1px solid color-mix(in oklab, var(--foreground) 6%, transparent);
+		}
+
+		.features-column:not(:last-child) {
+			padding-right: clamp(1.5rem, 3vw, 3rem);
+		}
+	}
+</style>

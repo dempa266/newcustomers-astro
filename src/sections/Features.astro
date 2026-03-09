@@ -24,7 +24,7 @@ const features = parseEncodedJson<Feature[]>(data.features, []);
 	<div class="lg:flex justify-between gap-10">
 		<div class="max-w-xl my-auto section-intro section-intro--spaced">
 			{data.preTitle && <div class="text-base font-medium text-primary uppercase">{data.preTitle}</div>}
-			{data.title && <h2 class="text-gray">{data.title}</h2>}
+			{data.title && <h2>{data.title}</h2>}
 			{data.description && <p class="text-muted prose-measure">{data.description}</p>}
 		</div>
 		{data.image && (
@@ -36,7 +36,7 @@ const features = parseEncodedJson<Feature[]>(data.features, []);
 	<div class="section-after-intro grid w-full gap-6 grid-cols-1 sm:grid-cols-3">
 		{features.map((feature) => (
 			<div class="surface-card-muted items-center p-6">
-				<div class="text-gray font-medium flex">
+				<div class="font-medium flex">
 					<span class="w-6 h-6 text-primary">✓</span>
 					<div class="ml-6">{feature.title}</div>
 				</div>

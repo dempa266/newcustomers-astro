@@ -8,7 +8,6 @@ interface Props {
 		title?: string;
 		description?: string;
 		image?: string;
-		video?: string;
 		noBackgroundImage?: boolean;
 		logos?: Array<{
 			icon?: {
@@ -17,6 +16,8 @@ interface Props {
 			};
 			name?: string;
 		}>;
+		primaryCta?: { text?: string; href?: string };
+		secondaryCta?: { text?: string; href?: string };
 	};
 }
 
@@ -24,11 +25,14 @@ const { h1, description, data = {} } = Astro.props as Props;
 const title = data.title ?? h1;
 const text = data.description ?? description;
 const noBackgroundImage = data.noBackgroundImage ?? true;
-const logoCloud = data.logos ?? [];
-const hasLogoCloud = logoCloud.length > 0;
 const heroImage =
 	data.image ??
 	'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=2200&q=80';
+const logoCloud = data.logos ?? [];
+const hasLogoCloud = logoCloud.length > 0;
+
+const primaryCta = data.primaryCta ?? { text: 'Boka strategisamtal', href: '/kontakt/' };
+const secondaryCta = data.secondaryCta ?? { text: 'Om oss', href: '/om-oss/' };
 
 const splitToken = ' och ';
 let heroLineOne = title ?? '';
@@ -44,8 +48,8 @@ if (title && title.includes(splitToken)) {
 <section
 	id="hero"
 	aria-label="Hero"
-	class="relative -mt-[4.75rem] flex min-h-[100dvh] items-end overflow-hidden border-b border-black/10 pb-14 pt-28 md:pb-20 md:pt-32"
-	data-hero-root
+	class="relative -mt-[8rem] flex items-end overflow-hidden border-b border-black/10 pb-16 pt-44 md:pb-24 md:pt-52"
+	data-subhero-root
 >
 	{!noBackgroundImage && (
 		<img src={heroImage} alt={title ?? 'Hero image'} class="absolute inset-0 h-full w-full object-cover" loading="eager" />
@@ -65,41 +69,40 @@ if (title && title.includes(splitToken)) {
 			<div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_20%,rgba(148,163,184,0.24),transparent_40%),radial-gradient(circle_at_88%_76%,rgba(100,116,139,0.16),transparent_44%)]"></div>
 			<div class="pointer-events-none absolute inset-0 opacity-56 [background-image:linear-gradient(to_right,rgba(100,116,139,0.16)_1px,transparent_1px),linear-gradient(to_bottom,rgba(100,116,139,0.16)_1px,transparent_1px)] [background-size:46px_46px] [mask-image:linear-gradient(to_bottom,transparent_0%,black_12%,black_100%)]"></div>
 			<div class="pointer-events-none absolute -right-36 top-16 h-[28rem] w-[28rem] rounded-full border border-slate-500/24 bg-[radial-gradient(circle,rgba(255,255,255,0.66),rgba(255,255,255,0)_70%)]"></div>
-			<div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-[radial-gradient(circle,rgba(100,116,139,0.26),rgba(100,116,139,0)_72%)]"></div>
 		</>
 	)}
 
 	<div class="site-container relative z-10 w-full">
 		<div class="flex flex-col">
-			<div class="w-full max-w-4xl">
+			<div class="w-full max-w-3xl">
 				{title && (
 					<h1
 						class:list={[
-							'hero-reveal text-[clamp(2.45rem,6.7vw,6.25rem)] font-semibold leading-[0.9] tracking-[-0.036em]',
+							'subhero-reveal text-[clamp(2.25rem,5.8vw,5rem)] font-semibold leading-[0.9] tracking-[-0.036em]',
 							noBackgroundImage ? 'text-foreground' : 'text-white',
 						]}
 					>
 						<span class="block">{heroLineOne}</span>
 						{heroLineTwo && (
-							<span class:list={['cinematic-serif mt-2 block text-[0.92em] font-semibold', noBackgroundImage ? 'text-foreground/88' : 'text-white/88']}>
+							<span class:list={['cinematic-serif mt-1.5 block text-[0.92em] font-semibold', noBackgroundImage ? 'text-foreground/88' : 'text-white/88']}>
 								{heroLineTwo}
 							</span>
 						)}
 					</h1>
 				)}
 				{text && (
-					<p class:list={['hero-reveal type-section-lead mt-7 max-w-[64ch]', noBackgroundImage ? 'text-foreground/80' : 'text-white/80']}>
+					<p class:list={['subhero-reveal type-section-lead mt-7 max-w-[58ch]', noBackgroundImage ? 'text-foreground/80' : 'text-white/80']}>
 						{text}
 					</p>
 				)}
 
-				<div class:list={['hero-reveal flex flex-wrap items-center gap-3.5 sm:gap-4', text ? 'mt-8' : 'mt-10']}>
-					<Button href="/kontakt/" type="primary" size="lg" text="Boka strategisamtal" class="text-sm tracking-[0.08em] uppercase" />
+				<div class:list={['subhero-reveal flex flex-wrap items-center gap-3.5 sm:gap-4', text ? 'mt-6' : 'mt-8']}>
+					<Button href={primaryCta.href ?? '/kontakt/'} type="primary" size="md" text={primaryCta.text ?? 'Boka strategisamtal'} class="text-sm tracking-[0.08em] uppercase" />
 					<Button
-						href="/om-oss/"
+						href={secondaryCta.href ?? '/om-oss/'}
 						type={noBackgroundImage ? 'secondary' : 'transparent'}
-						size="lg"
-						text="Om oss"
+						size="md"
+						text={secondaryCta.text ?? 'Om oss'}
 						class="text-sm tracking-[0.08em] uppercase"
 					/>
 				</div>
@@ -107,7 +110,7 @@ if (title && title.includes(splitToken)) {
 			{hasLogoCloud && (
 				<div
 					class:list={[
-						'hero-reveal w-full mt-8 px-0 py-2 md:mt-9 md:py-3',
+						'subhero-reveal w-full mt-10 px-0 py-2 md:mt-14 md:py-3',
 						noBackgroundImage ? '' : 'text-white',
 					]}
 				>
@@ -124,7 +127,7 @@ if (title && title.includes(splitToken)) {
 										alt={logo.icon.alt ?? logo.name ?? 'Kundlogotyp'}
 										width="220"
 										height="80"
-										loading="lazy"
+										loading="eager"
 									/>
 								)}
 							</div>
@@ -139,24 +142,16 @@ if (title && title.includes(splitToken)) {
 <script>
 	import gsap from 'gsap';
 
-	const heroRoot = document.querySelector('[data-hero-root]');
+	const heroRoot = document.querySelector('[data-subhero-root]');
 	if (heroRoot) {
 		const ctx = gsap.context(() => {
 			gsap.fromTo(
-				heroRoot.querySelectorAll('.hero-reveal'),
-				{ y: 40, opacity: 0 },
-				{ y: 0, opacity: 1, duration: 0.95, stagger: 0.08, ease: 'power3.out', delay: 0.2 },
+				heroRoot.querySelectorAll('.subhero-reveal'),
+				{ y: 30, opacity: 0 },
+				{ y: 0, opacity: 1, duration: 0.8, stagger: 0.07, ease: 'power3.out', delay: 0.15 },
 			);
 		}, heroRoot);
 
-		const cleanup = () => {
-			ctx.revert();
-		};
-
-		window.addEventListener(
-			'pagehide',
-			cleanup,
-			{ once: true },
-		);
+		window.addEventListener('pagehide', () => ctx.revert(), { once: true });
 	}
 </script>

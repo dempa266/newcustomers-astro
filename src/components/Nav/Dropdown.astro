@@ -6,15 +6,22 @@ interface Props {
 	path: string;
 	columns?: NavColumn[];
 	latestArticles?: NavArticleLink[];
+	onLight?: boolean;
 }
 
-const { title, path, columns = [], latestArticles = [] } = Astro.props as Props;
-const hasLatestArticles = latestArticles.length > 0;
+const { title, path, columns = [], latestArticles = [], onLight = false } = Astro.props as Props;
 ---
 
 <li class="relative mb-0 list-none">
 	<details class="group/nav" data-nav-dropdown>
-		<summary class="inline-flex list-none cursor-pointer items-center gap-x-2 rounded-full px-3 py-2 text-sm font-medium leading-none text-white/90 transition hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70">
+		<summary
+			class:list={[
+				'micro-link inline-flex list-none cursor-pointer items-center gap-x-2 rounded-full border px-3.5 py-2 text-sm font-medium leading-none transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70',
+				onLight
+					? 'border-transparent text-foreground/80 hover:bg-black/5 hover:text-foreground'
+					: 'border-transparent text-white/84 hover:border-white/18 hover:bg-white/12 hover:text-white',
+			]}
+		>
 			<span>{title}</span>
 			<svg
 				class="h-3 w-3 transition-transform duration-200 group-open/nav:rotate-180"
@@ -26,18 +33,28 @@ const hasLatestArticles = latestArticles.length > 0;
 				<path d="M2.25 4.5 6 8.25 9.75 4.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
 			</svg>
 		</summary>
-		<div class="absolute left-1/2 z-20 mt-4 w-screen max-w-6xl -translate-x-1/2 px-4">
-			<div class="w-full rounded-3xl border border-border/70 bg-white/95 p-6 text-sm leading-6 text-foreground shadow-2xl shadow-black/10 backdrop-blur">
-				<div class:list={['grid gap-8', hasLatestArticles ? 'xl:grid-cols-[minmax(0,1fr)_18rem]' : 'xl:grid-cols-1']}>
+		<div class="pointer-events-none absolute left-1/2 z-30 mt-4 w-screen max-w-6xl -translate-x-1/2 px-4 opacity-0 translate-y-2 scale-[0.98] transition-all duration-250 ease-out group-open/nav:pointer-events-auto group-open/nav:opacity-100 group-open/nav:translate-y-0 group-open/nav:scale-100">
+			<div class:list={[
+				'w-full rounded-[1.9rem] border p-6 text-sm leading-6 shadow-2xl backdrop-blur-xl',
+				onLight
+					? 'border-border/70 bg-white/95 text-foreground shadow-black/10'
+					: 'border-white/18 bg-[#1c1c26]/88 text-white shadow-black/45',
+			]}>
+				<div class="grid gap-8">
 					<div class="grid gap-6 md:grid-cols-3">
 						{columns.map((column) => (
-							<div class="rounded-2xl bg-surface-secondary/70 p-4">
-								<h3 class="mt-0 text-xs font-semibold uppercase tracking-[0.08em] text-muted">{column.title}</h3>
+							<div class:list={['rounded-2xl p-4', onLight ? 'bg-surface-secondary/70' : 'border border-white/12 bg-white/7']}>
+								<h3 class:list={['mt-0 text-xs font-semibold uppercase tracking-[0.08em]', onLight ? 'text-muted' : 'text-white/62']}>{column.title}</h3>
 								<div class="mt-3 space-y-1">
 									{column.links.map((item) => (
 										<a
 											href={item.path}
-											class="block rounded-xl px-3 py-2 text-sm font-medium text-foreground no-underline transition hover:bg-white hover:text-primary hover:no-underline"
+											class:list={[
+												'micro-link block rounded-xl px-3 py-2 text-sm font-medium no-underline transition',
+												onLight
+													? 'text-foreground hover:bg-white hover:text-primary hover:no-underline'
+													: 'text-white/88 hover:bg-white/12 hover:text-primary hover:no-underline',
+											]}
 										>
 											{item.label}
 										</a>
@@ -46,28 +63,6 @@ const hasLatestArticles = latestArticles.length > 0;
 							</div>
 						))}
 					</div>
-					{hasLatestArticles && (
-						<aside class="rounded-2xl border border-border bg-surface p-5">
-							<p class="mb-3 text-xs font-semibold uppercase tracking-[0.08em] text-muted">Senaste artiklar</p>
-							<div class="space-y-2">
-								{latestArticles.map((article) => (
-									<a
-										href={article.path}
-										class="block rounded-xl border border-transparent px-3 py-2 no-underline transition hover:border-border hover:bg-surface-secondary hover:no-underline"
-									>
-										<span class="block text-sm font-semibold text-foreground">{article.label}</span>
-										{article.description && <span class="mt-0.5 block text-xs text-muted">{article.description}</span>}
-									</a>
-								))}
-							</div>
-							<a
-								href={path}
-								class="mt-4 inline-flex rounded-full border border-border px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.06em] text-foreground no-underline transition hover:border-primary hover:text-primary hover:no-underline"
-							>
-								Alla {title}
-							</a>
-						</aside>
-					)}
 				</div>
 			</div>
 		</div>

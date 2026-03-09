@@ -14,7 +14,7 @@ const { data = {} } = Astro.props as Props;
 	<div class="site-container">
 	<div class="surface-card-muted flex flex-col">
 		{(data.title || data.description) && (
-			<div class="section-intro section-intro--center section-intro--spaced section-intro--inset px-6 lg:px-10 text-gray">
+			<div class="section-intro section-intro--center section-intro--spaced section-intro--inset px-6 lg:px-10">
 				{data.title && <h2>{data.title}</h2>}
 				{data.description && <p class="text-lg prose-measure">{data.description}</p>}
 			</div>

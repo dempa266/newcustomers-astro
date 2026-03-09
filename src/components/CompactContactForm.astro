@@ -1,30 +1,30 @@
 ---
-import { Checkbox, Input } from '@heroui/react';
-
 const fieldClassName =
-	'field block w-full border border-border bg-white px-3.5 py-2.5 text-base leading-6 text-gray shadow-none placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/30';
+	'field h-11 w-full rounded-xl border border-black/12 bg-white px-3.5 text-sm text-foreground placeholder:text-foreground/44 outline-none transition focus:border-primary/50 focus:ring-2 focus:ring-primary/25';
 const submitClassName =
-	'button button--primary inline-flex h-11 w-full sm:w-56 items-center justify-center rounded-[var(--radius-button)] border border-primary bg-primary px-6 text-base font-semibold text-dark shadow-sm transition duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-primary-dark hover:bg-primary-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background';
+	'button button--primary inline-flex h-11 w-full items-center justify-center rounded-[var(--radius-button)] border border-transparent bg-primary px-6 text-sm font-semibold tracking-[0.08em] text-dark uppercase shadow-[0_10px_24px_-18px_rgba(213,164,56,0.9)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/65 focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:w-auto';
 ---
 
-<section class="pt-8" data-contact-form-small>
+<section class="pt-2" aria-label="Snabbkontakt" data-contact-form-small>
 	<div class="w-full">
-		<p class="text-primary font-bold text-center my-auto hidden" data-success></p>
-		<form action="#" method="POST" class="lg:flex-auto" data-form>
-			<div class="max-w-5xl mx-auto sm:flex space-y-4 sm:space-y-0 sm:space-x-3">
-				<Input type="text" name="name" placeholder="Namn" autoComplete="name" aria-label="Namn" className={fieldClassName} />
-				<Input type="text" name="phone" autoComplete="phone" placeholder="Telefon" aria-label="Telefon" className={fieldClassName} />
-				<button type="submit" class={submitClassName}>
-					Skicka
-				</button>
+		<p class="mb-4 hidden rounded-lg border border-emerald-300/60 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-700" data-success></p>
+
+		<form action="#" method="POST" class="space-y-4" data-form>
+			<div class="grid gap-3 sm:grid-cols-[1fr_1fr_auto] sm:items-center">
+				<input type="text" name="name" placeholder="Namn" autoComplete="name" aria-label="Namn" class={fieldClassName} required />
+				<input type="tel" name="phone" autoComplete="tel" placeholder="Telefon" aria-label="Telefon" class={fieldClassName} required />
+				<button type="submit" class={submitClassName}>Skicka</button>
 			</div>
-			<div class="mt-5">
-				<Checkbox id="gdpr-small" name="gdpr" className="text-sm leading-6 text-white/75">
+
+			<label for="gdpr-small" class="flex items-start gap-3 rounded-xl border border-black/10 bg-white/80 px-3 py-3 text-sm leading-relaxed text-foreground/64">
+				<input id="gdpr-small" name="gdpr" type="checkbox" class="mt-1 h-4 w-4 rounded border-black/30 accent-primary" />
+				<span>
 					Genom att skicka detta meddelande godkänner du att vi lagrar och hanterar dina personuppgifter i enlighet med vår
-					<a href="/integritetspolicy/" class="text-primary">integritetspolicy</a>.
-				</Checkbox>
-			</div>
-			<p class="text-red-500 hidden" data-error></p>
+					<a href="/integritetspolicy/" class="font-semibold text-foreground underline decoration-primary/35 decoration-2 underline-offset-3 hover:decoration-primary">integritetspolicy</a>.
+				</span>
+			</label>
+
+			<p class="hidden rounded-lg border border-red-300/65 bg-red-50 px-4 py-3 text-sm font-medium text-red-700" data-error></p>
 		</form>
 	</div>
 </section>

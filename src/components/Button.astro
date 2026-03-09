@@ -28,25 +28,34 @@ const {
 } = Astro.props as Props;
 
 const baseClasses =
-  "inline-flex items-center justify-center rounded-xl border font-semibold tracking-wide leading-none no-underline transition-all duration-300 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-95 cursor-pointer";
+  "button inline-flex items-center justify-center border font-semibold tracking-wide leading-none no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-95 cursor-pointer";
 
 const classesBySize: Record<ButtonSize, string> = {
-  sm: "h-9 px-4 text-sm",
-  md: "h-11 px-6 text-base",
-  lg: "h-12 px-8 text-lg",
+  sm: "h-10 px-5 text-sm",
+  md: "h-12 px-7 text-base",
+  lg: "h-14 px-9 text-lg",
 };
 
 const classesByType: Record<ButtonVariant, string> = {
   primary:
-    "border-transparent bg-primary text-primary-foreground shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/40 hover:-translate-y-0.5 hover:bg-primary/90",
+    "button--primary border-transparent bg-primary text-primary-foreground",
   secondary:
-    "border-border/50 bg-surface text-foreground shadow-sm hover:border-border hover:shadow-md hover:-translate-y-0.5 hover:bg-surface-secondary",
+    "border-border/60 bg-surface text-foreground shadow-sm",
   transparent:
-    "border-white/20 bg-white/5 text-white backdrop-blur-sm hover:bg-white/10 hover:border-white/40 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/10",
+    "border-white/22 bg-white/6 text-white backdrop-blur-sm",
   tertiary:
-    "border-transparent bg-transparent text-foreground hover:bg-surface-secondary/80 hover:text-primary",
+    "border-transparent bg-transparent text-foreground",
   default:
-    "border-transparent bg-primary text-primary-foreground shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/40 hover:-translate-y-0.5 hover:bg-primary/90",
+    "button--primary border-transparent bg-primary text-primary-foreground",
+};
+
+const layerClassesByType: Record<ButtonVariant, string> = {
+  primary: "button__layer bg-[linear-gradient(120deg,var(--primary),var(--primary-dark))]",
+  secondary: "button__layer bg-[linear-gradient(120deg,var(--surface-secondary),var(--surface-tertiary))]",
+  transparent:
+    "button__layer bg-[linear-gradient(120deg,rgba(255,255,255,0.26),rgba(255,255,255,0.1))]",
+  tertiary: "button__layer bg-[linear-gradient(120deg,var(--surface-secondary),var(--surface-tertiary))]",
+  default: "button__layer bg-[linear-gradient(120deg,var(--primary),var(--primary-dark))]",
 };
 
 const classes =
@@ -56,5 +65,6 @@ const computedRel =
 ---
 
 <a href={href} class={classes} target={target} rel={computedRel}>
-  {text}
+  <span class={layerClassesByType[type]} aria-hidden="true"></span>
+  <span class="button__label">{text}</span>
 </a>

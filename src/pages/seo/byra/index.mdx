@@ -1,10 +1,249 @@
 ---
 layout: ../../../layouts/PageLayout.astro
-title: "SEO Byrå - new customers"
+title: "SEO Byrå – Organisk tillväxt med mätbara resultat | new customers"
+description: "Vi är en SEO-byrå som driver organisk tillväxt med bevisade resultat. Teknisk SEO, innehållsstrategi och länkbygge – allt under ett tak. Boka ett kostnadsfritt strategisamtal."
 ---
 
-import Hero from '../../../sections/Hero.astro';
+import SubHero from '../../../sections/SubHero.astro';
+import PainPoints from '../../../sections/PainPoints.astro';
+import MainFeatures from '../../../sections/MainFeatures.astro';
+import ResultsShowcase from '../../../sections/ResultsShowcase.astro';
+import StatsBar from '../../../sections/StatsBar.astro';
+import ServicesList from '../../../sections/ServicesList.astro';
+import Testimonials from '../../../sections/Testimonials.astro';
+import Faq from '../../../sections/Faq.astro';
+import ContactForm from '../../../components/ContactForm.astro';
+import SplitCoworkers from '../../../sections/SplitCoworkers.astro';
+import Button from '../../../components/Button.astro';
 
-<Hero h1="SEO Byrå" />
+export const logos = [
+	{ icon: { url: 'https://wp.newcustomers.se/wp-content/uploads/2024/01/ATG_Vit_logo.png' } },
+	{ icon: { url: 'https://wp.newcustomers.se/wp-content/uploads/2025/02/Weber_vit-1.png' } },
+	{ icon: { url: 'https://wp.newcustomers.se/wp-content/uploads/2024/01/Elexir-Pharma_vit.png' } },
+	{ icon: { url: 'https://wp.newcustomers.se/wp-content/uploads/2025/02/IG_Logo.png' } },
+	{ icon: { url: 'https://wp.newcustomers.se/wp-content/uploads/2024/01/Convendum_Vit.png' } },
+	{ icon: { url: 'https://wp.newcustomers.se/wp-content/uploads/2024/01/Seasea-logo_vit_2.png' } },
+	{ icon: { url: 'https://wp.newcustomers.se/wp-content/uploads/2024/04/HusmanHagberg_logo.png' } },
+];
 
-Basinnehåll kommer snart.
+export const painPoints = encodeURIComponent(
+	JSON.stringify([
+		{
+			title: 'Osynlig i Google',
+			description: 'Dina konkurrenter rankar högre och tar de kunder som borde vara dina. Utan synlighet i sökresultaten missar du kontinuerligt affärer.',
+		},
+		{
+			title: 'Fallande organisk trafik',
+			description: 'Algoritmuppdateringar och ökad konkurrens har urholkat era positioner. Trafiken sjunker utan att ni förstår varför.',
+		},
+		{
+			title: 'SEO utan tydlig ROI',
+			description: 'Ni har investerat i SEO tidigare men saknar koppling mellan insats och affärsresultat. Rapporterna visar data, inte intäkter.',
+		},
+		{
+			title: 'Tekniska problem bromsar',
+			description: 'Långsam sajt, indexeringsproblem och bristfällig struktur gör att Google inte premierar ert innehåll, oavsett hur bra det är.',
+		},
+		{
+			title: 'Innehåll utan strategi',
+			description: 'Ni publicerar content, men det drivs inte av sökintention eller affärsmål. Resultatet blir sidor som ingen hittar.',
+		},
+		{
+			title: 'Fel byrå, fel resultat',
+			description: 'Tidigare byråer har levererat generiska lösningar utan att förstå er bransch, era kunder eller era affärsmål.',
+		},
+	]),
+);
+
+export const solution = encodeURIComponent(
+	JSON.stringify([
+		{
+			title: 'Teknisk SEO-audit',
+			description: 'Vi identifierar och åtgärdar allt som hindrar Google från att crawla, indexera och ranka er sajt optimalt.',
+		},
+		{
+			title: 'Innehållsstrategi',
+			description: 'Datadriven innehållsplan baserad på sökintention, konkurrentanalys och era affärsmål – inte gissningar.',
+		},
+		{
+			title: 'Länkbygge & auktoritet',
+			description: 'Strategiskt länkbygge som stärker er domänauktoritet och lyfter er synlighet inom era viktigaste sökord.',
+		},
+	]),
+);
+
+export const cases = encodeURIComponent(
+	JSON.stringify([
+		{
+			tag: 'E-handel',
+			title: 'Från sida 3 till topp 3 på 6 månader',
+			description: 'En e-handelsaktör inom heminredning ville öka sin organiska synlighet och minska beroendet av betalda annonser.',
+			metrics: [
+				{ value: '+312%', label: 'Organisk trafik' },
+				{ value: 'Topp 3', label: 'Nyckelord' },
+				{ value: '+187%', label: 'Organiska intäkter' },
+			],
+		},
+		{
+			tag: 'B2B-tjänster',
+			title: '4x fler kvalificerade leads på 8 månader',
+			description: 'Ett konsultbolag behövde fler inkommande förfrågningar från beslutsfattare utan att öka annonsbudgeten.',
+			metrics: [
+				{ value: '4x', label: 'Fler leads' },
+				{ value: '+68%', label: 'Organisk synlighet' },
+				{ value: '-34%', label: 'Kostnad per lead' },
+			],
+		},
+	]),
+);
+
+export const coworkers = encodeURIComponent(
+	JSON.stringify([
+		{
+			name: 'Robert Nyberg',
+			title: 'Grundare | Senior SEO',
+			phone: '+46 70 718 96 97',
+			email: 'robert@newcustomers.se',
+			image: { url: 'https://wp.newcustomers.se/wp-content/uploads/2024/01/Robert_Nyberg.webp' },
+		},
+		{
+			name: 'Nicklas Sångberg',
+			title: 'Grundare | VD | Digital affärsutvecklare',
+			phone: '+46 70 387 71 77',
+			email: 'nicklas@newcustomers.se',
+			image: { url: 'https://wp.newcustomers.se/wp-content/uploads/2024/01/Nicklas_Sangberg.webp' },
+		},
+	]),
+);
+
+export const testimonials = encodeURIComponent(
+	JSON.stringify([
+		{
+			image: { url: 'https://wp.newcustomers.se/wp-content/uploads/2023/03/Texas_Recension-2.webp', alt: 'Texas recension' },
+			text: 'Toppklass! Från första mötet har new customers-teamet visat en stor förståelse för våra behov och önskemål. De är lyhörda, lösnings-orienterade och levererar alltid över förväntan. Deras expertis och kunskap inom SEO & Google är oöverträffad vilket lett till att vi tagit toppositioner och fått in nya gäster och bokningar till våra restauranger. - Andrea Huntzinger Marketing Coordinator på Texas Longhorn Group',
+			logo: { url: 'https://wp.newcustomers.se/wp-content/uploads/2024/01/stjarnor.png', alt: '5 stjärnor' },
+		},
+		{
+			image: { url: 'https://wp.newcustomers.se/wp-content/uploads/2023/05/Villa-Fridhem_recension-1.webp', alt: 'Villa Fridhem recension' },
+			text: 'Så tacksam över att vi valde att samarbeta med new customers. Vi kan redan efter ett par veckor se hur vi klättrar på google och får in nya helt gäster och bokningar. De är experter på sina områden och otroligt bra på att förklara och lära ut. Rekommenderar new customers till alla som har en digital närvaro. - Marknadschef på Villa Fridhem',
+			logo: { url: 'https://wp.newcustomers.se/wp-content/uploads/2024/01/stjarnor.png', alt: '5 stjärnor' },
+		},
+	]),
+);
+
+export const stats = encodeURIComponent(
+	JSON.stringify([
+		{ value: '35+', label: 'Aktiva kunder' },
+		{ value: '200%', label: 'Snitt trafikökning' },
+		{ value: '12', label: 'Specialister' },
+		{ image: { url: '/google.png', alt: 'Google partner' }, label: 'Partner' },
+	]),
+);
+
+export const services = encodeURIComponent(
+	JSON.stringify([
+		'On-page SEO & innehållsoptimering',
+		'Teknisk SEO & sajthälsa',
+		'Länkbygge & digital PR',
+		'Lokal SEO & Google Business',
+		'SEO för e-handel',
+		'Konkurrentanalys & keyword research',
+		'Content marketing & bloggstrategi',
+		'SEO-audit & migrering',
+		'Löpande rapportering & analys',
+	]),
+);
+
+export const faqQuestions = encodeURIComponent(
+	JSON.stringify([
+		{
+			question: 'Vad kostar det att anlita en SEO-byrå?',
+			answer: 'Kostnaden varierar beroende på omfattning och konkurrens i din bransch. Vi erbjuder skräddarsydda paket som börjar från 15 000 kr/månad. Alla samarbeten inleds med en kostnadsfri analys så att du vet exakt vad du investerar i.',
+		},
+		{
+			question: 'Hur lång tid tar det innan man ser resultat av SEO?',
+			answer: 'SEO är en långsiktig investering. Typiskt ser våra kunder tydliga förbättringar inom 3–6 månader, med starkare resultat efter 6–12 månader. Tekniska förbättringar kan dock ge effekt redan inom veckor.',
+		},
+		{
+			question: 'Vad skiljer er från andra SEO-byråer?',
+			answer: 'Vi kopplar alltid SEO-insatser till affärsresultat, inte bara rankningar. Med vår plattform Customer Intelligence 2.0 ger vi dig insyn i hela kedjan – från sökord till signerade avtal. Vi är transparenta, resultatdrivna och arbetar som en förlängning av ditt team.',
+		},
+		{
+			question: 'Kan ni hjälpa till med SEO för e-handel?',
+			answer: 'Absolut. Vi har bred erfarenhet av SEO för e-handelsplattformar och arbetar med allt från produktsides-optimering och kategorisidor till teknisk SEO och innehållsstrategi specifikt anpassad för e-handel.',
+		},
+		{
+			question: 'Binder jag upp mig på ett långt avtal?',
+			answer: 'Nej. Vi tror på att bevisa vårt värde varje månad. Våra avtal är flexibla med en kort uppsägningstid. Vi vill att du stannar för att du ser resultat – inte för att du är bunden.',
+		},
+		{
+			question: 'Hur rapporterar ni resultat?',
+			answer: 'Du får löpande tillgång till vår affärsrapport som visar organisk trafik, rankningar, konverteringar och affärsvärde i realtid. Vi har månatliga genomgångar där vi går igenom insikter och nästa steg.',
+		},
+	]),
+);
+
+<SubHero
+	data={{
+		title: 'SEO-byrån som levererar mätbar och hållbar tillväxt',
+		description: 'Vi hjälper ambitiösa företag att dominera sökresultaten med teknisk SEO, strategiskt innehåll och transparent rapportering. Inga genvägar – bara hållbar organisk tillväxt.',
+		noBackgroundImage: true,
+		logos,
+	}}
+/>
+
+<StatsBar data={{ eyebrow: 'I siffror', stats }} />
+
+<PainPoints
+	data={{
+		eyebrow: 'Känner du igen dig?',
+		title: 'Utmaningar vi löser varje dag',
+		description: 'Många företag kämpar med samma hinder när det gäller organisk synlighet. Om något av detta stämmer in på dig – då kan vi hjälpa.',
+		painPoints,
+		transitionText: 'Du behöver inte en till SEO-byrå som lovar allt och levererar rapporter. Du behöver en partner som förstår affär.',
+	}}
+/>
+
+<MainFeatures
+	data={{
+		preTitle: 'Vår metod',
+		title: 'Tre pelare för hållbar SEO-tillväxt',
+		description: 'Vi bygger organisk synlighet på en grund av teknisk excellens, strategiskt innehåll och auktoritetsbyggande – allt kopplat till dina affärsmål.',
+		features: solution,
+	}}
+/>
+
+<ResultsShowcase
+	data={{
+		eyebrow: 'Resultat som talar',
+		title: 'Kundcase som visar vad vi levererar',
+		description: 'Varje samarbete börjar med en tydlig målbild. Här är exempel på vad vi uppnått åt våra kunder.',
+		cases,
+	}}
+/>
+
+<ServicesList
+	data={{
+		eyebrow: 'Tjänster',
+		title: 'Allt du behöver under ett tak',
+		description: 'Vi erbjuder hela spektrumet av SEO-tjänster – från teknisk grund till löpande innehåll och analys.',
+		services,
+	}}
+/>
+
+<SplitCoworkers data={{ eyebrow: 'Teamet', title: 'Expertis och erfarenhet', coworkers }}>
+	<div class="section-stack">
+		<h3 class="mt-0">Specialiserad SEO-byrå</h3>
+		<p>Vi är inte en generalistbyrå som gör lite av allt. SEO är vår kärnkompetens – det vi andas, mäter och optimerar varje dag.</p>
+		<h3 class="mt-0">Customer Intelligence 2.0</h3>
+		<p>Med vår egenutvecklade plattform kopplar vi söktrafik till faktiska affärer. Du ser inte bara rankningar – du ser intäkter.</p>
+		<h3 class="mt-0">Transparens som standard</h3>
+		<p>Inga svarta lådor. Du har full insyn i vad vi gör, varför vi gör det och vilka resultat det ger.</p>
+	</div>
+</SplitCoworkers>
+
+<Testimonials data={{ eyebrow: 'Recensioner', title: 'Vad våra kunder säger', testimonials, buttonText: 'Fler recensioner', buttonLink: '/recensioner/' }} />
+
+<Faq data={{ eyebrow: 'FAQ', heading: 'Vanliga frågor om SEO-byrå', questions: faqQuestions }} />
+
+<ContactForm />
