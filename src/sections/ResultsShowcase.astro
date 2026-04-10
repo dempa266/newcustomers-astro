@@ -40,12 +40,12 @@ const cases = parseEncodedJson<CaseStudy[]>(data.cases, []);
 
 		<div class="section-after-intro results-grid">
 			{cases.map((study) => (
-				<article class="results-case" data-reveal>
+				<article class="results-case flow" data-reveal>
 					{study.tag && (
-						<div class="type-micro-label text-primary mb-5">{study.tag}</div>
+						<div class="type-micro-label text-primary">{study.tag}</div>
 					)}
 
-					{study.title && <h3 class="mb-3">{study.title}</h3>}
+					{study.title && <h3>{study.title}</h3>}
 					{study.description && <p class="max-w-[50ch] leading-relaxed">{study.description}</p>}
 
 					{study.metrics && study.metrics.length > 0 && (

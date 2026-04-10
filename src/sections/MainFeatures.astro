@@ -43,11 +43,11 @@ const features = parseEncodedJson<Feature[]>(data.features, []);
 
 		<div class="section-after-intro features-columns" data-reveal-children>
 			{features.map((feature, i) => (
-				<div class="features-column">
+				<div class="features-column flow">
 					<span class="shrink-0 font-[var(--font-heading)] text-[clamp(2rem,3.2vw,2.8rem)] font-bold leading-none text-primary tabular-nums">
 						{String(i + 1).padStart(2, '0')}
 					</span>
-					{feature.title && <h3 class="mt-4 mb-2 text-foreground">{feature.title}</h3>}
+					{feature.title && <h3 class="text-foreground">{feature.title}</h3>}
 					{feature.description && <p class="leading-relaxed max-w-[40ch]">{feature.description}</p>}
 				</div>
 			))}
@@ -60,7 +60,6 @@ const features = parseEncodedJson<Feature[]>(data.features, []);
 		display: grid;
 		grid-template-columns: 1fr;
 		gap: 2.5rem;
-		border-top: 1px solid color-mix(in oklab, var(--foreground) 6%, transparent);
 		padding-top: clamp(2rem, 3.5vw, 3rem);
 	}
 

@@ -1,35 +1,19 @@
 ---
 layout: ../layouts/PageLayout.astro
-title: "Vi ökar våra kunders försäljning och digitala närvaro - new customers"
-description: "Vi skapar nya kunder och ökar försäljningen genom SEO, SEM och CRO. Med vår metod och mjukvara Customer Intelligence 2.0 förenklar vi vägen till en ny kund och affär."
+title: "Digital Marknadsföring – Fler kunder, ökad försäljning | new customers"
+description: "Vi är en byrå för digital marknadsföring som driver tillväxt med SEO, SEM och CRO. Med vår metod Customer Intelligence 2.0 kopplar vi marknadsföring till affärsresultat. Boka ett kostnadsfritt strategisamtal."
 ---
 
-import Hero from '../sections/Hero.astro';
-import PageLinks from '../sections/PageLinks.astro';
-import SplitCoworkers from '../sections/SplitCoworkers.astro';
-import Testimonials from '../sections/Testimonials.astro';
+import SubHero from '../sections/SubHero.astro';
+import PainPoints from '../sections/PainPoints.astro';
+import MainFeatures from '../sections/MainFeatures.astro';
+import ResultsShowcase from '../sections/ResultsShowcase.astro';
 import StatsBar from '../sections/StatsBar.astro';
+import ServicesList from '../sections/ServicesList.astro';
+import Testimonials from '../sections/Testimonials.astro';
+import Faq from '../sections/Faq.astro';
 import ContactForm from '../components/ContactForm.astro';
-
-export const pageLinks = encodeURIComponent(
-	JSON.stringify([
-		{
-			text: 'SEO',
-			url: '#kontakt',
-			icon: { url: 'https://wp.newcustomers.se/wp-content/uploads/2023/03/NC_Symboler_Rityta-1.png' },
-		},
-		{
-			text: 'SEM',
-			url: '#kontakt',
-			icon: { url: 'https://wp.newcustomers.se/wp-content/uploads/2023/03/NC_Symboler-02.png' },
-		},
-		{
-			text: 'CRO',
-			url: '#kontakt',
-			icon: { url: 'https://wp.newcustomers.se/wp-content/uploads/2023/03/NC_Symboler-03.png' },
-		},
-	]),
-);
+import SplitCoworkers from '../sections/SplitCoworkers.astro';
 
 export const logos = [
 	{ icon: { url: 'https://wp.newcustomers.se/wp-content/uploads/2024/01/ATG_Vit_logo.png' } },
@@ -40,6 +24,77 @@ export const logos = [
 	{ icon: { url: 'https://wp.newcustomers.se/wp-content/uploads/2024/01/Seasea-logo_vit_2.png' } },
 	{ icon: { url: 'https://wp.newcustomers.se/wp-content/uploads/2024/04/HusmanHagberg_logo.png' } },
 ];
+
+export const painPoints = encodeURIComponent(
+	JSON.stringify([
+		{
+			title: 'Svårt att nå rätt målgrupp',
+			description: 'Ni investerar i digital marknadsföring men når inte de kunder som faktiskt är redo att köpa. Budgeten försvinner utan att generera kvalificerade leads.',
+		},
+		{
+			title: 'Ingen koppling till affärsresultat',
+			description: 'Ni ser klick och visningar i rapporterna, men saknar insikt i hur digital marknadsföring faktiskt påverkar försäljningen och lönsamheten.',
+		},
+		{
+			title: 'Spretig närvaro i flera kanaler',
+			description: 'SEO, Google Ads och sociala medier körs i silos utan gemensam strategi. Insatserna motarbetar varandra istället för att förstärka.',
+		},
+		{
+			title: 'Beroende av betalda annonser',
+			description: 'All trafik kommer via annonser. Stänger ni av budgeten försvinner kunderna. Ni saknar organisk synlighet som bärande kanal.',
+		},
+		{
+			title: 'Tidigare byrå levererade inte',
+			description: 'Ni har testat andra byråer som lovade mycket men inte kunde visa mätbara resultat kopplade till era affärsmål.',
+		},
+		{
+			title: 'Saknar intern kompetens',
+			description: 'Digital marknadsföring utvecklas snabbt och ert team hinner inte hänga med i algoritmer, verktyg och bästa praxis.',
+		},
+	]),
+);
+
+export const solution = encodeURIComponent(
+	JSON.stringify([
+		{
+			title: 'SEO & organisk tillväxt',
+			description: 'Vi bygger långsiktig synlighet i Google genom teknisk SEO, strategiskt innehåll och auktoritetsbyggande – trafik som växer utan att kostnaden ökar.',
+		},
+		{
+			title: 'Google Ads & betald sökning',
+			description: 'Datadrivna annonskampanjer som når rätt kund i rätt ögonblick. Vi optimerar löpande för lägsta kostnad per konvertering.',
+		},
+		{
+			title: 'CRO & konverteringsoptimering',
+			description: 'Vi förvandlar fler besökare till kunder genom datadriven analys, A/B-testning och optimerade kundresor på er sajt.',
+		},
+	]),
+);
+
+export const cases = encodeURIComponent(
+	JSON.stringify([
+		{
+			tag: 'E-handel',
+			title: 'Från sida 3 till topp 3 på 6 månader',
+			description: 'En e-handelsaktör inom heminredning ville öka sin organiska synlighet och minska beroendet av betalda annonser.',
+			metrics: [
+				{ value: '+312%', label: 'Organisk trafik' },
+				{ value: 'Topp 3', label: 'Nyckelord' },
+				{ value: '+187%', label: 'Organiska intäkter' },
+			],
+		},
+		{
+			tag: 'B2B-tjänster',
+			title: '4x fler kvalificerade leads på 8 månader',
+			description: 'Ett konsultbolag behövde fler inkommande förfrågningar från beslutsfattare utan att öka annonsbudgeten.',
+			metrics: [
+				{ value: '4x', label: 'Fler leads' },
+				{ value: '+68%', label: 'Organisk synlighet' },
+				{ value: '-34%', label: 'Kostnad per lead' },
+			],
+		},
+	]),
+);
 
 export const coworkers = encodeURIComponent(
 	JSON.stringify([
@@ -60,56 +115,133 @@ export const coworkers = encodeURIComponent(
 	]),
 );
 
-export const homeStats = encodeURIComponent(
+export const testimonials = encodeURIComponent(
+	JSON.stringify([
+		{
+			image: { url: 'https://wp.newcustomers.se/wp-content/uploads/2023/03/Texas_Recension-2.webp', alt: 'Texas recension' },
+			text: 'Toppklass! Från första mötet har new customers-teamet visat en stor förståelse för våra behov och önskemål. De är lyhörda, lösnings-orienterade och levererar alltid över förväntan. Deras expertis och kunskap inom SEO & Google är oöverträffad vilket lett till att vi tagit toppositioner och fått in nya gäster och bokningar till våra restauranger. - Andrea Huntzinger Marketing Coordinator på Texas Longhorn Group',
+			logo: { url: 'https://wp.newcustomers.se/wp-content/uploads/2024/01/stjarnor.png', alt: '5 stjärnor' },
+		},
+		{
+			image: { url: 'https://wp.newcustomers.se/wp-content/uploads/2023/05/Villa-Fridhem_recension-1.webp', alt: 'Villa Fridhem recension' },
+			text: 'Så tacksam över att vi valde att samarbeta med new customers. Vi kan redan efter ett par veckor se hur vi klättrar på google och får in nya helt gäster och bokningar. De är experter på sina områden och otroligt bra på att förklara och lära ut. Rekommenderar new customers till alla som har en digital närvaro. - Marknadschef på Villa Fridhem',
+			logo: { url: 'https://wp.newcustomers.se/wp-content/uploads/2024/01/stjarnor.png', alt: '5 stjärnor' },
+		},
+	]),
+);
+
+export const stats = encodeURIComponent(
 	JSON.stringify([
 		{ image: { url: '/google.png', alt: 'Google' }, stars: 5 },
-		{ value: '35+', label: 'Kunder' },
+		{ value: '35+', label: 'Aktiva kunder' },
 		{ value: '12', label: 'Specialister' },
 		{ value: '2021', label: 'Grundat' },
 		{ image: { url: '/google.png', alt: 'Google partner' }, label: 'Partner' },
 	]),
 );
 
-export const testimonials = encodeURIComponent(
+export const services = encodeURIComponent(
+	JSON.stringify([
+		'Sökmotoroptimering (SEO)',
+		'Google Ads & SEM',
+		'Konverteringsoptimering (CRO)',
+		'Innehållsstrategi & content marketing',
+		'Teknisk SEO & sajthälsa',
+		'Lokal SEO & Google Business',
+		'Länkbygge & digital PR',
+		'Webbanalys & spårning',
+		'Löpande rapportering & affärsinsikter',
+	]),
+);
+
+export const faqQuestions = encodeURIComponent(
 	JSON.stringify([
 		{
-			image: { url: 'https://wp.newcustomers.se/wp-content/uploads/2023/03/Texas_Recension-2.webp', alt: 'Texas recension' },
-			text:
-				'Toppklass! Från första mötet har new customers-teamet visat en stor förståelse för våra behov och önskemål. De är lyhörda, lösnings-orienterade och levererar alltid över förväntan. Deras expertis och kunskap inom SEO & Google är oöverträffad vilket lett till att vi tagit toppositioner och fått in nya gäster och bokningar till våra restauranger. - Andrea Huntzinger Marketing Coordinator på Texas Longhorn Group',
-			logo: { url: 'https://wp.newcustomers.se/wp-content/uploads/2024/01/stjarnor.png', alt: '5 stjärnor' },
+			question: 'Vad kostar digital marknadsföring?',
+			answer: 'Kostnaden beror på vilka kanaler och vilken omfattning som behövs. Vi skräddarsyr alltid upplägg efter era mål och budget. Alla samarbeten inleds med en kostnadsfri analys där vi kartlägger möjligheterna.',
 		},
 		{
-			image: { url: 'https://wp.newcustomers.se/wp-content/uploads/2023/05/Villa-Fridhem_recension-1.webp', alt: 'Villa Fridhem recension' },
-			text:
-				'Så tacksam över att vi valde att samarbeta med new customers. Vi kan redan efter ett par veckor se hur vi klättrar på google och får in nya helt gäster och bokningar. De är experter på sina områden och otroligt bra på att förklara och lära ut. Rekommenderar new customers till alla som har en digital närvaro. - Marknadschef på Villa Fridhem',
-			logo: { url: 'https://wp.newcustomers.se/wp-content/uploads/2024/01/stjarnor.png', alt: '5 stjärnor' },
+			question: 'Vilka kanaler inom digital marknadsföring arbetar ni med?',
+			answer: 'Vi specialiserar oss på SEO, Google Ads (SEM) och konverteringsoptimering (CRO). Dessa tre kanaler ger störst affärsnytta för de flesta företag och det är här vi levererar bäst resultat.',
+		},
+		{
+			question: 'Hur snabbt ser man resultat av digital marknadsföring?',
+			answer: 'Google Ads kan ge resultat direkt, medan SEO typiskt visar tydliga förbättringar inom 3–6 månader. Vi rekommenderar alltid en kombination av snabba insatser och långsiktig tillväxt.',
+		},
+		{
+			question: 'Vad skiljer er från andra byråer för digital marknadsföring?',
+			answer: 'Vi kopplar alltid insatser till affärsresultat – inte bara klick och visningar. Med vår plattform Customer Intelligence 2.0 ser du hela kedjan från besökare till avslutad affär. Vi är transparenta, resultatdrivna och arbetar som en förlängning av ert team.',
+		},
+		{
+			question: 'Behöver vi binda upp oss på ett långt avtal?',
+			answer: 'Nej. Vi tror på att bevisa vårt värde varje månad. Våra avtal har kort uppsägningstid – vi vill att ni stannar för att ni ser resultat, inte för att ni är bundna.',
+		},
+		{
+			question: 'Kan ni hjälpa företag i hela Sverige?',
+			answer: 'Absolut. Vi arbetar med kunder i hela Sverige och har kontor i Stockholm. Digital marknadsföring fungerar oberoende av geografisk plats och vi samarbetar lika effektivt på distans.',
 		},
 	]),
 );
 
-<Hero
+<SubHero
 	data={{
-		title: 'Vi ökar våra kunders försäljning och digitala närvaro',
+		title: 'Digital marknadsföring som driver försäljning och tillväxt',
+		description: 'Vi hjälper ambitiösa företag att växa med SEO, Google Ads och konverteringsoptimering. Ingen fluff – bara datadriven digital marknadsföring kopplad till era affärsmål.',
 		noBackgroundImage: true,
 		logos,
 	}}
 />
 
-<PageLinks data={{ links: pageLinks }} />
+<StatsBar data={{ eyebrow: 'I siffror', stats }} />
 
-<SplitCoworkers data={{ title: 'Resultat och mission', coworkers }}>
-	<div class="section-stack">
-		<h3 class="mt-0">Resultat</h3>
-		<p>Tillsammans skapar vi nya kunder och ökar försäljningen.</p>
-		<h3 class="mt-0">Mission</h3>
-		<p>Genom vår egen metod och mjukvara Customer Intelligence 2.0 skapar vi mer affär från webben.</p>
-		<h3 class="mt-0">Så skapar vi lönsamhet</h3>
-		<p>Vi förenklar och kostnadsoptimerar vägen till en ny kund och affär.</p>
-	</div>
+<PainPoints
+	data={{
+		eyebrow: 'Känner du igen dig?',
+		title: 'Utmaningar vi löser varje dag',
+		description: 'Många företag investerar i digital marknadsföring utan att se resultat. Om något av detta stämmer in på dig – då kan vi hjälpa.',
+		painPoints,
+		transitionText: 'Du behöver inte ytterligare en byrå som levererar rapporter. Du behöver en partner som förstår affär.',
+	}}
+/>
+
+<MainFeatures
+	data={{
+		preTitle: 'Vår metod',
+		title: 'Tre pelare för digital tillväxt',
+		description: 'Vi kombinerar SEO, betald sökning och konverteringsoptimering till en helhetsstrategi för digital marknadsföring – allt kopplat till era affärsmål.',
+		features: solution,
+	}}
+/>
+
+<ResultsShowcase
+	data={{
+		eyebrow: 'Resultat som talar',
+		title: 'Kundcase som visar vad vi levererar',
+		description: 'Varje samarbete börjar med en tydlig målbild. Här är exempel på vad vår digitala marknadsföring har uppnått.',
+		cases,
+	}}
+/>
+
+<ServicesList
+	data={{
+		eyebrow: 'Tjänster',
+		title: 'Digital marknadsföring under ett tak',
+		description: 'Vi erbjuder hela spektrumet av digital marknadsföring – från organisk synlighet till betalda kampanjer och konvertering.',
+		services,
+	}}
+/>
+
+<SplitCoworkers data={{ eyebrow: 'Teamet', title: 'Expertis och erfarenhet', coworkers }}>
+	<h3>Specialiserad byrå för digital marknadsföring</h3>
+	<p>Vi är inte en generalistbyrå som gör lite av allt. Digital marknadsföring genom SEO, SEM och CRO är vår kärnkompetens – det vi andas, mäter och optimerar varje dag.</p>
+	<h3>Customer Intelligence 2.0</h3>
+	<p>Med vår egenutvecklade plattform kopplar vi marknadsföringsinsatser till faktiska affärer. Du ser inte bara trafik – du ser intäkter.</p>
+	<h3>Transparens som standard</h3>
+	<p>Inga svarta lådor. Du har full insyn i vad vi gör, varför vi gör det och vilka resultat det ger.</p>
 </SplitCoworkers>
 
-<StatsBar data={{ eyebrow: 'I siffror', stats: homeStats }} />
+<Testimonials data={{ eyebrow: 'Recensioner', title: 'Vad våra kunder säger', testimonials, buttonText: 'Fler recensioner', buttonLink: '/recensioner/' }} />
 
-<Testimonials data={{ testimonials, buttonText: 'Fler recensioner', buttonLink: '/recensioner/' }} />
+<Faq data={{ eyebrow: 'FAQ', heading: 'Vanliga frågor om digital marknadsföring', questions: faqQuestions }} />
 
 <ContactForm />

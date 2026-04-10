@@ -235,6 +235,27 @@ p {
 	gap: var(--space-stack);
 }
 
+/* Flow: standardized vertical rhythm for heading/paragraph content */
+.flow > * + * {
+	margin-top: var(--flow-space, 0.75em);
+}
+
+.flow > * + :where(h2) {
+	margin-top: 1.5em;
+}
+
+.flow > * + :where(h3) {
+	margin-top: 1.25em;
+}
+
+.flow > * + :where(h4, h5, h6) {
+	margin-top: 1em;
+}
+
+.flow > :where(h1, h2, h3, h4, h5, h6) + * {
+	margin-top: 0.4em;
+}
+
 .section-intro {
 	display: flex;
 	flex-direction: column;

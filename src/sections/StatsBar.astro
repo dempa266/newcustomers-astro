@@ -36,12 +36,12 @@ const colsClass: Record<number, string> = {
 			</div>
 		)}
 		<div data-reveal-children class:list={[
-			'max-w-4xl mx-auto grid grid-cols-2 border-t border-black/6',
+			'max-w-4xl mx-auto grid grid-cols-2',
 			data.eyebrow ? 'mt-5' : '',
 			colsClass[cols] ?? 'md:grid-cols-4',
 		]}>
 			{stats.map((stat) => (
-				<div class="py-8 flex flex-col items-center justify-center border-b border-black/6">
+				<div class="py-8 flex flex-col items-center justify-center">
 					{stat.image?.url && (
 						<img
 							src={stat.image.url}

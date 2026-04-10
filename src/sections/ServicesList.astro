@@ -23,7 +23,7 @@ const services = parseEncodedJson<string[]>(data.services, []);
 				{data.title && <h2>{data.title}</h2>}
 				{data.description && <p class="type-section-lead prose-measure">{data.description}</p>}
 			</div>
-			<div class="section-after-intro grid grid-cols-1 sm:grid-cols-2 gap-x-12 border-t border-black/6" data-reveal-children>
+			<div class="section-after-intro grid grid-cols-1 sm:grid-cols-2 gap-x-12" data-reveal-children>
 				{services.map((service, i) => (
 					<div class="py-5 border-b border-black/6 flex items-baseline gap-4">
 						<span class="shrink-0 font-[var(--font-heading)] text-sm font-semibold text-primary tabular-nums">

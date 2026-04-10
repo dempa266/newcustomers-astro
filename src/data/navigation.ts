@@ -142,6 +142,8 @@ export const footerNavigation = {
 	company: [
 		{ name: 'Om oss', href: '/om-oss/' },
 		{ name: 'Kontakt', href: '/kontakt/' },
+		{ name: 'Artiklar', href: '/artiklar/' },
+		{ name: 'Integritetspolicy', href: '/integritetspolicy/' },
 	],
 	social: [{ name: 'LinkedIn', href: 'https://www.linkedin.com/company/new-customers/' }],
 };

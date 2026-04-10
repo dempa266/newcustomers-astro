@@ -1,6 +1,6 @@
 ---
 const fieldClassName =
-	'field w-full rounded-xl border border-black/10 bg-white px-4 py-3 text-base text-foreground placeholder:text-foreground/38 outline-none transition focus:border-primary/40 focus:ring-2 focus:ring-primary/12';
+	'field w-full rounded-xl border border-black/10 bg-white px-4 py-3 [font-size:inherit] text-foreground placeholder:text-foreground/38 outline-none transition focus:border-primary/40 focus:ring-2 focus:ring-primary/12';
 const labelClassName =
 	'type-micro-label mb-2 block text-foreground/50';
 const submitClassName =
@@ -20,33 +20,33 @@ import SectionEyebrow from './SectionEyebrow.astro';
 					</p>
 				</div>
 
-				<div class="border-t border-black/6 pt-6">
+				<div>
 					<div class="grid gap-6 sm:grid-cols-2">
-						<div>
+						<div class="flow">
 							<p class="type-micro-label text-foreground/44">Stockholm</p>
-							<p class="mt-2 text-sm leading-relaxed">Kungsgatan 9<br />111 43 Stockholm</p>
+							<p class="leading-relaxed">Kungsgatan 9<br />111 43 Stockholm</p>
 						</div>
-						<div>
+						<div class="flow">
 							<p class="type-micro-label text-foreground/44">Göteborg</p>
-							<p class="mt-2 text-sm leading-relaxed">Kungsportsavenyn 21<br />411 36 Göteborg</p>
+							<p class="leading-relaxed">Kungsportsavenyn 21<br />411 36 Göteborg</p>
 						</div>
 					</div>
 				</div>
 
-				<div class="border-t border-black/6 pt-6">
+				<div>
 					<div class="flex flex-wrap gap-x-8 gap-y-3">
 						<a href="tel:+46703877177" class="group no-underline">
 							<p class="type-micro-label text-foreground/44">Telefon</p>
-							<p class="mt-1 text-sm font-semibold text-foreground group-hover:text-primary">070 387 71 77</p>
+							<p class="mt-1 font-semibold text-foreground group-hover:text-primary">070 387 71 77</p>
 						</a>
 						<a href="mailto:info@newcustomers.se" class="group no-underline">
 							<p class="type-micro-label text-foreground/44">E-post</p>
-							<p class="mt-1 text-sm font-semibold text-foreground group-hover:text-primary">info@newcustomers.se</p>
+							<p class="mt-1 font-semibold text-foreground group-hover:text-primary">info@newcustomers.se</p>
 						</a>
 					</div>
 				</div>
 
-				<p class="text-sm text-foreground/56">
+				<p class="text-foreground/56">
 					Letar du efter våra medarbetare?
 					<a href="/om-oss/" class="font-semibold text-foreground underline decoration-black/16 decoration-[1.5px] underline-offset-4 hover:decoration-primary">Hitta dem här</a>.
 				</p>
@@ -79,8 +79,8 @@ import SectionEyebrow from './SectionEyebrow.astro';
 						</div>
 					</div>
 
-					<div class="mt-6 border-t border-black/6 pt-5">
-						<label for="cf-gdpr" class="flex items-start gap-3 text-sm leading-relaxed text-foreground/60">
+					<div class="mt-6">
+						<label for="cf-gdpr" class="flex items-start gap-3 text-[0.9375rem] leading-relaxed text-foreground/60">
 							<input id="cf-gdpr" name="gdpr" type="checkbox" class="mt-1 h-4 w-4 rounded border-black/20 accent-primary" />
 							<span>
 								Genom att skicka detta meddelande godkänner du att vi lagrar och hanterar dina personuppgifter i enlighet med vår

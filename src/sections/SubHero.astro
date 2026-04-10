@@ -1,5 +1,6 @@
 ---
 import Button from '../components/Button.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 
 interface Props {
 	h1?: string;
@@ -31,7 +32,7 @@ const heroImage =
 const logoCloud = data.logos ?? [];
 const hasLogoCloud = logoCloud.length > 0;
 
-const primaryCta = data.primaryCta ?? { text: 'Boka strategisamtal', href: '/kontakt/' };
+const primaryCta = data.primaryCta ?? { text: 'Boka möte', href: '/kontakt/' };
 const secondaryCta = data.secondaryCta ?? { text: 'Om oss', href: '/om-oss/' };
 
 const splitToken = ' och ';
@@ -84,20 +85,23 @@ if (title && title.includes(splitToken)) {
 					>
 						<span class="block">{heroLineOne}</span>
 						{heroLineTwo && (
-							<span class:list={['cinematic-serif mt-1.5 block text-[0.92em] font-semibold', noBackgroundImage ? 'text-foreground/88' : 'text-white/88']}>
-								{heroLineTwo}
+							<span class:list={['cinematic-serif mt-3 block text-[0.92em] font-semibold', noBackgroundImage ? 'text-foreground/88' : 'text-white/88']} data-typewriter={heroLineTwo}>
+								<span class="typewriter-text" aria-hidden="true"></span>
+								<span class="typewriter-placeholder invisible" aria-hidden="true">{heroLineTwo}</span>
+								<span class="typewriter-cursor" aria-hidden="true"></span>
+								<span class="sr-only">{heroLineTwo}</span>
 							</span>
 						)}
 					</h1>
 				)}
 				{text && (
-					<p class:list={['subhero-reveal type-section-lead mt-7 max-w-[58ch]', noBackgroundImage ? 'text-foreground/80' : 'text-white/80']}>
+					<p class:list={['subhero-reveal type-section-lead mt-10 max-w-[58ch]', noBackgroundImage ? 'text-foreground/80' : 'text-white/80']}>
 						{text}
 					</p>
 				)}
 
-				<div class:list={['subhero-reveal flex flex-wrap items-center gap-3.5 sm:gap-4', text ? 'mt-6' : 'mt-8']}>
-					<Button href={primaryCta.href ?? '/kontakt/'} type="primary" size="md" text={primaryCta.text ?? 'Boka strategisamtal'} class="text-sm tracking-[0.08em] uppercase" />
+				<div class:list={['subhero-reveal flex flex-wrap items-center gap-3.5 sm:gap-4', text ? 'mt-8' : 'mt-10']}>
+					<Button href={primaryCta.href ?? '/kontakt/'} type="primary" size="md" text={primaryCta.text ?? 'Boka möte'} class="text-sm tracking-[0.08em] uppercase" />
 					<Button
 						href={secondaryCta.href ?? '/om-oss/'}
 						type={noBackgroundImage ? 'secondary' : 'transparent'}
@@ -139,18 +143,137 @@ if (title && title.includes(splitToken)) {
 	</div>
 </section>
 
+<div class="site-container py-4">
+	<Breadcrumbs />
+</div>
+
+<style>
+	[data-typewriter] {
+		position: relative;
+	}
+
+	.typewriter-text {
+		position: absolute;
+		left: 0;
+		top: 0;
+	}
+
+	.typewriter-placeholder {
+		user-select: none;
+		pointer-events: none;
+	}
+
+	/* Hide placeholder once typing is done */
+	[data-typewriter].is-done .typewriter-placeholder {
+		display: none;
+	}
+
+	[data-typewriter].is-done .typewriter-text {
+		position: static;
+	}
+
+	.typewriter-cursor {
+		display: inline-block;
+		width: 0.05em;
+		height: 0.82em;
+		vertical-align: -0.04em;
+		margin-left: 0.02em;
+		background: currentColor;
+		border-radius: 1px;
+		opacity: 0;
+		transition: opacity 0.15s;
+	}
+
+	.typewriter-cursor.is-typing {
+		opacity: 0.8;
+		animation: cursor-blink 0.72s ease-in-out infinite;
+	}
+
+	.typewriter-cursor.is-done {
+		animation: cursor-fade 0.72s ease-in-out 3;
+		animation-fill-mode: forwards;
+	}
+
+	@keyframes cursor-blink {
+		0%, 100% { opacity: 0.8; }
+		50% { opacity: 0; }
+	}
+
+	@keyframes cursor-fade {
+		0%, 100% { opacity: 0.6; }
+		50% { opacity: 0; }
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.typewriter-cursor { display: none; }
+		.typewriter-placeholder { display: none !important; }
+		.typewriter-text { position: static !important; }
+	}
+</style>
+
 <script>
 	import gsap from 'gsap';
 
 	const heroRoot = document.querySelector('[data-subhero-root]');
 	if (heroRoot) {
+		const reveals = heroRoot.querySelectorAll('.subhero-reveal');
+		const revealDuration = 0.08 + (reveals.length * 0.04) + 0.55;
+
 		const ctx = gsap.context(() => {
 			gsap.fromTo(
-				heroRoot.querySelectorAll('.subhero-reveal'),
-				{ y: 30, opacity: 0 },
-				{ y: 0, opacity: 1, duration: 0.8, stagger: 0.07, ease: 'power3.out', delay: 0.15 },
+				reveals,
+				{ y: 12, opacity: 0 },
+				{ y: 0, opacity: 1, duration: 0.55, stagger: 0.04, ease: 'power2.out', delay: 0.08 },
 			);
 		}, heroRoot);
+
+		// Typewriter effect
+		const el = heroRoot.querySelector<HTMLElement>('[data-typewriter]');
+		if (el && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+			const fullText = el.dataset.typewriter || '';
+			const textEl = el.querySelector<HTMLElement>('.typewriter-text');
+			const cursorEl = el.querySelector<HTMLElement>('.typewriter-cursor');
+
+			if (textEl && cursorEl && fullText) {
+				let i = 0;
+				const baseSpeed = 38;
+
+				// Variable delay per character — slight randomness for natural feel,
+				// slower on spaces and after punctuation
+				function nextDelay(): number {
+					const char = fullText[i];
+					const jitter = Math.random() * 28 - 14; // ±14ms
+					if (char === ' ') return baseSpeed + 30 + jitter;
+					if (',.:;!?'.includes(char)) return baseSpeed + 80 + jitter;
+					return baseSpeed + jitter;
+				}
+
+				function typeNext() {
+					i++;
+					textEl.textContent = fullText.slice(0, i);
+					if (i < fullText.length) {
+						setTimeout(typeNext, nextDelay());
+					} else {
+						// Done
+						el.classList.add('is-done');
+						cursorEl.classList.remove('is-typing');
+						cursorEl.classList.add('is-done');
+						setTimeout(() => { cursorEl.style.display = 'none'; }, 2500);
+					}
+				}
+
+				// Start after reveal animation completes
+				setTimeout(() => {
+					cursorEl.classList.add('is-typing');
+					setTimeout(typeNext, 300); // brief pause before first character
+				}, revealDuration * 1000 + 100);
+			}
+		} else if (el) {
+			// Reduced motion: show immediately
+			const textEl = el.querySelector<HTMLElement>('.typewriter-text');
+			if (textEl) textEl.textContent = el.dataset.typewriter || '';
+			el.classList.add('is-done');
+		}
 
 		window.addEventListener('pagehide', () => ctx.revert(), { once: true });
 	}

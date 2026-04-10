@@ -1,0 +1,487 @@
+---
+import Layout from './Layout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Button from '../components/Button.astro';
+
+interface Props {
+	title: string;
+	description: string;
+	category: string;
+	publishedDate: string;
+	updatedDate?: string;
+	author: {
+		name: string;
+		title?: string;
+		image?: string;
+	};
+	image?: string;
+	imageAlt?: string;
+	slug: string;
+}
+
+const {
+	title,
+	description,
+	category,
+	publishedDate,
+	updatedDate,
+	author,
+	image,
+	imageAlt,
+	slug,
+} = Astro.props as Props;
+
+const categoryLabels: Record<string, string> = {
+	seo: 'SEO',
+	sem: 'SEM',
+	'google-ads': 'Google Ads',
+	cro: 'CRO',
+	'digital-marknadsforing': 'Digital Marknadsföring',
+};
+
+const categoryLabel = categoryLabels[category] ?? category.charAt(0).toUpperCase() + category.slice(1);
+
+const site = Astro.site ?? new URL('https://www.newcustomers.se');
+const canonicalUrl = new URL(Astro.url.pathname, site).toString();
+
+const formattedDate = new Date(publishedDate).toLocaleDateString('sv-SE', {
+	year: 'numeric',
+	month: 'long',
+	day: 'numeric',
+});
+
+const formattedUpdatedDate = updatedDate
+	? new Date(updatedDate).toLocaleDateString('sv-SE', {
+			year: 'numeric',
+			month: 'long',
+			day: 'numeric',
+		})
+	: null;
+
+const articleSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'Article',
+	headline: title,
+	description,
+	image: image ?? undefined,
+	datePublished: publishedDate,
+	dateModified: updatedDate ?? publishedDate,
+	url: canonicalUrl,
+	author: {
+		'@type': 'Person',
+		name: author.name,
+		jobTitle: author.title ?? undefined,
+	},
+	publisher: {
+		'@type': 'Organization',
+		name: 'New Customers Sweden AB',
+		url: 'https://www.newcustomers.se',
+		logo: {
+			'@type': 'ImageObject',
+			url: 'https://www.newcustomers.se/newcustomers.svg',
+		},
+	},
+};
+
+const breadcrumbs = [
+	{ url: '/', text: 'Hem' },
+	{ url: '/artiklar/', text: 'Artiklar' },
+	{ url: `/artiklar/${category}/`, text: categoryLabel },
+	{ url: `/artiklar/${category}/${slug}/`, text: title },
+];
+---
+
+<Layout title={`${title} | new customers`} description={description} ogImage={image}>
+	<!-- Article hero -->
+	<section class="relative -mt-[8rem] overflow-hidden border-b border-black/10 pb-12 pt-44 md:pb-16 md:pt-52">
+		<div class="absolute inset-0 bg-[linear-gradient(165deg,#ffffff_0%,#f7f9fc_44%,#eef2f7_100%)]"></div>
+		<div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_20%,rgba(148,163,184,0.24),transparent_40%),radial-gradient(circle_at_88%_76%,rgba(100,116,139,0.16),transparent_44%)]"></div>
+		<div class="pointer-events-none absolute inset-0 opacity-56 [background-image:linear-gradient(to_right,rgba(100,116,139,0.16)_1px,transparent_1px),linear-gradient(to_bottom,rgba(100,116,139,0.16)_1px,transparent_1px)] [background-size:46px_46px] [mask-image:linear-gradient(to_bottom,transparent_0%,black_12%,black_100%)]"></div>
+
+		<div class="site-container relative z-10">
+			<div class="max-w-3xl">
+				<a href={`/artiklar/${category}/`} class="type-micro-label text-primary hover:text-primary/80 transition">{categoryLabel}</a>
+				<h1 class="mt-3 text-[clamp(2rem,5vw,3.5rem)] font-semibold leading-[1.08] tracking-[-0.03em] text-foreground">
+					{title}
+				</h1>
+				<p class="mt-5 type-section-lead text-foreground/70 max-w-[58ch]">{description}</p>
+
+				<div class="mt-8 flex items-center gap-4">
+					{author.image && (
+						<img
+							src={author.image}
+							alt={author.name}
+							width="48"
+							height="48"
+							class="h-12 w-12 rounded-full object-cover border border-black/8"
+							loading="eager"
+						/>
+					)}
+					<div>
+						<div class="text-sm font-medium text-foreground">{author.name}</div>
+						<div class="flex items-center gap-2 text-sm text-foreground/50">
+							<time datetime={publishedDate}>{formattedDate}</time>
+							{formattedUpdatedDate && (
+								<>
+									<span aria-hidden="true" class="text-foreground/20">·</span>
+									<span>Uppdaterad {formattedUpdatedDate}</span>
+								</>
+							)}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Breadcrumbs -->
+	<div class="site-container py-4">
+		<Breadcrumbs breadcrumbs={breadcrumbs} />
+	</div>
+
+	<!-- Article body + sidebar -->
+	<article class="section-spacing">
+		<div class="site-container">
+			<div class="article-grid">
+				<!-- Main content -->
+				<div class="article-content min-w-0">
+					{image && (
+						<div class="mb-12 overflow-hidden rounded-2xl border border-black/6" data-reveal>
+							<img
+								src={image}
+								alt={imageAlt ?? title}
+								width="1200"
+								height="630"
+								class="w-full h-auto object-cover"
+								loading="eager"
+							/>
+						</div>
+					)}
+
+					<!-- Mobile TOC (below lg) -->
+					<div class="mb-10 lg:hidden" data-reveal>
+						<details class="toc-mobile group rounded-xl border border-black/6 bg-white">
+							<summary class="flex cursor-pointer items-center justify-between px-5 py-4 list-none">
+								<span class="type-micro-label text-foreground/50">Innehåll</span>
+								<svg class="h-4 w-4 text-foreground/30 transition-transform duration-300 group-open:rotate-180" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+									<path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+								</svg>
+							</summary>
+							<nav aria-label="Innehållsförteckning" class="px-5 pb-5">
+								<ol class="toc-list-mobile list-none m-0 p-0 space-y-1"></ol>
+							</nav>
+						</details>
+					</div>
+
+					<div class="article-prose" data-reveal>
+						<slot />
+					</div>
+
+					<!-- Author card -->
+					<div class="mt-16 border-t border-black/6 pt-10" data-reveal>
+						<div class="flex items-start gap-5">
+							{author.image && (
+								<img
+									src={author.image}
+									alt={author.name}
+									width="64"
+									height="64"
+									class="h-16 w-16 rounded-full object-cover border border-black/8 shrink-0"
+									loading="lazy"
+								/>
+							)}
+							<div>
+								<p class="type-micro-label text-foreground/40 mb-1">Skriven av</p>
+								<p class="text-lg font-medium text-foreground">{author.name}</p>
+								{author.title && <p class="mt-1 text-sm text-foreground/60">{author.title}</p>}
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Sidebar (lg+) -->
+				<aside class="article-sidebar hidden lg:block">
+					<div class="sticky top-24 space-y-6">
+						<!-- TOC -->
+						<nav aria-label="Innehållsförteckning" class="toc-sidebar rounded-xl border border-black/6 bg-white px-6 py-6">
+							<p class="type-micro-label text-foreground/40 mb-4">Innehåll</p>
+							<ol class="toc-list-desktop list-none m-0 p-0 space-y-0.5"></ol>
+						</nav>
+
+						<!-- Sidebar CTA -->
+						<div class="rounded-xl border border-black/6 bg-[linear-gradient(165deg,#ffffff_0%,#f9fafb_100%)] px-6 py-6">
+							<p class="font-[var(--font-heading)] text-base font-semibold text-foreground leading-snug">Vill du ha hjälp med {categoryLabel}?</p>
+							<p class="mt-2 text-[0.9375rem] text-foreground/60 leading-relaxed">Boka ett kostnadsfritt strategisamtal så går vi igenom era möjligheter.</p>
+							<div class="mt-5">
+								<Button href="/kontakt/" type="primary" size="md" text="Boka samtal" class="w-full text-xs tracking-[0.08em] uppercase justify-center" />
+							</div>
+						</div>
+
+						<!-- Sidebar author -->
+						<div class="rounded-xl border border-black/6 bg-white px-6 py-6">
+							<p class="type-micro-label text-foreground/40 mb-3">Författare</p>
+							<div class="flex items-center gap-3.5">
+								{author.image && (
+									<img
+										src={author.image}
+										alt={author.name}
+										width="48"
+										height="48"
+										class="h-12 w-12 rounded-full object-cover border border-black/8 shrink-0"
+										loading="lazy"
+									/>
+								)}
+								<div>
+									<p class="text-[0.9375rem] font-medium text-foreground leading-tight">{author.name}</p>
+									{author.title && <p class="mt-1 text-sm text-foreground/50">{author.title}</p>}
+								</div>
+							</div>
+						</div>
+					</div>
+				</aside>
+			</div>
+		</div>
+	</article>
+
+	<script type="application/ld+json" set:html={JSON.stringify(articleSchema)}></script>
+</Layout>
+
+<style is:global>
+	/* Article grid layout */
+	.article-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		max-width: 48rem;
+		margin-inline: auto;
+	}
+
+	@media (min-width: 1024px) {
+		.article-grid {
+			grid-template-columns: 1fr 20rem;
+			gap: 3rem;
+			max-width: none;
+		}
+	}
+
+	@media (min-width: 1280px) {
+		.article-grid {
+			grid-template-columns: 1fr 22rem;
+			gap: 4rem;
+		}
+	}
+
+	/* TOC link styles */
+	.toc-link {
+		display: block;
+		padding: 0.4rem 0;
+		font-size: 0.875rem;
+		line-height: 1.45;
+		color: color-mix(in oklab, var(--foreground) 55%, white 45%);
+		text-decoration: none;
+		border-left: 2px solid transparent;
+		padding-left: 0.75rem;
+		transition: color 0.2s, border-color 0.2s;
+	}
+
+	.toc-link:hover {
+		color: var(--foreground);
+	}
+
+	.toc-link.is-active {
+		color: var(--primary);
+		border-left-color: var(--primary);
+	}
+
+	.toc-link--h3 {
+		padding-left: 1.5rem;
+		font-size: 0.8125rem;
+	}
+
+	/* Mobile TOC links */
+	.toc-link-mobile {
+		display: block;
+		padding: 0.35rem 0;
+		font-size: 0.875rem;
+		line-height: 1.45;
+		color: color-mix(in oklab, var(--foreground) 55%, white 45%);
+		text-decoration: none;
+		transition: color 0.15s;
+	}
+
+	.toc-link-mobile:hover {
+		color: var(--primary);
+	}
+
+	.toc-link-mobile--h3 {
+		padding-left: 1rem;
+		font-size: 0.8125rem;
+	}
+
+	/* Article prose */
+	.article-prose {
+		font-family: var(--font-body);
+		font-size: 1.125rem;
+		line-height: 1.75;
+		color: color-mix(in oklab, var(--foreground) 78%, white 22%);
+	}
+
+	.article-prose h2 {
+		font-family: var(--font-heading);
+		font-size: clamp(1.5rem, 3vw, 2rem);
+		font-weight: 600;
+		line-height: 1.15;
+		letter-spacing: -0.02em;
+		color: var(--foreground);
+		margin-top: 3rem;
+		margin-bottom: 1rem;
+		scroll-margin-top: 6rem;
+	}
+
+	.article-prose h3 {
+		font-family: var(--font-heading);
+		font-size: clamp(1.2rem, 2.4vw, 1.5rem);
+		font-weight: 500;
+		line-height: 1.2;
+		letter-spacing: -0.01em;
+		color: var(--foreground);
+		margin-top: 2.5rem;
+		margin-bottom: 0.75rem;
+		scroll-margin-top: 6rem;
+	}
+
+	.article-prose p {
+		margin-bottom: 1.25rem;
+	}
+
+	.article-prose ul,
+	.article-prose ol {
+		margin-bottom: 1.25rem;
+		padding-left: 1.5rem;
+	}
+
+	.article-prose li {
+		margin-bottom: 0.5rem;
+	}
+
+	.article-prose strong {
+		font-weight: 600;
+		color: var(--foreground);
+	}
+
+	.article-prose a {
+		color: var(--primary);
+		text-decoration: underline;
+		text-decoration-color: color-mix(in oklab, var(--primary) 40%, transparent);
+		text-underline-offset: 3px;
+		transition: text-decoration-color 0.2s;
+	}
+
+	.article-prose a:hover {
+		text-decoration-color: var(--primary);
+	}
+
+	.article-prose blockquote {
+		border-left: 3px solid var(--primary);
+		padding-left: 1.5rem;
+		margin: 2rem 0;
+		font-style: italic;
+		color: color-mix(in oklab, var(--foreground) 66%, white 34%);
+	}
+
+	.article-prose code {
+		font-family: 'JetBrains Mono', monospace;
+		font-size: 0.875em;
+		background: rgba(0, 0, 0, 0.04);
+		padding: 0.15em 0.4em;
+		border-radius: 0.25rem;
+	}
+
+	.article-prose hr {
+		border: none;
+		border-top: 1px solid rgba(0, 0, 0, 0.06);
+		margin: 2.5rem 0;
+	}
+</style>
+
+<script>
+	function slugify(text: string): string {
+		return text
+			.toLowerCase()
+			.replace(/[åä]/g, 'a')
+			.replace(/ö/g, 'o')
+			.replace(/[^\w\s-]/g, '')
+			.replace(/\s+/g, '-')
+			.replace(/-+/g, '-')
+			.trim();
+	}
+
+	function buildToc() {
+		const prose = document.querySelector('.article-prose');
+		if (!prose) return;
+
+		const headings = prose.querySelectorAll('h2, h3');
+		if (headings.length === 0) return;
+
+		const desktopList = document.querySelector('.toc-list-desktop');
+		const mobileList = document.querySelector('.toc-list-mobile');
+
+		const tocItems: { id: string; el: Element }[] = [];
+
+		headings.forEach((heading) => {
+			const text = heading.textContent?.trim() ?? '';
+			const id = heading.id || slugify(text);
+			heading.id = id;
+
+			const isH3 = heading.tagName === 'H3';
+
+			// Desktop TOC
+			if (desktopList) {
+				const li = document.createElement('li');
+				const a = document.createElement('a');
+				a.href = `#${id}`;
+				a.textContent = text;
+				a.className = `toc-link${isH3 ? ' toc-link--h3' : ''}`;
+				a.dataset.tocTarget = id;
+				li.appendChild(a);
+				desktopList.appendChild(li);
+			}
+
+			// Mobile TOC
+			if (mobileList) {
+				const li = document.createElement('li');
+				const a = document.createElement('a');
+				a.href = `#${id}`;
+				a.textContent = text;
+				a.className = `toc-link-mobile${isH3 ? ' toc-link-mobile--h3' : ''}`;
+				li.appendChild(a);
+				mobileList.appendChild(li);
+			}
+
+			tocItems.push({ id, el: heading });
+		});
+
+		// Active heading tracking via IntersectionObserver
+		if (desktopList && tocItems.length > 0) {
+			const observer = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							const id = entry.target.id;
+							desktopList.querySelectorAll('.toc-link').forEach((link) => {
+								link.classList.toggle('is-active', (link as HTMLAnchorElement).dataset.tocTarget === id);
+							});
+						}
+					});
+				},
+				{
+					rootMargin: '-80px 0px -70% 0px',
+					threshold: 0,
+				},
+			);
+
+			tocItems.forEach(({ el }) => observer.observe(el));
+		}
+	}
+
+	buildToc();
+</script>

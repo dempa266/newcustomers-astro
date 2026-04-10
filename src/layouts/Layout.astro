@@ -2,68 +2,48 @@
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import Breadcrumbs from '../components/Breadcrumbs.astro';
 
 interface Props {
 	title?: string;
 	description?: string;
+	ogImage?: string;
 }
 
 const {
 	title = 'New Site',
 	description = 'Clean Astro starter page.',
+	ogImage = '/og-default.png',
 } = Astro.props as Props;
 
-const site = Astro.site ?? new URL('http://localhost:4321');
+const site = Astro.site ?? new URL('https://www.newcustomers.se');
 const canonicalUrl = new URL(Astro.url.pathname, site).toString();
+const ogImageUrl = new URL(ogImage, site).toString();
 const pathname = Astro.url.pathname;
 const isHomePage = pathname === '/';
 
-const slugLabelMap: Record<string, string> = {
-	seo: 'SEO',
-	ads: 'Google Ads',
-	sem: 'SEM',
-	byra: 'Byrå',
-	konsult: 'Konsult',
-	'e-handel': 'E-handel',
-	pris: 'Pris',
-	stockholm: 'Stockholm',
-	goteborg: 'Göteborg',
-	malmo: 'Malmö',
-	'om-oss': 'Om oss',
-	kontakt: 'Kontakt',
+const organizationSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'Organization',
+	name: 'New Customers Sweden AB',
+	url: 'https://www.newcustomers.se',
+	logo: 'https://www.newcustomers.se/newcustomers.svg',
+	foundingDate: '2021',
+	description: 'Digital marknadsföringsbyrå specialiserad på SEO, SEM och CRO.',
+	address: {
+		'@type': 'PostalAddress',
+		addressLocality: 'Stockholm',
+		addressCountry: 'SE',
+	},
+	contactPoint: {
+		'@type': 'ContactPoint',
+		telephone: '+46703877177',
+		contactType: 'sales',
+		availableLanguage: 'Swedish',
+	},
+	sameAs: [
+		'https://www.linkedin.com/company/newcustomers/',
+	],
 };
-
-function toLabel(segment: string): string {
-	const normalized = decodeURIComponent(segment).toLowerCase();
-	const mapped = slugLabelMap[normalized];
-
-	if (mapped) return mapped;
-
-	return normalized
-		.split('-')
-		.filter(Boolean)
-		.map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-		.join(' ');
-}
-
-const breadcrumbs = isHomePage
-	? []
-	: (() => {
-			const segments = pathname.split('/').filter(Boolean);
-			const items: Array<{ url: string; text: string }> = [{ url: '/', text: 'Hem' }];
-			let currentPath = '';
-
-			for (const segment of segments) {
-				currentPath += `/${segment}`;
-				items.push({
-					url: `${currentPath}/`,
-					text: toLabel(segment),
-				});
-			}
-
-			return items;
-		})();
 ---
 
 <!doctype html>
@@ -73,6 +53,8 @@ const breadcrumbs = isHomePage
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
+		<link rel="apple-touch-icon" href="/favicon.ico" />
+		<meta name="theme-color" content="#15151f" />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
 		<link
@@ -83,18 +65,32 @@ const breadcrumbs = isHomePage
 		<title>{title}</title>
 		<meta name="description" content={description} />
 		<link rel="canonical" href={canonicalUrl} />
+
+		<!-- Open Graph -->
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={canonicalUrl} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={ogImageUrl} />
+		<meta property="og:locale" content="sv_SE" />
+		<meta property="og:site_name" content="New Customers" />
+
+		<!-- Twitter / X -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={ogImageUrl} />
 	</head>
 	<body class:list={['bg-background text-foreground', isHomePage && 'home-cinematic']}>
+		<a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-lg focus:bg-primary focus:px-4 focus:py-2 focus:text-white focus:outline-none">
+			Hoppa till innehåll
+		</a>
 		<Header />
-		{!isHomePage && (
-			<div class="site-container py-4">
-				<Breadcrumbs breadcrumbs={breadcrumbs} />
-			</div>
-		)}
-		<main>
+		<main id="main-content">
 			<slot />
 		</main>
 		<Footer />
+		{isHomePage && <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)}></script>}
 		<script>
 			import '../scripts/scroll-reveal';
 		</script>

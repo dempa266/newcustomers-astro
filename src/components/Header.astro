@@ -7,7 +7,7 @@ import { mainNavGroups, mainNavLinks, mobileNavLinks } from '../data/navigation'
 
 <header class="sticky top-3 z-50 w-full">
 	<div class="site-container">
-		<div class="relative flex min-h-[4.5rem] items-center justify-between rounded-[999px] border border-white/14 bg-[#11131b]/90 px-4 py-2.5 text-white shadow-none backdrop-blur-xl supports-[backdrop-filter]:bg-[#11131b]/84 sm:px-6">
+		<div class="relative flex min-h-[4.5rem] items-center justify-between rounded-[999px] border border-white/14 bg-[#0d0d1a]/85 px-4 py-2.5 text-white shadow-none backdrop-blur-xl supports-[backdrop-filter]:bg-[#0d0d1a]/78 sm:px-6">
 			<div class="pointer-events-none absolute inset-0 rounded-[999px] bg-[linear-gradient(135deg,rgba(255,255,255,0.12),rgba(255,255,255,0)_45%)]"></div>
 			<a href="/" class="relative inline-flex items-center rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70">
 				<img src="/newcustomers.svg" alt="Logo" width="240" height="36" class="h-8 w-auto sm:h-9" />
@@ -16,7 +16,8 @@ import { mainNavGroups, mainNavLinks, mobileNavLinks } from '../data/navigation'
 				<Nav groups={mainNavGroups} links={mainNavLinks} />
 			</div>
 			<div class="relative my-auto hidden gap-3 lg:flex">
-				<Button href="/kontakt/" type="primary" text="Kontakt" />
+				<Button href="https://app.newcustomers.se" type="transparent" text="Logga in" />
+				<Button href="/kontakt/" type="primary" text="Boka möte" />
 			</div>
 			<MobileNav groups={mainNavGroups} links={mobileNavLinks} />
 		</div>

@@ -11,8 +11,8 @@ interface Props {
 const { groups = [], links = [], onLight = false } = Astro.props as Props;
 ---
 
-<div class="flex h-full">
-	<ul class="my-auto flex list-none gap-1.5">
+<nav class="flex items-center h-full">
+	<ul class="flex items-center list-none gap-1 m-0 p-0">
 		{groups.map((group) => (
 			<Dropdown title={group.title} path={group.path} columns={group.columns} latestArticles={group.latestArticles} onLight={onLight} />
 		))}
@@ -20,7 +20,7 @@ const { groups = [], links = [], onLight = false } = Astro.props as Props;
 			<li class="mb-0 list-none">
 				<a
 					class:list={[
-						'micro-link inline-flex items-center rounded-full border px-3.5 py-2 text-sm font-medium no-underline transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70',
+						'micro-link inline-flex items-center rounded-full border px-4 py-2 text-base font-medium leading-tight no-underline transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70',
 						onLight
 							? 'border-transparent text-foreground/80 hover:bg-black/5 hover:text-foreground hover:no-underline'
 							: 'border-transparent text-white/84 hover:border-white/18 hover:bg-white/12 hover:text-white hover:no-underline',
@@ -32,4 +32,4 @@ const { groups = [], links = [], onLight = false } = Astro.props as Props;
 			</li>
 		))}
 	</ul>
-</div>
+</nav>

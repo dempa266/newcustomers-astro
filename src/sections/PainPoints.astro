@@ -29,14 +29,14 @@ const painPoints = parseEncodedJson<PainPoint[]>(data.painPoints, []);
 			{data.description && <p class="type-section-lead max-w-[62ch] mx-auto">{data.description}</p>}
 		</div>
 
-		<div class="section-after-intro grid gap-x-16 gap-y-0 grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto border-t border-black/6" data-reveal-children>
+		<div class="section-after-intro grid gap-x-16 gap-y-0 grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto" data-reveal-children>
 			{painPoints.map((point, i) => (
 				<div class="flex gap-5 py-8 border-b border-black/6">
 					<span class="shrink-0 font-[var(--font-heading)] text-base font-semibold leading-[1.12] text-primary tabular-nums">
 						{String(i + 1).padStart(2, '0')}
 					</span>
-					<div>
-						{point.title && <h4 class="mb-2 text-foreground">{point.title}</h4>}
+					<div class="flow">
+						{point.title && <h4 class="text-foreground">{point.title}</h4>}
 						{point.description && <p class="leading-relaxed">{point.description}</p>}
 					</div>
 				</div>

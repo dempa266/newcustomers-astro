@@ -31,12 +31,8 @@ const { question, answer } = Astro.props as Props;
 		transition: grid-template-rows 400ms cubic-bezier(0.22, 1, 0.36, 1);
 	}
 
-	.faq-item[open] > .faq-answer {
+	.faq-item.is-open > .faq-answer {
 		grid-template-rows: 1fr;
-	}
-
-	.faq-item.is-closing > .faq-answer {
-		grid-template-rows: 0fr;
 	}
 
 	.faq-answer-inner {
@@ -54,15 +50,17 @@ const { question, answer } = Astro.props as Props;
 			e.preventDefault();
 
 			if (details.hasAttribute('open')) {
-				// Closing: add class to trigger 0fr transition, then remove open
-				details.classList.add('is-closing');
+				// Closing: remove is-open to transition to 0fr, then remove open
+				details.classList.remove('is-open');
 				answer.addEventListener('transitionend', () => {
 					details.removeAttribute('open');
-					details.classList.remove('is-closing');
 				}, { once: true });
 			} else {
-				// Opening: set open attribute, CSS handles the 1fr transition
+				// Opening: set open so content is in DOM at 0fr, then next frame add is-open to transition to 1fr
 				details.setAttribute('open', '');
+				requestAnimationFrame(() => {
+					details.classList.add('is-open');
+				});
 			}
 		});
 	});

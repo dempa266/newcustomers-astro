@@ -1,0 +1,18 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Button from '../components/Button.astro';
+---
+
+<Layout title="Sidan hittades inte – new customers" description="Sidan du söker finns inte. Gå tillbaka till startsidan eller kontakta oss.">
+	<section class="section-spacing flex items-center justify-center min-h-[60vh]">
+		<div class="site-container text-center">
+			<p class="type-micro-label text-primary mb-4">404</p>
+			<h1 class="text-4xl md:text-5xl font-semibold tracking-tight">Sidan hittades inte</h1>
+			<p class="mt-4 text-lg text-foreground/66 max-w-md mx-auto">Sidan du letar efter kan ha flyttats eller finns inte längre.</p>
+			<div class="mt-8 flex flex-wrap justify-center gap-4">
+				<Button href="/" type="primary" size="md" text="Till startsidan" />
+				<Button href="/kontakt/" type="secondary" size="md" text="Kontakta oss" />
+			</div>
+		</div>
+	</section>
+</Layout>

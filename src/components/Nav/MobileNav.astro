@@ -11,125 +11,146 @@ interface Props {
 const { groups = [], links = [], onLight = false } = Astro.props as Props;
 ---
 
-<div class="flex lg:hidden">
-		<details class="relative" data-mobile-nav>
-			<summary
-				data-mobile-summary
-				class:list={[
-					'inline-flex h-10 w-10 list-none cursor-pointer items-center justify-center rounded-full border backdrop-blur-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70',
-					onLight
-						? 'border-black/16 text-foreground hover:bg-black/6'
-					: 'border-white/25 bg-white/8 text-white hover:bg-white/16',
-			]}
-		>
-			<span class="sr-only">Open main menu</span>
-			<svg class="h-5 w-5" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-				<path d="M3.5 5.75h13M3.5 10h13M3.5 14.25h13" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" />
-			</svg>
-		</summary>
-		<button type="button" class="fixed inset-0 z-20 bg-black/35 backdrop-blur-[2px]" data-close-menu aria-label="Close menu overlay"></button>
-			<div class="fixed inset-y-0 right-0 z-30 w-full overflow-y-auto border-l border-white/18 bg-[#11131b]/96 px-6 py-6 text-white shadow-2xl backdrop-blur-xl sm:max-w-sm">
-				<div class="flex items-center justify-between border-b border-white/16 pb-5">
-					<a href="/" class="my-auto">
-						<img src="/newcustomers.svg" alt="Logo" width="240" height="36" class="h-9 my-auto" />
-					</a>
-				<button type="button" class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white transition hover:bg-white/12" data-close-menu>
-					<span class="sr-only">Close menu</span>
-					<svg class="h-5 w-5" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-						<path d="M5.75 5.75 14.25 14.25M14.25 5.75 5.75 14.25" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" />
-					</svg>
-				</button>
-			</div>
-			<div class="mt-6 flow-root">
-				<div>
-					<ul class="space-y-2 list-none">
-						{groups.map((group) => (
-							<li class="mb-0 list-none">
-								<details class="group/mobile rounded-2xl border border-white/16 bg-white/8 p-2">
-									<summary class="flex list-none w-full cursor-pointer items-center justify-between rounded-xl px-3 py-2 text-sm font-semibold text-white transition hover:bg-white/12">
-										<span>{group.title}</span>
-										<svg
-											class="h-4 w-4 text-white/68 transition-transform duration-200 group-open/mobile:rotate-180"
-											viewBox="0 0 12 12"
-											fill="none"
-											xmlns="http://www.w3.org/2000/svg"
-											aria-hidden="true"
-										>
-											<path d="M2.25 4.5 6 8.25 9.75 4.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
-										</svg>
-									</summary>
-									<div class="mt-1 space-y-3 pb-2">
-										{group.columns.map((column) => (
-											<div class="px-3">
-												<p class="mb-1 text-[0.7rem] font-semibold uppercase tracking-[0.08em] text-white/58">{column.title}</p>
-												<div class="space-y-1">
-													{column.links.map((item) => (
-														<a
-															class="block rounded-lg px-3 py-1.5 text-sm text-white/90 no-underline transition hover:bg-white/12 hover:text-primary hover:no-underline"
-															href={item.path}
-														>
-															{item.label}
-														</a>
-													))}
-												</div>
-											</div>
-										))}
-									</div>
-								</details>
-							</li>
-						))}
-						{links.map((link) => (
-							<li class="mb-0 list-none">
-								<a
-									class="block rounded-xl border border-white/18 bg-white/10 px-4 py-2.5 text-sm font-semibold text-white no-underline transition hover:border-primary/70 hover:bg-white/14 hover:text-primary hover:no-underline"
-									href={link.path}
-								>
-									{link.label}
-								</a>
-							</li>
-						))}
-					</ul>
-					<div class="mt-6 border-t border-white/16 pt-5">
-						<Button href="/kontakt/" type="primary" text="Kontakt" class="w-full" />
-					</div>
-				</div>
-			</div>
+{/* Hamburger trigger */}
+<button
+	type="button"
+	data-mobile-trigger
+	class:list={[
+		'relative inline-flex h-10 w-10 list-none cursor-pointer items-center justify-center rounded-full border backdrop-blur-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 lg:hidden',
+		onLight
+			? 'border-black/16 text-foreground hover:bg-black/6'
+			: 'border-white/25 bg-white/8 text-white hover:bg-white/16',
+	]}
+>
+	<span class="sr-only">Öppna meny</span>
+	<svg class="h-5 w-5" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+		<path d="M3.5 5.75h13M3.5 10h13M3.5 14.25h13" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" />
+	</svg>
+</button>
+
+{/* Panel + overlay — rendered hidden, moved to body by JS to escape backdrop-filter containing block */}
+<div data-mobile-nav-root class="hidden">
+	<div data-mobile-overlay class="fixed inset-0 z-[60] bg-black/40 backdrop-blur-[2px]" aria-hidden="true" style="display:none"></div>
+	<div data-mobile-panel class="fixed inset-y-0 right-0 z-[70] w-full overflow-y-auto bg-[#0d0d1a] px-6 py-6 text-white shadow-2xl sm:max-w-[22rem] translate-x-full transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]" role="dialog" aria-modal="true" aria-label="Navigation" style="display:none">
+		<div class="flex items-center justify-between pb-6">
+			<a href="/" data-mobile-link>
+				<img src="/newcustomers.svg" alt="Logo" width="240" height="36" class="h-9" />
+			</a>
+			<button type="button" data-mobile-close class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white transition hover:bg-white/12">
+				<span class="sr-only">Stäng meny</span>
+				<svg class="h-5 w-5" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+					<path d="M5.75 5.75 14.25 14.25M14.25 5.75 5.75 14.25" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" />
+				</svg>
+			</button>
 		</div>
-	</details>
+		<nav>
+			<ul class="space-y-2 list-none p-0">
+				{groups.map((group) => (
+					<li class="mb-0 list-none">
+						<details class="group/mobile rounded-2xl border border-white/12 bg-white/6">
+							<summary class="flex list-none w-full cursor-pointer items-center justify-between px-4 py-3 text-base font-semibold text-white transition hover:bg-white/8 rounded-2xl">
+								<span>{group.title}</span>
+								<svg
+									class="h-4 w-4 text-white/50 transition-transform duration-200 group-open/mobile:rotate-180"
+									viewBox="0 0 12 12"
+									fill="none"
+									xmlns="http://www.w3.org/2000/svg"
+									aria-hidden="true"
+								>
+									<path d="M2.25 4.5 6 8.25 9.75 4.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+								</svg>
+							</summary>
+							<div class="space-y-4 px-2 pb-3">
+								{group.columns.map((column) => (
+									<div class="px-2">
+										<p class="mb-1.5 text-xs font-semibold uppercase tracking-[0.08em] text-white/50">{column.title}</p>
+										<div class="space-y-0.5">
+											{column.links.map((item) => (
+												<a
+													class="block rounded-lg px-3 py-2.5 text-[0.9375rem] text-white/75 no-underline transition hover:bg-white/10 hover:text-white hover:no-underline"
+													href={item.path}
+													data-mobile-link
+												>
+													{item.label}
+												</a>
+											))}
+										</div>
+									</div>
+								))}
+							</div>
+						</details>
+					</li>
+				))}
+				{links.map((navLink) => (
+					<li class="mb-0 list-none">
+						<a
+							class="block rounded-2xl border border-white/12 bg-white/6 px-4 py-3 text-base font-semibold text-white no-underline transition hover:bg-white/10 hover:text-white hover:no-underline"
+							href={navLink.path}
+							data-mobile-link
+						>
+							{navLink.label}
+						</a>
+					</li>
+				))}
+			</ul>
+			<div class="mt-6 pt-4">
+				<Button href="/kontakt/" type="primary" text="Boka möte" class="w-full" />
+			</div>
+		</nav>
+	</div>
 </div>
 
 <script is:inline>
-	document.querySelectorAll('[data-mobile-nav]').forEach((root) => {
-		if (root.dataset.bound === 'true') return;
-		root.dataset.bound = 'true';
-		const summary = root.querySelector('[data-mobile-summary]');
+(function() {
+	document.querySelectorAll('[data-mobile-trigger]').forEach(function(trigger) {
+		if (trigger.dataset.bound === 'true') return;
+		trigger.dataset.bound = 'true';
 
-		const closeMenu = () => {
-			root.removeAttribute('open');
-			document.body.classList.remove('mobile-nav-open');
-		};
+		// Find the nav root (next sibling hidden div) and move its children to body
+		var navRoot = trigger.parentElement.querySelector('[data-mobile-nav-root]');
+		if (!navRoot) return;
 
-		summary?.addEventListener('click', (event) => {
-			event.preventDefault();
-			if (root.hasAttribute('open')) {
-				closeMenu();
-				return;
-			}
+		var overlay = navRoot.querySelector('[data-mobile-overlay]');
+		var panel = navRoot.querySelector('[data-mobile-panel]');
+		if (!overlay || !panel) return;
 
-			root.setAttribute('open', '');
+		// Move to body to escape backdrop-filter containing block
+		document.body.appendChild(overlay);
+		document.body.appendChild(panel);
+		navRoot.remove();
+
+		function openMenu() {
+			overlay.style.display = '';
+			panel.style.display = '';
+			panel.offsetHeight; // force reflow
+			panel.classList.remove('translate-x-full');
+			panel.classList.add('translate-x-0');
 			document.body.classList.add('mobile-nav-open');
+		}
+
+		function closeMenu() {
+			panel.classList.remove('translate-x-0');
+			panel.classList.add('translate-x-full');
+			overlay.style.display = 'none';
+			document.body.classList.remove('mobile-nav-open');
+		}
+
+		trigger.addEventListener('click', openMenu);
+		overlay.addEventListener('click', closeMenu);
+
+		panel.querySelectorAll('[data-mobile-close]').forEach(function(btn) {
+			btn.addEventListener('click', closeMenu);
 		});
 
-		root.querySelectorAll('[data-close-menu]').forEach((close) => {
-			close.addEventListener('click', closeMenu);
-		});
-
-		root.querySelectorAll('a').forEach((link) => {
+		panel.querySelectorAll('[data-mobile-link]').forEach(function(link) {
 			link.addEventListener('click', closeMenu);
 		});
 
-		document.addEventListener('keydown', (event) => {
-			if (event.key === 'Escape') closeMenu();
+		document.addEventListener('keydown', function(event) {
+			if (event.key === 'Escape' && panel.classList.contains('translate-x-0')) {
+				closeMenu();
+			}
 		});
 	});
+})();
 </script>
